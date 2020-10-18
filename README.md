@@ -8,7 +8,7 @@ If you are intending to run this on a CP/M machine, you will need a SYSGEN 64 im
 
 You are free to use and modify the code for your own purposes, but must credit the author, Andy Glenn, under all circumstances.
 
-This code is fully functional, but there are some of features I plan to include, as follows:
+This code is fully functional, but there are some additional features that I plan to include, as follows:
 
 More help pages
 *  "Terminal Session" when David Lightman is in Mr. McKittrick's office at NORAD
