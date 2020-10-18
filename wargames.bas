@@ -1,3 +1,10 @@
+1 REM *******************************************
+2 REM *                                         *
+3 REM *          WARGAMES SIMULATOR             *
+4 REM *            BY ANDY GLENN                *
+5 REM *     (C) 2020, ALL RIGHTS RESERVED       *
+6 REM *                                         *
+7 REM *******************************************
 10 LET CLS$=CHR$(27)+"c"
 20 DIM GRADE$(2)
 30 DIM PFX%(9)
