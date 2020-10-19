@@ -15,3 +15,5 @@ This code is fully functional, but there are some additional features that I pla
 *  Completed tasks/status/score page at end of "game"
 *  AT modem connections to BBS systems (for some/all of the "dummy" systems)
 *  Speech synth output via RS-232 (ASCII)
+
+NOTE: It may not be possible to compile and link the code as it stands because of the 64KB limit of CP/M. I am considering breaking the code up into a series of smaller programs and using a data file to share variables between them.
