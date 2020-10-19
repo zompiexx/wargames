@@ -19,3 +19,7 @@ This code is fully functional, but there are some additional features that I pla
 NOTE: It may not be possible to compile and link the code as it stands because of the 64KB limit of CP/M. I am considering breaking the code up into a series of smaller programs and using a data file to share variables between them.
 
 If you want to see a demo of the code in action, running on an IMSAI 8080esp (albeit, a slightly earlier version of the code), please watch this Youtube video: https://youtu.be/GsTtD4rpM6E
+
+Useful Links:
+Z80PACK written by Udo Munk: https://www.z80cpu.eu/mirrors/www.unix4fun.org/z80pack/index.html
+Replica IMSAI 8080 (ESP32) Kit: https://thehighnibble.com
