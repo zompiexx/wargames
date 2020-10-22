@@ -24,3 +24,6 @@ Useful Links:
 Z80PACK written by Udo Munk: https://www.z80cpu.eu/mirrors/www.unix4fun.org/z80pack/index.html 
 
 Replica IMSAI 8080 (ESP32) Kit: https://thehighnibble.com
+
+The High Nibble (Youtube): https://www.youtube.com/c/TheHighNibble
+Udo Munk (Youtube): https://www.youtube.com/channel/UCwOfdlzktTTDuFyFODbA3yA
