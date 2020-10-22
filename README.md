@@ -21,13 +21,13 @@ If you want to see a demo of the code in action, running on an IMSAI 8080esp (al
 
 Useful Links: 
 
-Z80PACK written by Udo Munk: https://www.z80cpu.eu/mirrors/www.unix4fun.org/z80pack/index.html 
+*  Z80PACK written by Udo Munk: https://www.z80cpu.eu/mirrors/www.unix4fun.org/z80pack/index.html 
 
-Replica IMSAI 8080 (ESP32) Kit: https://thehighnibble.com
+*  Replica IMSAI 8080 (ESP32) Kit: https://thehighnibble.com
 
-The High Nibble (Youtube): https://www.youtube.com/c/TheHighNibble
+*  The High Nibble (Youtube): https://www.youtube.com/c/TheHighNibble
 
-Udo Munk (Youtube): https://www.youtube.com/channel/UCwOfdlzktTTDuFyFODbA3yA
+*  Udo Munk (Youtube): https://www.youtube.com/channel/UCwOfdlzktTTDuFyFODbA3yA
 
-CP/M Software Archives: http://www.classiccmp.org/cpmarchives/
+*  CP/M Software Archives: http://www.classiccmp.org/cpmarchives/
 
