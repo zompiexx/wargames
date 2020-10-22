@@ -10,6 +10,7 @@ You are free to use and modify the code for your own purposes, but must credit t
 
 This code is fully functional, but there are some additional features that I plan to include, as follows:
 
+*  Zero (0) Players option in Tic-Tac-Toe game
 *  Completed tasks/status/score page at end of "game"
 *  AT modem connections to BBS systems (for some/all of the "dummy" systems)
 *  Speech synth output via RS-232 (ASCII)
