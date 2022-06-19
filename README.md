@@ -31,3 +31,4 @@ Useful Links:
 
 *  CP/M Software Archives: http://www.classiccmp.org/cpmarchives/
 
+Update 19 June 2022: I am in the process of re-writing the code in C so that it can be easily compiled on various platforms. I am also making it client/server so that when the dialer connects to a system, e.g. WOPR, Pan AM etc. these will actually be hosted on another machine (or can be on the same machine if preferred). I have already written the Imsai 8080 sim in C which I will publish shortly. 
