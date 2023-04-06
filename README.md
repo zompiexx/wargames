@@ -6,6 +6,8 @@ This is a Wargames Simulator written in BASIC. It has been developed using BASIC
 
 If you are intending to run this on a CP/M machine, you will need a SYSGEN 64 image/boot disk.
 
+You can use the included disk image file to create your own media or mount it using the Z80Pack or Imsai 8080esp: https://github.com/zompiexx/wargames/blob/main/wargames.dsk
+
 You are free to use and modify the code for your own purposes, but must credit the author, Andy Glenn, under all circumstances.
 
 This code is fully functional, but there are some additional features that I plan to include, as follows:
