@@ -39,4 +39,4 @@ Update 11 June 2023: I have started re-writing the WOPR (Server) in C. It's very
 At the moment, the code has the following features:
 * TCP Listener for Telnet
 * Basic WOPR (Pre-Logon) Commands
-* "Joshua" Logon sequence (although delays need some work)
+* "Joshua" Logon sequence
