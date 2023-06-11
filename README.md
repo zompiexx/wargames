@@ -37,6 +37,6 @@ Update 25 June 2022: The plan is to re-write the WOPR (and other remote systems)
 
 Update 11 June 2023: I have started re-writing the WOPR (Server) in C. It's very early days, but the initial code can be found here: https://github.com/zompiexx/wargames/blob/main/C/wopr.c
 At the moment, the code has the following features:
-  TCP Listener for Telnet
-  Basic WOPR (Pre-Logon) Commands
-  "Joshua" Logon sequence (although delays need some work)
+* TCP Listener for Telnet
+* Basic WOPR (Pre-Logon) Commands
+* "Joshua" Logon sequence (although delays need some work)
