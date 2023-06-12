@@ -9,7 +9,7 @@
 
 #define PORT 9999
 #define BUFFER_SIZE 1024
-#define CHARACTER_DELAY 50000  // Delay for 50ms (50,000 microseconds)
+#define CHARACTER_DELAY 7500  // Delay for 7.5ms (7,500 microseconds)
 
 void handle_telnet_negotiation(int sockfd) {
     // Telnet negotiation codes
