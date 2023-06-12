@@ -40,3 +40,4 @@ At the moment, the code has the following features:
 * TCP Listener for Telnet
 * Basic WOPR (Pre-Logon) Commands
 * "Joshua" Logon sequence
+* WOPR Chat Sequence (template only, needs work)
