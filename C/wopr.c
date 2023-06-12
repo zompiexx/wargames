@@ -163,6 +163,8 @@ void handle_user_input(int sockfd) {
 			} else if (strcmp(input, "help games") == 0) {
                 		send_with_delay(sockfd, "\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
 				send_with_delay(sockfd, "WOPR> ");
+			} else if (strcmp(input, "") == 0) {
+                		send_with_delay(sockfd, "\nWOPR> ");			
 			} else if (strcmp(input, "list") == 0) {
                 		send_with_delay(sockfd, "\nUSE SYNTAX: LIST <SUBJECT> (E.G. LIST GAMES)\n\n");
 				send_with_delay(sockfd, "WOPR> ");
