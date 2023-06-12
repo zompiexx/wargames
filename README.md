@@ -35,9 +35,24 @@ Useful Links:
 
 Update 25 June 2022: The plan is to re-write the WOPR (and other remote systems) code in C so that it can be easily compiled on various platforms. The intention is to make it client/server so that when the DIALER (running on the IMSAI 8080 or other CP/M machine) connects to a system, e.g. WOPR, Pan AM etc. these will actually be hosted on another machine, ideally Linux, each with a unique TCP listener port; assuming I can get BASIC-80 to open the uc1 port on the IMSAI 8080, so AT commands can be sent to the WiFi modem. If you are interested in working on the development of this project in C for the various systems from the Wargames movie (School Computer, Pan AM, Bank, WOPR - and maybe RIPLEY), please get in touch by logging a ticket.
 
-Update 11 June 2023: I have started re-writing the WOPR (Server) in C. It's very early days, but the initial code can be found here: https://github.com/zompiexx/wargames/blob/main/C/wopr.c.
-At the moment, the code has the following features:
-* TCP Listener for Telnet
+Update 11 June 2023: I have started re-writing the WOPR (Server) in C. It's very early days, but the initial code can be found here: https://github.com/zompiexx/wargames/blob/main/C/wopr.c.The code is still a little untidy, but I will refine as the project devlops.
+At the moment, the WOPR c code has the following features:
+* TCP Listener for Telnet Access (TCP/9999, but easily changed in code to suit)
 * Basic WOPR (Pre-Logon) Commands
 * "Joshua" Logon sequence
 * WOPR Chat Sequence (template only, needs work)
+
+Still to do:
+* User Accounts (for users other than "Joshua")
+* Directory Listing
+* Date/Time
+* Global Thermonuclear War Game
+* Tic-Tac-Toe Game with AI
+
+If you want to try it out for yourself, here are the steps:
+* You will need a Linux machine
+* You will need a gcc compiler installed
+* Download https://github.com/zompiexx/wargames/blob/main/C/wopr.c
+* Compile using: gcc wopr.c -o wopr
+* execute: ./wopr
+* Telnet onto the Linux host on port 9999. If connecting using the same host, then: telnet localhost 9999
