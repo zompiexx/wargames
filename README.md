@@ -53,6 +53,7 @@ Still to do:
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
 * You will need a gcc compiler installed
+* You will need a telnet client installed (on the client machine)
 * Download https://github.com/zompiexx/wargames/blob/main/C/wopr.c
 * Compile using: gcc wopr.c -o wopr
 * execute: ./wopr
