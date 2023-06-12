@@ -41,11 +41,11 @@ At the moment, the WOPR C code has the following features:
 * Basic WOPR (Pre-Logon) Commands
 * "Joshua" Logon sequence
 * WOPR Chat Sequence (template only, needs work)
+* Date, Time options (post logon)
 
 Still to do:
 * User Accounts (for users other than "Joshua")
 * Directory Listing
-* Date/Time
 * Global Thermonuclear War Game
 * Tic-Tac-Toe Game with AI
 * Fix compatability issues when connecting using the IMSAI8080esp Wi-Fi Modem in Telnet Mode with Kermit (works fine for standard telnet connections from other machines)
