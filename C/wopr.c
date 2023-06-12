@@ -125,6 +125,50 @@ void handle_user_input(int sockfd) {
                 send_with_delay(sockfd, "1105-45-F6-B456                 NOPR STATUS: TRAK OFF   PRON ACTIVE\n");
                 send_with_delay(sockfd, "\033[2J\033[H\n");
                 send_with_delay(sockfd, "GREETINGS PROFESSOR FALKEN\n");
+		send_with_delay(sockfd, "Enter a command (a, b, c, or exit):\n");
+		// Chat with WOPR loop
+ 		    while (1) {
+			// Receive user input character by character from the client
+			bytesRead = recv(sockfd, &ch, 1, 0);
+			if (bytesRead < 0) {
+			perror("Receiving user input failed");
+			exit(1);
+			}
+
+        if (ch == '\r') {
+            // Ignore carriage return character
+            continue;
+        }
+
+        input[index++] = tolower(ch);  // Convert character to lowercase
+
+        if (ch == '\n') {
+            input[index] = '\0';  // Null-terminate the input
+            index = 0;  // Reset the index for the next input
+
+            // Remove trailing newline character if present
+            if (input[strlen(input) - 1] == '\n') {
+                input[strlen(input) - 1] = '\0';
+            }
+
+			if (strcmp(input, "a") == 0) {
+				send_with_delay(sockfd, "Command A executed\n");
+        		} else if (strcmp(input, "b") == 0) {
+            			send_with_delay(sockfd, "Command B executed\n");
+        		} else if (strcmp(input, "c") == 0) {
+            			send_with_delay(sockfd, "Command C executed\n");
+        		} else if (strcmp(input, "exit") == 0) {
+				send_with_delay(sockfd, "SESSION CLOSED");
+				usleep(1000000);
+				send_with_delay(sockfd, "\033[2J\033[H");
+            			send_with_delay(sockfd, "LOGON: ");
+            			break;  // Exit the while loop
+        		} else {
+            			send_with_delay(sockfd, "Invalid command\n");
+        		}
+    		}
+	    }
+		
             } else {
                 send_with_delay(sockfd, "IDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
                 close(sockfd);
