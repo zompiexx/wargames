@@ -76,13 +76,19 @@ void handle_user_input(int sockfd) {
 
             // Handle user input options
             if (strcmp(input, "help") == 0) {
-                send_with_delay(sockfd, "NO HELP AVAILABLE\n");
+                send_with_delay(sockfd, "\nNO HELP AVAILABLE\n\n");
+		send_with_delay(sockfd, "LOGON: ");
+	    } else if (strcmp(input, "help logon") == 0) {
+                send_with_delay(sockfd, "\nNO HELP AVAILABLE\n\n");
+		send_with_delay(sockfd, "LOGON: ");
             } else if (strcmp(input, "help games") == 0) {
-                send_with_delay(sockfd, "'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n");
+                send_with_delay(sockfd, "\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
+		send_with_delay(sockfd, "LOGON: ");
             } else if (strcmp(input, "list games") == 0) {
-                send_with_delay(sockfd, "BLACK JACK\nGIN RUMMY\nHEARTS\nBRIDGE\nCHESS\nPOKER\nFIGHTER COMBAT\nGUERRILLA ENGAGEMENT\nDESERT WARFARE\nAIR-TO-GROUND ACTIONS\nTHEATERWIDE TACTICAL WARFARE\nTHEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n\n");
+                send_with_delay(sockfd, "\nBLACK JACK\nGIN RUMMY\nHEARTS\nBRIDGE\nCHESS\nPOKER\nFIGHTER COMBAT\nGUERRILLA ENGAGEMENT\nDESERT WARFARE\nAIR-TO-GROUND ACTIONS\nTHEATERWIDE TACTICAL WARFARE\nTHEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n\n");
 		usleep(1000000);		
-		send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n");
+		send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
+		send_with_delay(sockfd, "LOGON: ");
             } else if (strcmp(input, "joshua") == 0) {
                 send_with_delay(sockfd, "\033[2J\033[H");
 		send_with_delay(sockfd, "145          11456          11889          11893\n");
@@ -152,19 +158,19 @@ void handle_user_input(int sockfd) {
             }
 
 			if (strcmp(input, "a") == 0) {
-				send_with_delay(sockfd, "Command A executed\n");
+				send_with_delay(sockfd, "\nCOMMAND A EXECUTED\n\n");
         		} else if (strcmp(input, "b") == 0) {
-            			send_with_delay(sockfd, "Command B executed\n");
+            			send_with_delay(sockfd, "\nCOMMAND B EXECUTED\n\n");
         		} else if (strcmp(input, "c") == 0) {
-            			send_with_delay(sockfd, "Command C executed\n");
+            			send_with_delay(sockfd, "\nCOMMAND C EXECUTED\n\n");
         		} else if (strcmp(input, "exit") == 0) {
-				send_with_delay(sockfd, "SESSION CLOSED");
+				send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
 				usleep(1000000);
 				send_with_delay(sockfd, "\033[2J\033[H");
             			send_with_delay(sockfd, "LOGON: ");
             			break;  // Exit the while loop
         		} else {
-            			send_with_delay(sockfd, "Invalid command\n");
+            			send_with_delay(sockfd, "\nInvalid command\n\n");
         		}
     		}
 	    }
