@@ -42,11 +42,12 @@ At the moment, the WOPR C code has the following features:
 * "Joshua" Logon sequence
 * WOPR Chat Sequence (template only, needs work)
 * Date, Time options (post logon)
+* Global Thermonuclear War Game Map
 
 Still to do:
 * User Accounts (for users other than "Joshua")
 * Directory Listing
-* Global Thermonuclear War Game
+* Global Thermonuclear War Game Logic
 * Tic-Tac-Toe Game with AI
 * Fix compatability issues when connecting using the IMSAI8080esp Wi-Fi Modem in Telnet Mode with Kermit (works fine for standard telnet connections from other machines)
 
