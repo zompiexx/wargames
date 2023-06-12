@@ -173,6 +173,24 @@ void handle_user_input(int sockfd) {
 				usleep(500000);		
 				send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
 				send_with_delay(sockfd, "WOPR> ");
+			} else if (strcmp(input, "global thermonuclear war") == 0) {
+				send_with_delay(sockfd, "\033[2J\033[H");
+				usleep(500000);
+		                send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
+				send_with_delay(sockfd, "\n");
+				send_with_delay(sockfd, "      ___    ____             ____                   _______________\n");
+				send_with_delay(sockfd, "     |   \\__/    \\_____      /    |              ___/               \\\n");
+				send_with_delay(sockfd, "     |                 \\    /    /           ___/                    \\______\n");
+				send_with_delay(sockfd, "     |                  \\__/    /           /                               \\\n");
+				send_with_delay(sockfd, "     |                           \\        _/                                 |\n");
+				send_with_delay(sockfd, "     |        UNITED STATES       |      /           SOVIET UNION       ____/\n");
+				send_with_delay(sockfd, "      \\                           /     /                          ____/\n");
+				send_with_delay(sockfd, "        \\                        /     |                          /\n");
+				send_with_delay(sockfd, "          \\________          __/       \\          _____   /\\_    /\n");
+				send_with_delay(sockfd, "                   \\__      /            \\__    _/     \\_/   \\__/\n");
+				send_with_delay(sockfd, "                      \\____/                \\__/\n");
+				send_with_delay(sockfd, "\n");
+				send_with_delay(sockfd, "WOPR> ");			
 			} else if (strcmp(input, "date") == 0) {
                 		time_t current_time = time(NULL);
                 		struct tm* time_info = localtime(&current_time);
