@@ -158,7 +158,7 @@ void handle_user_input(int sockfd) {
             }
 
 			if (strcmp(input, "help") == 0) {
-                		send_with_delay(sockfd, "\nVALID COMMANDS: HELP <SUBJECT>, LIST, EXIT\n\n");
+                		send_with_delay(sockfd, "\nVALID COMMANDS: HELP, LIST, DATE, TIME, EXIT\n\n");
 				send_with_delay(sockfd, "WOPR> ");
 			} else if (strcmp(input, "help games") == 0) {
                 		send_with_delay(sockfd, "\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
@@ -171,6 +171,20 @@ void handle_user_input(int sockfd) {
 				usleep(500000);		
 				send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
 				send_with_delay(sockfd, "WOPR> ");
+			} else if (strcmp(input, "date") == 0) {
+                		time_t current_time = time(NULL);
+                		struct tm* time_info = localtime(&current_time);
+                		char date_string[100];
+                		strftime(date_string, sizeof(date_string), "\nDATE: %Y-%m-%d\n", time_info);
+                		send_with_delay(sockfd, date_string);
+				send_with_delay(sockfd, "\nWOPR> ");
+            		} else if (strcmp(input, "time") == 0) {
+                		time_t current_time = time(NULL);
+                		struct tm* time_info = localtime(&current_time);
+                		char time_string[100];
+                		strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n", time_info);
+                		send_with_delay(sockfd, time_string);
+				send_with_delay(sockfd, "\nWOPR> ");
         		} else if (strcmp(input, "exit") == 0) {
 				send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
 				usleep(500000);
