@@ -46,15 +46,7 @@ void send_with_delay(int sockfd, const char* message) {
 void global_thermonuclear_war(int sockfd) {
     	send_with_delay(sockfd, "\033[2J\033[H");
 	usleep(500000);
-	send_with_delay(sockfd, "                            GLOBAL THERMONUCLEAR WAR\n\n");
-	send_with_delay(sockfd, "                             WHICH SIDE DO YOU WANT\n\n");
-	send_with_delay(sockfd, "                                     1. USA\n");
-	send_with_delay(sockfd, "                                     2. USSR\n\n");
-	send_with_delay(sockfd, "                            SELECT: ");
 	int side = 0;
-	// handle input for side selection
-	usleep(1000000);
-	send_with_delay(sockfd, "\033[2J\033[H");
 	send_with_delay(sockfd, "                            GLOBAL THERMONUCLEAR WAR\n\n");
 	send_with_delay(sockfd, "\n");
 	send_with_delay(sockfd, "      ___    ____             ____                   _______________\n");
@@ -69,6 +61,13 @@ void global_thermonuclear_war(int sockfd) {
 	send_with_delay(sockfd, "                   \\__      /            \\__    _/     \\_/   \\__/\n");
 	send_with_delay(sockfd, "                      \\____/                \\__/\n");
 	send_with_delay(sockfd, "\n");
+	send_with_delay(sockfd, "                             WHICH SIDE DO YOU WANT\n\n");
+	send_with_delay(sockfd, "                                     1. USA\n");
+	send_with_delay(sockfd, "                                     2. USSR\n\n");
+	send_with_delay(sockfd, "                            SELECT: ");
+	// handle input for side selection
+	usleep(5000000);
+	send_with_delay(sockfd, "\033[2J\033[H");
 }
 
 void handle_user_input(int sockfd) {
@@ -158,7 +157,7 @@ void handle_user_input(int sockfd) {
                 send_with_delay(sockfd, "**********************************************************************\n");
                 send_with_delay(sockfd, "1105-45-F6-B456                 NOPR STATUS: TRAK OFF   PRON ACTIVE\n");
                 send_with_delay(sockfd, "\033[2J\033[H\n");
-                send_with_delay(sockfd, "GREETINGS PROFESSOR FALKEN\n\n");
+                send_with_delay(sockfd, "GREETINGS PROFESSOR FALKEN.\n\n");
 		char command[100];
     		snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
     		system(command);
@@ -231,7 +230,7 @@ void handle_user_input(int sockfd) {
                 		send_with_delay(sockfd, "\nEXCELLENT. IT'S BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER\n");
 				send_with_delay(sockfd, "ACCOUNT ON 6/23/1973?\n\n");
 				char command[200];
-    				snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE 23 nineteen seventy three'");
+    				snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
     				system(command);
 				send_with_delay(sockfd, "WOPR> ");
 			} else if (strcmp(input, "mistakes") == 0) {
@@ -243,6 +242,19 @@ void handle_user_input(int sockfd) {
 				send_with_delay(sockfd, "SHALL WE PLAY A GAME?\n\n");
 				snprintf(command, sizeof(command), "espeak 'SHALL WE PLAY A GAME'");
     				system(command);
+				send_with_delay(sockfd, "WOPR> ");
+			} else if (strcmp(input, "nuclear") == 0) {
+                		send_with_delay(sockfd, "\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?\n\n");
+				char command[200];
+    				snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
+    				system(command);
+			} else if (strcmp(input, "later") == 0) {
+                		send_with_delay(sockfd, "\nFINE\n\n");
+				char command[200];
+    				snprintf(command, sizeof(command), "espeak 'FINE'");
+    				system(command);
+				usleep(1000000);
+				global_thermonuclear_war(sockfd);
 				send_with_delay(sockfd, "WOPR> ");
         		} else if (strcmp(input, "exit") == 0) {
 				send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
