@@ -159,6 +159,9 @@ void handle_user_input(int sockfd) {
                 send_with_delay(sockfd, "1105-45-F6-B456                 NOPR STATUS: TRAK OFF   PRON ACTIVE\n");
                 send_with_delay(sockfd, "\033[2J\033[H\n");
                 send_with_delay(sockfd, "GREETINGS PROFESSOR FALKEN\n\n");
+		char command[100];
+    		snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
+    		system(command);
 		send_with_delay(sockfd, "WOPR> ");
 		// Chat with WOPR loop
  		    while (1) {
