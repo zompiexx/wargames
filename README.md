@@ -43,6 +43,7 @@ At the moment, the WOPR C code has the following features:
 * WOPR Chat Sequence (template only, needs work)
 * Date, Time options (post logon)
 * Global Thermonuclear War Game Map
+* Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
 
 Still to do:
 * User Accounts (for users other than "Joshua")
