@@ -171,21 +171,21 @@ void handle_user_input(int sockfd) {
 			exit(1);
 			}
 
-        if (ch == '\r') {
-            // Ignore carriage return character
-            continue;
-        }
+        		if (ch == '\r') {
+            		// Ignore carriage return character
+            		continue;
+        		}
 
-        input[index++] = tolower(ch);  // Convert character to lowercase
+        		input[index++] = tolower(ch);  // Convert character to lowercase
 
-        if (ch == '\n') {
-            input[index] = '\0';  // Null-terminate the input
-            index = 0;  // Reset the index for the next input
+        		if (ch == '\n') {
+            		input[index] = '\0';  // Null-terminate the input
+            		index = 0;  // Reset the index for the next input
 
-            // Remove trailing newline character if present
-            if (input[strlen(input) - 1] == '\n') {
-                input[strlen(input) - 1] = '\0';
-            }
+            		// Remove trailing newline character if present
+            		if (input[strlen(input) - 1] == '\n') {
+                		input[strlen(input) - 1] = '\0';
+            		}
 
 			if (strcmp(input, "help") == 0) {
                 		send_with_delay(sockfd, "\nVALID COMMANDS: HELP, LIST, DATE, TIME, EXIT\n\n");
@@ -220,20 +220,20 @@ void handle_user_input(int sockfd) {
                 		strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n", time_info);
                 		send_with_delay(sockfd, time_string);
 				send_with_delay(sockfd, "\nWOPR> ");
-			} else if (strcmp(input, "hello") == 0) {
-                		send_with_delay(sockfd, "\nHOW ARE YOU FEELING TODAY?\n\n");
+			} else if (strstr(input, "hello") != NULL) {
+			        send_with_delay(sockfd, "\nHOW ARE YOU FEELING TODAY?\n\n");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
     				system(command);
 				send_with_delay(sockfd, "WOPR> ");
-			} else if (strcmp(input, "fine") == 0) {
+			} else if (strstr(input, "fine") != NULL) {
                 		send_with_delay(sockfd, "\nEXCELLENT. IT'S BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER\n");
 				send_with_delay(sockfd, "ACCOUNT ON 6/23/1973?\n\n");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
     				system(command);
 				send_with_delay(sockfd, "WOPR> ");
-			} else if (strcmp(input, "mistakes") == 0) {
+			} else if (strstr(input, "mistakes") != NULL) {
                 		send_with_delay(sockfd, "\nYES THEY DO. ");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'YES THEY DO.'");
@@ -243,12 +243,12 @@ void handle_user_input(int sockfd) {
 				snprintf(command, sizeof(command), "espeak 'SHALL WE PLAY A GAME'");
     				system(command);
 				send_with_delay(sockfd, "WOPR> ");
-			} else if (strcmp(input, "nuclear") == 0) {
+			} else if (strstr(input, "nuclear") != NULL) {
                 		send_with_delay(sockfd, "\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?\n\n");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
     				system(command);
-			} else if (strcmp(input, "later") == 0) {
+			} else if (strstr(input, "later") != NULL) {
                 		send_with_delay(sockfd, "\nFINE\n\n");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'FINE'");
