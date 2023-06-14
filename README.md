@@ -50,6 +50,7 @@ Still to do:
 * Directory Listing
 * Global Thermonuclear War Game Logic
 * Tic-Tac-Toe Game with AI
+* Complete WOPR chat sequence: add mid$ search for inputs and split into separate functions or nested loops
 * Fix compatability issues when connecting using the IMSAI8080esp Wi-Fi Modem in Telnet Mode with Kermit (works fine for standard telnet connections from other machines)
 
 If you want to try it out for yourself, here are the steps:
