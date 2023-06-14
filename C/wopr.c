@@ -221,6 +221,12 @@ void handle_user_input(int sockfd) {
                 		strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n", time_info);
                 		send_with_delay(sockfd, time_string);
 				send_with_delay(sockfd, "\nWOPR> ");
+			} else if (strcmp(input, "hello") == 0) {
+                		send_with_delay(sockfd, "\nHOW ARE YOU FEELING TODAY?\n\n");
+				char command[100];
+    				snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
+    				system(command);
+				send_with_delay(sockfd, "WOPR> ");
         		} else if (strcmp(input, "exit") == 0) {
 				send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
 				usleep(500000);
