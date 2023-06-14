@@ -40,7 +40,7 @@ At the moment, the WOPR C code has the following features:
 * TCP Listener for Telnet Access (TCP/9999, but easily changed in code to suit)
 * Basic WOPR (Pre-Logon) Commands
 * "Joshua" Logon sequence
-* WOPR Chat Sequence (template only, needs work)
+* WOPR Chat Sequence
 * Date, Time options (post logon)
 * Global Thermonuclear War Game Map
 * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
@@ -50,7 +50,7 @@ Still to do:
 * Directory Listing
 * Global Thermonuclear War Game Logic
 * Tic-Tac-Toe Game with AI
-* Complete WOPR chat sequence: add mid$ search for inputs and split into separate functions or nested loops
+* Complete WOPR chat sequence: enforce counter for sequencing of inputs/outputs
 * Fix compatability issues when connecting using the IMSAI8080esp Wi-Fi Modem in Telnet Mode with Kermit (works fine for standard telnet connections from other machines)
 
 If you want to try it out for yourself, here are the steps:
