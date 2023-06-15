@@ -82,7 +82,6 @@ void global_thermonuclear_war(int sockfd) {
 	// handle input for side selection
 	usleep(5000000);
 	clear_screen(sockfd);
-	send_with_delay(sockfd, "WOPR> ");
 }
 
 void handle_user_input(int sockfd) {
@@ -281,6 +280,7 @@ void handle_user_input(int sockfd) {
     				system(command);
 				usleep(1000000);
 				global_thermonuclear_war(sockfd);
+				send_with_delay(sockfd, "WOPR> ");
 			} else if (strcmp(input, "exit") == 0) {
 				send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
 				usleep(500000);
