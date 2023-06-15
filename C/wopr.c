@@ -29,6 +29,7 @@ void handle_telnet_negotiation(int sockfd) {
     send(sockfd, telnet_do_response, sizeof(telnet_do_response), 0);
 }
 
+
 void clear_screen(int sockfd) {
     const char* clear_screen_sequence = "\033[2J\033[H";
     usleep(CHARACTER_DELAY);
@@ -81,6 +82,7 @@ void global_thermonuclear_war(int sockfd) {
 	// handle input for side selection
 	usleep(5000000);
 	clear_screen(sockfd);
+	send_with_delay(sockfd, "WOPR> ");
 }
 
 void handle_user_input(int sockfd) {
@@ -179,6 +181,8 @@ void handle_user_input(int sockfd) {
     		snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
     		system(command);
 		send_with_delay(sockfd, "WOPR> ");
+		int woprchat;
+		woprchat=0;
 		// Chat with WOPR loop
  		    while (1) {
 			// Receive user input character by character from the client
@@ -237,20 +241,22 @@ void handle_user_input(int sockfd) {
                 		strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n", time_info);
                 		send_with_delay(sockfd, time_string);
 				send_with_delay(sockfd, "\nWOPR> ");
-			} else if (strstr(input, "hello") != NULL) {
+			} else if (strstr(input, "hello") != NULL && woprchat == 0) {
 			        send_with_delay(sockfd, "\nHOW ARE YOU FEELING TODAY?\n\n");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
     				system(command);
 				send_with_delay(sockfd, "WOPR> ");
-			} else if (strstr(input, "fine") != NULL) {
+				woprchat=1;
+			} else if (strstr(input, "fine") != NULL && woprchat == 1) {
                 		send_with_delay(sockfd, "\nEXCELLENT. IT'S BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER\n");
 				send_with_delay(sockfd, "ACCOUNT ON 6/23/1973?\n\n");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
     				system(command);
 				send_with_delay(sockfd, "WOPR> ");
-			} else if (strstr(input, "mistake") != NULL) {
+				woprchat=2;
+			} else if (strstr(input, "mistake") != NULL && woprchat == 2) {
                 		send_with_delay(sockfd, "\nYES THEY DO. ");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'YES THEY DO.'");
@@ -260,20 +266,22 @@ void handle_user_input(int sockfd) {
 				snprintf(command, sizeof(command), "espeak 'SHALL WE PLAY A GAME'");
     				system(command);
 				send_with_delay(sockfd, "WOPR> ");
-			} else if (strstr(input, "nuclear") != NULL) {
+				woprchat=3;
+			} else if (strstr(input, "nuclear") != NULL && woprchat == 3) {
                 		send_with_delay(sockfd, "\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?\n\n");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
     				system(command);
-			} else if (strstr(input, "later") != NULL) {
+				send_with_delay(sockfd, "WOPR> ");
+				woprchat=4;
+			} else if (strstr(input, "later") != NULL && woprchat == 4) {
                 		send_with_delay(sockfd, "\nFINE\n\n");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'FINE'");
     				system(command);
 				usleep(1000000);
 				global_thermonuclear_war(sockfd);
-				send_with_delay(sockfd, "WOPR> ");
-        		} else if (strcmp(input, "exit") == 0) {
+			} else if (strcmp(input, "exit") == 0) {
 				send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
 				usleep(500000);
 				clear_screen(sockfd);
@@ -355,6 +363,7 @@ int main() {
     	for (i = 0; i < 360; i++) {
         send_with_delay(newsockfd, " ");
     	}
+	send_with_delay(newsockfd, "\n");
         const char* logon_message = "\nLOGON: ";
         send_with_delay(newsockfd, logon_message);
 
