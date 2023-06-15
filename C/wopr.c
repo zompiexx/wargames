@@ -54,7 +54,7 @@ void send_without_delay(int sockfd, const char* message) {
 }
 
 void global_thermonuclear_war(int sockfd) {
-    	send_with_delay(sockfd, "\033[2J\033[H");
+    	clear_screen(sockfd);
 	usleep(500000);
 	int side = 0;
 	send_with_delay(sockfd, "                            GLOBAL THERMONUCLEAR WAR\n\n");
@@ -77,7 +77,7 @@ void global_thermonuclear_war(int sockfd) {
 	send_with_delay(sockfd, "                            SELECT: ");
 	// handle input for side selection
 	usleep(5000000);
-	send_with_delay(sockfd, "\033[2J\033[H");
+	clear_screen(sockfd);
 }
 
 void handle_user_input(int sockfd) {
@@ -127,35 +127,35 @@ void handle_user_input(int sockfd) {
 		send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
 		send_with_delay(sockfd, "LOGON: ");
             } else if (strcmp(input, "joshua") == 0) {
-                send_with_delay(sockfd, "\033[2J\033[H");
+                clear_screen(sockfd);
 		int i;
     		for (i = 0; i < 3; i++) {
     		send_without_delay(sockfd, "145          11456          11889          11893\n, 1, 0");
                 send_without_delay(sockfd, "PRT CON. 3.4.5. SECTRAN 9.4.3.          PORT STAT: SB-345\n");
                 send_without_delay(sockfd, "\n");
-                send_without_delay(sockfd, "\033[2J\033[H");
+                clear_screen(sockfd);
                 send_without_delay(sockfd, "(311) 655-7385\n");
                 send_without_delay(sockfd, "\n");
                 send_without_delay(sockfd, "\n");
-                send_without_delay(sockfd, "\033[2J\033[H");
+                clear_screen(sockfd);
                 send_without_delay(sockfd, "(311) 767-8739\n");
                 send_without_delay(sockfd, "(311) 936-2364\n");
-                send_without_delay(sockfd, "\033[2J\033[H");
-                send_without_delay(sockfd, "PRT. STAT.                   CRT. DEF.\n");
+                clear_screen(sockfd);
+                send_without_delay(sockfd, "\033[7m%sPRT. STAT.                   CRT. DEF.\033[0m\n");
                 send_without_delay(sockfd, "================================================\n");
-                send_without_delay(sockfd, "FSKJJSJ: SUSJKJ: SUFJSL:          DKSJL: SKFJJ: SDKFJLJ\n");
-                send_without_delay(sockfd, "SYSPROC FUNCT READY          ALT NET READY\n");
-                send_without_delay(sockfd, "CPU AUTH RY-345-AX3     SYSCOMP STATUS: ALL PORTS ACTIVE\n");
+                send_without_delay(sockfd, "\033[7m%sFSKJJSJ: SUSJKJ: SUFJSL:          DKSJL: SKFJJ: SDKFJLJ\033[0m\n");
+                send_without_delay(sockfd, "\033[7m%sSYSPROC FUNCT READY          ALT NET READY\033[0m\n");
+                send_without_delay(sockfd, "\033[7m%sCPU AUTH RY-345-AX3     SYSCOMP STATUS: ALL PORTS ACTIVE\033[0m\n");
                 send_without_delay(sockfd, "22/34534.90/3289               CVB-3904-39490\n");
                 send_without_delay(sockfd, "(311) 936-2384\n");
                 send_without_delay(sockfd, "(311) 936-3582\n");
-                send_without_delay(sockfd, "\033[2J\033[H");
+                clear_screen(sockfd);
                 send_without_delay(sockfd, "22/34534.3209                  CVB-3904-39490\n");
                 send_without_delay(sockfd, "12934-AD-43KJ: CENTR PAK\n");
                 send_without_delay(sockfd, "(311) 767-1083\n");
-                send_without_delay(sockfd, "\033[2J\033[H");
-                send_without_delay(sockfd, "FLD CRS: 33.34.543     HPBS: 34/56/67/83     STATUS FLT  034/304\n");
-                send_without_delay(sockfd, "1105-45-F6-B456          NOPR STATUS: TRAK OFF     PRON ACTIVE\n");
+                clear_screen(sockfd);
+                send_without_delay(sockfd, "\033[7m%sFLD CRS: 33.34.543     HPBS: 34/56/67/83     STATUS FLT  034/304\033[0m\n");
+                send_without_delay(sockfd, "\033[7m%s1105-45-F6-B456          NOPR STATUS: TRAK OFF     PRON ACTIVE\033[0m\n");
                 send_without_delay(sockfd, "(45:45:45  WER: 45/29/01 XCOMP: 43239582 YCOMP: 3492930D ZCOMP: 343906834\n");
                 send_without_delay(sockfd, "                                          SRON: 65=65/74/84/65/89\n");
                 send_without_delay(sockfd, "\033[2J\033[H\n");
@@ -164,7 +164,7 @@ void handle_user_input(int sockfd) {
                 send_without_delay(sockfd, "                  3453                3594\n");
                 send_without_delay(sockfd, "FLJ42   TK01   BM90   R601   6J82   FP03   ZWO::   JW89\n");
                 send_without_delay(sockfd, "DEF TRPCON: 43.45342.349\n");
-                send_without_delay(sockfd, "CPU AUTH RY-345-AX3     SYSCOMP STATUS: ALL PORTS ACTIVE\n");
+                send_without_delay(sockfd, "\033[7m%sCPU AUTH RY-345-AX3     SYSCOMP STATUS: ALL PORTS ACTIVE\033[0m\n");
                 send_without_delay(sockfd, "(311) 936-2364\n");
                 send_without_delay(sockfd, "**********************************************************************\n");
                 send_without_delay(sockfd, "1105-45-F6-B456                 NOPR STATUS: TRAK OFF   PRON ACTIVE\n");
@@ -273,7 +273,7 @@ void handle_user_input(int sockfd) {
         		} else if (strcmp(input, "exit") == 0) {
 				send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
 				usleep(500000);
-				send_with_delay(sockfd, "\033[2J\033[H");
+				clear_screen(sockfd);
             			send_with_delay(sockfd, "LOGON: ");
             			break;  // Exit the while loop
         		} else {
