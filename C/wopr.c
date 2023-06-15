@@ -71,10 +71,13 @@ void global_thermonuclear_war(int sockfd) {
 	send_with_delay(sockfd, "                   \\__      /            \\__    _/     \\_/   \\__/\n");
 	send_with_delay(sockfd, "                      \\____/                \\__/\n");
 	send_with_delay(sockfd, "\n");
-	send_with_delay(sockfd, "                             WHICH SIDE DO YOU WANT\n\n");
-	send_with_delay(sockfd, "                                     1. USA\n");
-	send_with_delay(sockfd, "                                     2. USSR\n\n");
-	send_with_delay(sockfd, "                            SELECT: ");
+	send_with_delay(sockfd, "WHICH SIDE DO YOU WANT?\n\n");
+	char command[200];
+    	snprintf(command, sizeof(command), "espeak 'WHICH SIDE DO YOU WANT'");
+    	system(command);
+	send_with_delay(sockfd, "  1. UNITED STATES\n");
+	send_with_delay(sockfd, "  2. SOVIET UNION\n\n");
+	send_with_delay(sockfd, "PLEASE CHOOSE ONE: ");
 	// handle input for side selection
 	usleep(5000000);
 	clear_screen(sockfd);
