@@ -334,7 +334,11 @@ int main() {
         clear_screen(newsockfd);
 
         // Send "LOGON: " to the client
-        const char* logon_message = "LOGON: ";
+	int i;
+    	for (i = 0; i < 360; i++) {
+        send_with_delay(newsockfd, " ");
+    	}
+        const char* logon_message = "\nLOGON: ";
         send_with_delay(newsockfd, logon_message);
 
         // Handle user input
