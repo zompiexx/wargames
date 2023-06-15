@@ -250,7 +250,7 @@ void handle_user_input(int sockfd) {
     				snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
     				system(command);
 				send_with_delay(sockfd, "WOPR> ");
-			} else if (strstr(input, "mistakes") != NULL) {
+			} else if (strstr(input, "mistake") != NULL) {
                 		send_with_delay(sockfd, "\nYES THEY DO. ");
 				char command[200];
     				snprintf(command, sizeof(command), "espeak 'YES THEY DO.'");
