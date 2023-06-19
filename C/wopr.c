@@ -120,7 +120,10 @@ void global_thermonuclear_war(int sockfd) {
         snprintf(side_str, sizeof(side_str), "%d", side);
         send_with_delay(sockfd, "\nYOU HAVE SELECTED: ");
         send_with_delay(sockfd, side_str);
-        //rest of game code goes here
+        send_with_delay(sockfd, "\n\n");
+        //rest of game code goes here: start
+        send_with_delay(sockfd, "\nREST OF THE GAME IS WORK IN PROGRESS\n\n");
+        //rest of game code goes here: finish
         usleep(5000000);
 	clear_screen(sockfd);
         send_with_delay(sockfd, "\nA STRANGE GAME. ");
@@ -135,6 +138,7 @@ void global_thermonuclear_war(int sockfd) {
 
 void joshua(int sockfd) {
 	clear_screen(sockfd);
+        char* prompt = "> ";
         int i;
         for (i = 0; i < 3; i++) {
         send_without_delay(sockfd, "145          11456          11889          11893\n, 1, 0");
@@ -182,7 +186,7 @@ void joshua(int sockfd) {
         char command[100];
         snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
         system(command);
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
         int woprchat;
         woprchat=0;
         while (1) {
@@ -190,44 +194,44 @@ void joshua(int sockfd) {
 
     if (strcmp(input, "help") == 0) {
         send_with_delay(sockfd, "\nVALID COMMANDS: HELP, LIST, DATE, TIME, EXIT\n\n");
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
     } else if (strcmp(input, "help games") == 0) {
         send_with_delay(sockfd, "\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
     } else if (strcmp(input, "") == 0) {
-        send_with_delay(sockfd, "\n");
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, "\n\n");
+        send_with_delay(sockfd, prompt);
     } else if (strcmp(input, "list") == 0) {
         send_with_delay(sockfd, "\nUSE SYNTAX: LIST <SUBJECT> (E.G. LIST GAMES)\n\n");
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
     } else if (strcmp(input, "list games") == 0) {
         send_with_delay(sockfd, "\nBLACK JACK\nGIN RUMMY\nHEARTS\nBRIDGE\nCHESS\nPOKER\nFIGHTER COMBAT\nGUERRILLA ENGAGEMENT\nDESERT WARFARE\nAIR-TO-GROUND ACTIONS\nTHEATERWIDE TACTICAL WARFARE\nTHEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n\n");
         usleep(500000);
         send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
     } else if (strcmp(input, "global thermonuclear war") == 0) {
         global_thermonuclear_war(sockfd);
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
     } else if (strcmp(input, "date") == 0) {
         time_t current_time = time(NULL);
         struct tm* time_info = localtime(&current_time);
         char date_string[100];
         strftime(date_string, sizeof(date_string), "\nDATE: %Y-%m-%d\n\n", time_info);
         send_with_delay(sockfd, date_string);
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
     } else if (strcmp(input, "time") == 0) {
         time_t current_time = time(NULL);
         struct tm* time_info = localtime(&current_time);
         char time_string[100];
         strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n\n", time_info);
         send_with_delay(sockfd, time_string);
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
     } else if (strstr(input, "hello") != NULL && woprchat == 0) {
         send_with_delay(sockfd, "\nHOW ARE YOU FEELING TODAY?\n\n");
         char command[200];
         snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
         system(command);
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
         woprchat=1;
     } else if (strstr(input, "fine") != NULL && woprchat == 1) {
         send_with_delay(sockfd, "\nEXCELLENT. IT'S BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER\n");
@@ -235,7 +239,7 @@ void joshua(int sockfd) {
         char command[200];
         snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
         system(command);
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
         woprchat=2;
     } else if (strstr(input, "mistake") != NULL && woprchat == 2) {
         send_with_delay(sockfd, "\nYES THEY DO. ");
@@ -246,14 +250,14 @@ void joshua(int sockfd) {
         send_with_delay(sockfd, "SHALL WE PLAY A GAME?\n\n");
         snprintf(command, sizeof(command), "espeak 'SHALL WE PLAY A GAME'");
         system(command);
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
         woprchat=3;
     } else if (strstr(input, "nuclear") != NULL && woprchat == 3) {
         send_with_delay(sockfd, "\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?\n\n");
         char command[200];
         snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
         system(command);
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
         woprchat=4;
     } else if (strstr(input, "later") != NULL && woprchat == 4) {
         send_with_delay(sockfd, "\nFINE\n\n");
@@ -262,7 +266,7 @@ void joshua(int sockfd) {
         system(command);
         usleep(1000000);
         global_thermonuclear_war(sockfd);
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
         } else if (strcmp(input, "exit") == 0) {
 	send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
         usleep(1000000);
@@ -271,7 +275,7 @@ void joshua(int sockfd) {
         send_with_delay(sockfd, "\nINVALID COMMAND: ");
         send_with_delay(sockfd, input);
         send_with_delay(sockfd, "\n\n");
-        //send_with_delay(sockfd, "WOPR> ");
+        send_with_delay(sockfd, prompt);
     }
 
     // Free the dynamically allocated memory for input
@@ -281,28 +285,29 @@ void joshua(int sockfd) {
 }
 
 void handle_user_input(int sockfd) {
+    char* prompt = "LOGON: ";
     while (1) {
         char* input = receive_message(sockfd);
 
         // Handle user input options
         if (strcmp(input, "help") == 0) {
             send_with_delay(sockfd, "\nNO HELP AVAILABLE\n\n");
-            send_with_delay(sockfd, "LOGON: ");
+            send_with_delay(sockfd, prompt);
         } else if (strcmp(input, "help logon") == 0) {
             send_with_delay(sockfd, "\nNO HELP AVAILABLE\n\n");
-            send_with_delay(sockfd, "LOGON: ");
+            send_with_delay(sockfd, prompt);
         } else if (strcmp(input, "help games") == 0) {
             send_with_delay(sockfd, "\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
-            send_with_delay(sockfd, "LOGON: ");
+            send_with_delay(sockfd, prompt);
         } else if (strcmp(input, "list games") == 0) {
             send_with_delay(sockfd, "\nBLACK JACK\nGIN RUMMY\nHEARTS\nBRIDGE\nCHESS\nPOKER\nFIGHTER COMBAT\nGUERRILLA ENGAGEMENT\nDESERT WARFARE\nAIR-TO-GROUND ACTIONS\nTHEATERWIDE TACTICAL WARFARE\nTHEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n\n");
             usleep(1000000);
             send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
-            send_with_delay(sockfd, "LOGON: ");
+            send_with_delay(sockfd, prompt);
         } else if (strcmp(input, "joshua") == 0) {
             joshua(sockfd);
             clear_screen(sockfd);
-            send_with_delay(sockfd, "LOGON: ");
+            send_with_delay(sockfd, prompt);
         } else {
             send_with_delay(sockfd, "IDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
             close(sockfd);
