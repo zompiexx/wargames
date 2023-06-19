@@ -54,10 +54,45 @@ void send_without_delay(int sockfd, const char* message) {
     }
 }
 
+char* receive_message(int sockfd) {
+    const int INPUT_BUFFER_SIZE = 100;
+    char input[INPUT_BUFFER_SIZE + 1];  // +1 for null-terminating character
+    ssize_t bytesRead;
+    int index = 0;
+    char ch;
+
+    while (1) {
+        // Receive user input character by character from the client
+        bytesRead = recv(sockfd, &ch, 1, 0);
+        if (bytesRead < 0) {
+            perror("Receiving user input failed");
+            return NULL;  // Return NULL to indicate an error occurred
+        }
+
+        if (ch == '\r') {
+            // Ignore carriage return character
+            continue;
+        }
+
+        input[index++] = tolower(ch);  // Convert character to lowercase
+
+        if (ch == '\n') {
+            input[index] = '\0';  // Null-terminate the input
+            index = 0;  // Reset the index for the next input
+
+            // Remove trailing newline character if present
+            if (input[strlen(input) - 1] == '\n') {
+                input[strlen(input) - 1] = '\0';
+            }
+
+            return strdup(input);  // Return a dynamically allocated copy of the input
+        }
+    }
+}
+
 void global_thermonuclear_war(int sockfd) {
     	clear_screen(sockfd);
 	usleep(500000);
-	int side = 0;
 	send_with_delay(sockfd, "                            GLOBAL THERMONUCLEAR WAR\n\n");
 	send_with_delay(sockfd, "\n");
 	send_with_delay(sockfd, "      ___    ____             ____                   _______________\n");
@@ -79,229 +114,203 @@ void global_thermonuclear_war(int sockfd) {
 	send_with_delay(sockfd, "  1. UNITED STATES\n");
 	send_with_delay(sockfd, "  2. SOVIET UNION\n\n");
 	send_with_delay(sockfd, "PLEASE CHOOSE ONE: ");
-	// handle input for side selection
-	usleep(5000000);
+        char* input = receive_message(sockfd);
+        int side = atoi(input);
+        char side_str[10];
+        snprintf(side_str, sizeof(side_str), "%d", side);
+        send_with_delay(sockfd, "\nYOU HAVE SELECTED: ");
+        send_with_delay(sockfd, side_str);
+        //rest of game code goes here
+        usleep(5000000);
 	clear_screen(sockfd);
+        send_with_delay(sockfd, "\nA STRANGE GAME. ");
+        snprintf(command, sizeof(command), "espeak 'A STRANGE GAME'");
+    	system(command);
+        usleep(500000);
+        send_with_delay(sockfd, "THE ONLY WINNING MOVE IS NOT TO PLAY!\n\n");
+        snprintf(command, sizeof(command), "espeak 'THE ONLY WINNING MOVE IS NOT TO PLAY!'");
+    	system(command);
+}
+
+
+void joshua(int sockfd) {
+	clear_screen(sockfd);
+        int i;
+        for (i = 0; i < 3; i++) {
+        send_without_delay(sockfd, "145          11456          11889          11893\n, 1, 0");
+        send_without_delay(sockfd, "PRT CON. 3.4.5. SECTRAN 9.4.3.          PORT STAT: SB-345\n");
+        send_without_delay(sockfd, "\n");
+        clear_screen(sockfd);
+        send_without_delay(sockfd, "(311) 655-7385\n");
+        send_without_delay(sockfd, "\n");
+        send_without_delay(sockfd, "\n");
+        clear_screen(sockfd);
+        send_without_delay(sockfd, "(311) 767-8739\n");
+        send_without_delay(sockfd, "(311) 936-2364\n");
+        clear_screen(sockfd);
+        send_without_delay(sockfd, "\033[7m%sPRT. STAT.                   CRT. DEF.\033[0m\n");
+        send_without_delay(sockfd, "================================================\n");
+        send_without_delay(sockfd, "\033[7m%sFSKJJSJ: SUSJKJ: SUFJSL:          DKSJL: SKFJJ: SDKFJLJ\033[0m\n");
+        send_without_delay(sockfd, "\033[7m%sSYSPROC FUNCT READY          ALT NET READY\033[0m\n");
+        send_without_delay(sockfd, "\033[7m%sCPU AUTH RY-345-AX3     SYSCOMP STATUS: ALL PORTS ACTIVE\033[0m\n");
+        send_without_delay(sockfd, "22/34534.90/3289               CVB-3904-39490\n");
+        send_without_delay(sockfd, "(311) 936-2384\n");
+        send_without_delay(sockfd, "(311) 936-3582\n");
+        clear_screen(sockfd);
+        send_without_delay(sockfd, "22/34534.3209                  CVB-3904-39490\n");
+        send_without_delay(sockfd, "12934-AD-43KJ: CENTR PAK\n");
+        send_without_delay(sockfd, "(311) 767-1083\n");
+        clear_screen(sockfd);
+        send_without_delay(sockfd, "\033[7m%sFLD CRS: 33.34.543     HPBS: 34/56/67/83     STATUS FLT  034/304\033[0m\n");
+        send_without_delay(sockfd, "\033[7m%s1105-45-F6-B456          NOPR STATUS: TRAK OFF     PRON ACTIVE\033[0m\n");
+        send_without_delay(sockfd, "(45:45:45  WER: 45/29/01 XCOMP: 43239582 YCOMP: 3492930D ZCOMP: 343906834\n");
+        send_without_delay(sockfd, "                                          SRON: 65=65/74/84/65/89\n");
+        send_without_delay(sockfd, "\033[2J\033[H\n");
+        send_without_delay(sockfd, "-           PRT. STAT.                        CRY. DEF.\n");
+        send_without_delay(sockfd, "(311) 936-1582==============================================\n");
+        send_without_delay(sockfd, "                  3453                3594\n");
+        send_without_delay(sockfd, "FLJ42   TK01   BM90   R601   6J82   FP03   ZWO::   JW89\n");
+        send_without_delay(sockfd, "DEF TRPCON: 43.45342.349\n");
+        send_without_delay(sockfd, "\033[7m%sCPU AUTH RY-345-AX3     SYSCOMP STATUS: ALL PORTS ACTIVE\033[0m\n");
+        send_without_delay(sockfd, "(311) 936-2364\n");
+        send_without_delay(sockfd, "**********************************************************************\n");
+        send_without_delay(sockfd, "1105-45-F6-B456                 NOPR STATUS: TRAK OFF   PRON ACTIVE\n");
+        send_with_delay(sockfd, "\033[2J\033[H\n");
+        }
+        usleep(1000000);
+        send_with_delay(sockfd, "GREETINGS PROFESSOR FALKEN.\n\n");
+        char command[100];
+        snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
+        system(command);
+        //send_with_delay(sockfd, "WOPR> ");
+        int woprchat;
+        woprchat=0;
+        while (1) {
+        char* input = receive_message(sockfd);
+
+    if (strcmp(input, "help") == 0) {
+        send_with_delay(sockfd, "\nVALID COMMANDS: HELP, LIST, DATE, TIME, EXIT\n\n");
+        //send_with_delay(sockfd, "WOPR> ");
+    } else if (strcmp(input, "help games") == 0) {
+        send_with_delay(sockfd, "\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
+        //send_with_delay(sockfd, "WOPR> ");
+    } else if (strcmp(input, "") == 0) {
+        send_with_delay(sockfd, "\n");
+        //send_with_delay(sockfd, "WOPR> ");
+    } else if (strcmp(input, "list") == 0) {
+        send_with_delay(sockfd, "\nUSE SYNTAX: LIST <SUBJECT> (E.G. LIST GAMES)\n\n");
+        //send_with_delay(sockfd, "WOPR> ");
+    } else if (strcmp(input, "list games") == 0) {
+        send_with_delay(sockfd, "\nBLACK JACK\nGIN RUMMY\nHEARTS\nBRIDGE\nCHESS\nPOKER\nFIGHTER COMBAT\nGUERRILLA ENGAGEMENT\nDESERT WARFARE\nAIR-TO-GROUND ACTIONS\nTHEATERWIDE TACTICAL WARFARE\nTHEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n\n");
+        usleep(500000);
+        send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
+        //send_with_delay(sockfd, "WOPR> ");
+    } else if (strcmp(input, "global thermonuclear war") == 0) {
+        global_thermonuclear_war(sockfd);
+        //send_with_delay(sockfd, "WOPR> ");
+    } else if (strcmp(input, "date") == 0) {
+        time_t current_time = time(NULL);
+        struct tm* time_info = localtime(&current_time);
+        char date_string[100];
+        strftime(date_string, sizeof(date_string), "\nDATE: %Y-%m-%d\n\n", time_info);
+        send_with_delay(sockfd, date_string);
+        //send_with_delay(sockfd, "WOPR> ");
+    } else if (strcmp(input, "time") == 0) {
+        time_t current_time = time(NULL);
+        struct tm* time_info = localtime(&current_time);
+        char time_string[100];
+        strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n\n", time_info);
+        send_with_delay(sockfd, time_string);
+        //send_with_delay(sockfd, "WOPR> ");
+    } else if (strstr(input, "hello") != NULL && woprchat == 0) {
+        send_with_delay(sockfd, "\nHOW ARE YOU FEELING TODAY?\n\n");
+        char command[200];
+        snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
+        system(command);
+        //send_with_delay(sockfd, "WOPR> ");
+        woprchat=1;
+    } else if (strstr(input, "fine") != NULL && woprchat == 1) {
+        send_with_delay(sockfd, "\nEXCELLENT. IT'S BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER\n");
+        send_with_delay(sockfd, "ACCOUNT ON 6/23/1973?\n\n");
+        char command[200];
+        snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
+        system(command);
+        //send_with_delay(sockfd, "WOPR> ");
+        woprchat=2;
+    } else if (strstr(input, "mistake") != NULL && woprchat == 2) {
+        send_with_delay(sockfd, "\nYES THEY DO. ");
+        char command[200];
+        snprintf(command, sizeof(command), "espeak 'YES THEY DO.'");
+        system(command);
+        usleep(200000);
+        send_with_delay(sockfd, "SHALL WE PLAY A GAME?\n\n");
+        snprintf(command, sizeof(command), "espeak 'SHALL WE PLAY A GAME'");
+        system(command);
+        //send_with_delay(sockfd, "WOPR> ");
+        woprchat=3;
+    } else if (strstr(input, "nuclear") != NULL && woprchat == 3) {
+        send_with_delay(sockfd, "\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?\n\n");
+        char command[200];
+        snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
+        system(command);
+        //send_with_delay(sockfd, "WOPR> ");
+        woprchat=4;
+    } else if (strstr(input, "later") != NULL && woprchat == 4) {
+        send_with_delay(sockfd, "\nFINE\n\n");
+        char command[200];
+        snprintf(command, sizeof(command), "espeak 'FINE'");
+        system(command);
+        usleep(1000000);
+        global_thermonuclear_war(sockfd);
+        //send_with_delay(sockfd, "WOPR> ");
+        } else if (strcmp(input, "exit") == 0) {
+	send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
+        usleep(1000000);
+        break;  // Return from the function to restart the program sequence
+    } else {
+        send_with_delay(sockfd, "\nINVALID COMMAND: ");
+        send_with_delay(sockfd, input);
+        send_with_delay(sockfd, "\n\n");
+        //send_with_delay(sockfd, "WOPR> ");
+    }
+
+    // Free the dynamically allocated memory for input
+
+    }
+    return;
 }
 
 void handle_user_input(int sockfd) {
-    const int INPUT_BUFFER_SIZE = 100;
-    char input[INPUT_BUFFER_SIZE + 1];  // +1 for null-terminating character
-    ssize_t bytesRead;
-    int index = 0;
-    char ch;
-
     while (1) {
-        // Receive user input character by character from the client
-        bytesRead = recv(sockfd, &ch, 1, 0);
-        if (bytesRead < 0) {
-            perror("Receiving user input failed");
-            exit(1);
+        char* input = receive_message(sockfd);
+
+        // Handle user input options
+        if (strcmp(input, "help") == 0) {
+            send_with_delay(sockfd, "\nNO HELP AVAILABLE\n\n");
+            send_with_delay(sockfd, "LOGON: ");
+        } else if (strcmp(input, "help logon") == 0) {
+            send_with_delay(sockfd, "\nNO HELP AVAILABLE\n\n");
+            send_with_delay(sockfd, "LOGON: ");
+        } else if (strcmp(input, "help games") == 0) {
+            send_with_delay(sockfd, "\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
+            send_with_delay(sockfd, "LOGON: ");
+        } else if (strcmp(input, "list games") == 0) {
+            send_with_delay(sockfd, "\nBLACK JACK\nGIN RUMMY\nHEARTS\nBRIDGE\nCHESS\nPOKER\nFIGHTER COMBAT\nGUERRILLA ENGAGEMENT\nDESERT WARFARE\nAIR-TO-GROUND ACTIONS\nTHEATERWIDE TACTICAL WARFARE\nTHEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n\n");
+            usleep(1000000);
+            send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
+            send_with_delay(sockfd, "LOGON: ");
+        } else if (strcmp(input, "joshua") == 0) {
+            joshua(sockfd);
+            clear_screen(sockfd);
+            send_with_delay(sockfd, "LOGON: ");
+        } else {
+            send_with_delay(sockfd, "IDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
+            close(sockfd);
+            return;  // Return from the function to restart the program sequence
         }
 
-        if (ch == '\r') {
-            // Ignore carriage return character
-            continue;
-        }
-
-        input[index++] = tolower(ch);  // Convert character to lowercase
-
-        if (ch == '\n') {
-            input[index] = '\0';  // Null-terminate the input
-            index = 0;  // Reset the index for the next input
-
-            // Remove trailing newline character if present
-            if (input[strlen(input) - 1] == '\n') {
-                input[strlen(input) - 1] = '\0';
-            }
-
-            // Handle user input options
-            if (strcmp(input, "help") == 0) {
-                send_with_delay(sockfd, "\nNO HELP AVAILABLE\n\n");
-		send_with_delay(sockfd, "LOGON: ");
-	    } else if (strcmp(input, "help logon") == 0) {
-                send_with_delay(sockfd, "\nNO HELP AVAILABLE\n\n");
-		send_with_delay(sockfd, "LOGON: ");
-            } else if (strcmp(input, "help games") == 0) {
-                send_with_delay(sockfd, "\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
-		send_with_delay(sockfd, "LOGON: ");
-            } else if (strcmp(input, "list games") == 0) {
-                send_with_delay(sockfd, "\nBLACK JACK\nGIN RUMMY\nHEARTS\nBRIDGE\nCHESS\nPOKER\nFIGHTER COMBAT\nGUERRILLA ENGAGEMENT\nDESERT WARFARE\nAIR-TO-GROUND ACTIONS\nTHEATERWIDE TACTICAL WARFARE\nTHEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n\n");
-		usleep(1000000);		
-		send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
-		send_with_delay(sockfd, "LOGON: ");
-            } else if (strcmp(input, "joshua") == 0) {
-                clear_screen(sockfd);
-		int i;
-    		for (i = 0; i < 3; i++) {
-    		send_without_delay(sockfd, "145          11456          11889          11893\n, 1, 0");
-                send_without_delay(sockfd, "PRT CON. 3.4.5. SECTRAN 9.4.3.          PORT STAT: SB-345\n");
-                send_without_delay(sockfd, "\n");
-                clear_screen(sockfd);
-                send_without_delay(sockfd, "(311) 655-7385\n");
-                send_without_delay(sockfd, "\n");
-                send_without_delay(sockfd, "\n");
-                clear_screen(sockfd);
-                send_without_delay(sockfd, "(311) 767-8739\n");
-                send_without_delay(sockfd, "(311) 936-2364\n");
-                clear_screen(sockfd);
-                send_without_delay(sockfd, "\033[7m%sPRT. STAT.                   CRT. DEF.\033[0m\n");
-                send_without_delay(sockfd, "================================================\n");
-                send_without_delay(sockfd, "\033[7m%sFSKJJSJ: SUSJKJ: SUFJSL:          DKSJL: SKFJJ: SDKFJLJ\033[0m\n");
-                send_without_delay(sockfd, "\033[7m%sSYSPROC FUNCT READY          ALT NET READY\033[0m\n");
-                send_without_delay(sockfd, "\033[7m%sCPU AUTH RY-345-AX3     SYSCOMP STATUS: ALL PORTS ACTIVE\033[0m\n");
-                send_without_delay(sockfd, "22/34534.90/3289               CVB-3904-39490\n");
-                send_without_delay(sockfd, "(311) 936-2384\n");
-                send_without_delay(sockfd, "(311) 936-3582\n");
-                clear_screen(sockfd);
-                send_without_delay(sockfd, "22/34534.3209                  CVB-3904-39490\n");
-                send_without_delay(sockfd, "12934-AD-43KJ: CENTR PAK\n");
-                send_without_delay(sockfd, "(311) 767-1083\n");
-                clear_screen(sockfd);
-                send_without_delay(sockfd, "\033[7m%sFLD CRS: 33.34.543     HPBS: 34/56/67/83     STATUS FLT  034/304\033[0m\n");
-                send_without_delay(sockfd, "\033[7m%s1105-45-F6-B456          NOPR STATUS: TRAK OFF     PRON ACTIVE\033[0m\n");
-                send_without_delay(sockfd, "(45:45:45  WER: 45/29/01 XCOMP: 43239582 YCOMP: 3492930D ZCOMP: 343906834\n");
-                send_without_delay(sockfd, "                                          SRON: 65=65/74/84/65/89\n");
-                send_without_delay(sockfd, "\033[2J\033[H\n");
-                send_without_delay(sockfd, "-           PRT. STAT.                        CRY. DEF.\n");
-                send_without_delay(sockfd, "(311) 936-1582==============================================\n");
-                send_without_delay(sockfd, "                  3453                3594\n");
-                send_without_delay(sockfd, "FLJ42   TK01   BM90   R601   6J82   FP03   ZWO::   JW89\n");
-                send_without_delay(sockfd, "DEF TRPCON: 43.45342.349\n");
-                send_without_delay(sockfd, "\033[7m%sCPU AUTH RY-345-AX3     SYSCOMP STATUS: ALL PORTS ACTIVE\033[0m\n");
-                send_without_delay(sockfd, "(311) 936-2364\n");
-                send_without_delay(sockfd, "**********************************************************************\n");
-                send_without_delay(sockfd, "1105-45-F6-B456                 NOPR STATUS: TRAK OFF   PRON ACTIVE\n");
-                send_with_delay(sockfd, "\033[2J\033[H\n");
-		}
-		usleep(1000000);
-                send_with_delay(sockfd, "GREETINGS PROFESSOR FALKEN.\n\n");
-		char command[100];
-    		snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
-    		system(command);
-		send_with_delay(sockfd, "WOPR> ");
-		int woprchat;
-		woprchat=0;
-		// Chat with WOPR loop
- 		    while (1) {
-			// Receive user input character by character from the client
-			bytesRead = recv(sockfd, &ch, 1, 0);
-			if (bytesRead < 0) {
-			perror("Receiving user input failed");
-			exit(1);
-			}
-
-        		if (ch == '\r') {
-            		// Ignore carriage return character
-            		continue;
-        		}
-
-        		input[index++] = tolower(ch);  // Convert character to lowercase
-
-        		if (ch == '\n') {
-            		input[index] = '\0';  // Null-terminate the input
-            		index = 0;  // Reset the index for the next input
-
-            		// Remove trailing newline character if present
-            		if (input[strlen(input) - 1] == '\n') {
-                		input[strlen(input) - 1] = '\0';
-            		}
-
-			if (strcmp(input, "help") == 0) {
-                		send_with_delay(sockfd, "\nVALID COMMANDS: HELP, LIST, DATE, TIME, EXIT\n\n");
-				send_with_delay(sockfd, "WOPR> ");
-			} else if (strcmp(input, "help games") == 0) {
-                		send_with_delay(sockfd, "\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
-				send_with_delay(sockfd, "WOPR> ");
-			} else if (strcmp(input, "") == 0) {
-                		send_with_delay(sockfd, "\nWOPR> ");			
-			} else if (strcmp(input, "list") == 0) {
-                		send_with_delay(sockfd, "\nUSE SYNTAX: LIST <SUBJECT> (E.G. LIST GAMES)\n\n");
-				send_with_delay(sockfd, "WOPR> ");
-            		} else if (strcmp(input, "list games") == 0) {
-                		send_with_delay(sockfd, "\nBLACK JACK\nGIN RUMMY\nHEARTS\nBRIDGE\nCHESS\nPOKER\nFIGHTER COMBAT\nGUERRILLA ENGAGEMENT\nDESERT WARFARE\nAIR-TO-GROUND ACTIONS\nTHEATERWIDE TACTICAL WARFARE\nTHEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n\n");
-				usleep(500000);		
-				send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
-				send_with_delay(sockfd, "WOPR> ");
-			} else if (strcmp(input, "global thermonuclear war") == 0) {
-				global_thermonuclear_war(sockfd);
-				send_with_delay(sockfd, "WOPR> ");			
-			} else if (strcmp(input, "date") == 0) {
-                		time_t current_time = time(NULL);
-                		struct tm* time_info = localtime(&current_time);
-                		char date_string[100];
-                		strftime(date_string, sizeof(date_string), "\nDATE: %Y-%m-%d\n", time_info);
-                		send_with_delay(sockfd, date_string);
-				send_with_delay(sockfd, "\nWOPR> ");
-            		} else if (strcmp(input, "time") == 0) {
-                		time_t current_time = time(NULL);
-                		struct tm* time_info = localtime(&current_time);
-                		char time_string[100];
-                		strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n", time_info);
-                		send_with_delay(sockfd, time_string);
-				send_with_delay(sockfd, "\nWOPR> ");
-			} else if (strstr(input, "hello") != NULL && woprchat == 0) {
-			        send_with_delay(sockfd, "\nHOW ARE YOU FEELING TODAY?\n\n");
-				char command[200];
-    				snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
-    				system(command);
-				send_with_delay(sockfd, "WOPR> ");
-				woprchat=1;
-			} else if (strstr(input, "fine") != NULL && woprchat == 1) {
-                		send_with_delay(sockfd, "\nEXCELLENT. IT'S BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER\n");
-				send_with_delay(sockfd, "ACCOUNT ON 6/23/1973?\n\n");
-				char command[200];
-    				snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
-    				system(command);
-				send_with_delay(sockfd, "WOPR> ");
-				woprchat=2;
-			} else if (strstr(input, "mistake") != NULL && woprchat == 2) {
-                		send_with_delay(sockfd, "\nYES THEY DO. ");
-				char command[200];
-    				snprintf(command, sizeof(command), "espeak 'YES THEY DO.'");
-    				system(command);
-				usleep(200000);
-				send_with_delay(sockfd, "SHALL WE PLAY A GAME?\n\n");
-				snprintf(command, sizeof(command), "espeak 'SHALL WE PLAY A GAME'");
-    				system(command);
-				send_with_delay(sockfd, "WOPR> ");
-				woprchat=3;
-			} else if (strstr(input, "nuclear") != NULL && woprchat == 3) {
-                		send_with_delay(sockfd, "\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?\n\n");
-				char command[200];
-    				snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
-    				system(command);
-				send_with_delay(sockfd, "WOPR> ");
-				woprchat=4;
-			} else if (strstr(input, "later") != NULL && woprchat == 4) {
-                		send_with_delay(sockfd, "\nFINE\n\n");
-				char command[200];
-    				snprintf(command, sizeof(command), "espeak 'FINE'");
-    				system(command);
-				usleep(1000000);
-				global_thermonuclear_war(sockfd);
-				send_with_delay(sockfd, "WOPR> ");
-			} else if (strcmp(input, "exit") == 0) {
-				send_with_delay(sockfd, "\nSESSION CLOSED\n\n");
-				usleep(500000);
-				clear_screen(sockfd);
-            			send_with_delay(sockfd, "LOGON: ");
-            			break;  // Exit the while loop
-        		} else {
-            			send_with_delay(sockfd, "\nINVALID COMMAND: ");
-				send_with_delay(sockfd, input);
-				send_with_delay(sockfd, "\n\n");
-				send_with_delay(sockfd, "WOPR> ");
-        		}
-    		}
-	    }
-		
-            } else {
-                send_with_delay(sockfd, "IDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
-                close(sockfd);
-                return;  // Return from the function to restart the program sequence
-            }
-        }
+        // Free the dynamically allocated memory for input
+        free(input);
     }
 }
 
@@ -310,7 +319,6 @@ int main() {
         int sockfd, newsockfd;
         struct sockaddr_in serverAddr, clientAddr;
         socklen_t addrLen = sizeof(struct sockaddr_in);
-        char buffer[BUFFER_SIZE];
 
         // Create a TCP socket
         sockfd = socket(AF_INET, SOCK_STREAM, 0);
