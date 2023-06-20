@@ -10,6 +10,7 @@
 #define PORT 9999
 #define BUFFER_SIZE 1024
 #define CHARACTER_DELAY 7500  // Delay for 7.5ms (7,500 microseconds)
+#define MAX_TARGETS 100
 
 void handle_telnet_negotiation(int sockfd) {
     // Telnet negotiation codes
@@ -91,54 +92,186 @@ char* receive_message(int sockfd) {
 }
 
 void global_thermonuclear_war(int sockfd) {
-    	clear_screen(sockfd);
-	usleep(500000);
-	send_with_delay(sockfd, "                            GLOBAL THERMONUCLEAR WAR\n\n");
-	send_with_delay(sockfd, "\n");
-	send_with_delay(sockfd, "      ___    ____             ____                   _______________\n");
-	send_with_delay(sockfd, "     |   \\__/    \\_____      /    |              ___/               \\\n");
-	send_with_delay(sockfd, "     |                 \\    /    /           ___/                    \\______\n");
-	send_with_delay(sockfd, "     |                  \\__/    /           /                               \\\n");
-	send_with_delay(sockfd, "     |                           \\        _/                                 |\n");
-	send_with_delay(sockfd, "     |        UNITED STATES       |      /           SOVIET UNION       ____/\n");
-	send_with_delay(sockfd, "      \\                           /     /                          ____/\n");
-	send_with_delay(sockfd, "        \\                        /     |                          /\n");
-	send_with_delay(sockfd, "          \\________          __/       \\          _____   /\\_    /\n");
-	send_with_delay(sockfd, "                   \\__      /            \\__    _/     \\_/   \\__/\n");
-	send_with_delay(sockfd, "                      \\____/                \\__/\n");
-	send_with_delay(sockfd, "\n");
-	send_with_delay(sockfd, "WHICH SIDE DO YOU WANT?\n\n");
-	char command[200];
-    	snprintf(command, sizeof(command), "espeak 'WHICH SIDE DO YOU WANT'");
-    	system(command);
-	send_with_delay(sockfd, "  1. UNITED STATES\n");
-	send_with_delay(sockfd, "  2. SOVIET UNION\n\n");
-	send_with_delay(sockfd, "PLEASE CHOOSE ONE: ");
-        char* input = receive_message(sockfd);
-        int side = atoi(input);
-        char side_str[10];
-        snprintf(side_str, sizeof(side_str), "%d", side);
-        send_with_delay(sockfd, "\nYOU HAVE SELECTED: ");
-        send_with_delay(sockfd, side_str);
-        send_with_delay(sockfd, "\n\n");
-        //rest of game code goes here: start
-        send_with_delay(sockfd, "\nREST OF THE GAME IS WORK IN PROGRESS\n\n");
-        //rest of game code goes here: finish
+    char command[200];
+    startgame:
+    clear_screen(sockfd);
+    usleep(500000);
+    send_with_delay(sockfd, "                            GLOBAL THERMONUCLEAR WAR\n\n");
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, "      ___    ____             ____                   _______________\n");
+    send_with_delay(sockfd, "     |   \\__/    \\_____      /    |              ___/               \\\n");
+    send_with_delay(sockfd, "     |                 \\    /    /           ___/                    \\______\n");
+    send_with_delay(sockfd, "     |                  \\__/    /           /                               \\\n");
+    send_with_delay(sockfd, "     |                           \\        _/                                 |\n");
+    send_with_delay(sockfd, "     |        UNITED STATES       |      /           SOVIET UNION       ____/\n");
+    send_with_delay(sockfd, "      \\                           /     /                          ____/\n");
+    send_with_delay(sockfd, "        \\                        /     |                          /\n");
+    send_with_delay(sockfd, "          \\________          __/       \\          _____   /\\_    /\n");
+    send_with_delay(sockfd, "                   \\__      /            \\__    _/     \\_/   \\__/\n");
+    send_with_delay(sockfd, "                      \\____/                \\__/\n");
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, "WHICH SIDE DO YOU WANT?\n\n");
+    snprintf(command, sizeof(command), "espeak 'WHICH SIDE DO YOU WANT?'");
+    system(command);
+    send_with_delay(sockfd, "  1. UNITED STATES\n");
+    send_with_delay(sockfd, "\033[5m  2. SOVIET UNION\033[0m\n\n");
+    send_with_delay(sockfd, "PLEASE CHOOSE ONE: ");
+    char* side;
+    char* input = receive_message(sockfd);
+    if (strcmp(input, "1") == 0) {
+        side = "UNITED STATES";
+    } else if (strcmp(input, "2") == 0) {
+        side = "SOVIET UNION";
+    } else {
+        send_with_delay(sockfd, "\nINVALID OPTION\n\n");
         usleep(5000000);
-	clear_screen(sockfd);
-        send_with_delay(sockfd, "\nA STRANGE GAME. ");
-        snprintf(command, sizeof(command), "espeak 'A STRANGE GAME'");
-    	system(command);
-        usleep(500000);
-        send_with_delay(sockfd, "THE ONLY WINNING MOVE IS NOT TO PLAY!\n\n");
-        snprintf(command, sizeof(command), "espeak 'THE ONLY WINNING MOVE IS NOT TO PLAY!'");
-    	system(command);
+        goto startgame;
+    }
+   
+    // Rest of the game code goes here: start
+    send_with_delay(sockfd, "YOU HAVE SELECTED: ");
+    send_with_delay(sockfd, side);
+    usleep(2500000);
+    clear_screen(sockfd);
+    usleep(2500000);
+    send_with_delay(sockfd, "PLEASE LIST PRIMARY TARGETS BY\n");
+    send_with_delay(sockfd, "CITY AND/OR COUNTY NAME:\n\n");
+    snprintf(command, sizeof(command), "espeak 'PLEASE LIST PRIMARY TARGETS'");
+    system(command);
+    int targets=0;
+    char* target1 = receive_message(sockfd);
+    if (strcmp(target1, "") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    char* target2 = receive_message(sockfd);
+    if (strcmp(target2, "") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    char* target3 = receive_message(sockfd);
+    if (strcmp(target3, "") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    char* target4 = receive_message(sockfd);
+    if (strcmp(target4, "") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    char* target5 = receive_message(sockfd);
+    if (strcmp(target5, "") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    char* target6 = receive_message(sockfd);
+    if (strcmp(target6, "") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    char* target7 = receive_message(sockfd);
+    if (strcmp(target7, "") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    char* target8 = receive_message(sockfd);
+    if (strcmp(target8, "\r") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    char* target9 = receive_message(sockfd);
+    if (strcmp(target9, "") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    char* target10 = receive_message(sockfd);
+    if (strcmp(target10, "") == 0) {
+          goto targets;
+        } 
+    targets=targets+1;
+    send_with_delay(sockfd, "\n\nMAX TARGETS SELECTED");
+        
+    targets:
+    send_with_delay(sockfd, "\n\nTARGET SELECTION COMPLETE\n\n");
+    snprintf(command, sizeof(command), "espeak 'TARGET SELECTION COMPLETE'");
+    system(command);
+    usleep(2500000);
+    
+    send_with_delay(sockfd, "LISTING PRIMARY TARGETS:\n\n");
+    
+    if (targets == 0) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target1);
+    if (targets == 1) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target2);
+    if (targets == 2) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target3);
+    if (targets == 3) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target4);
+    if (targets == 4) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target5);
+    if (targets == 5) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target6);
+    if (targets == 6) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target7);
+    if (targets == 7) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target8);
+    if (targets == 8) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target9);
+    if (targets == 9) {
+            goto targetslisted;
+    }
+    send_with_delay(sockfd, "\n");
+    send_with_delay(sockfd, target10);
+    if (targets == 10) {
+            goto targetslisted;
+    }
+        
+    targetslisted:
+    send_with_delay(sockfd, "\n");
+
+    // Rest of the game code goes here: finish
+    usleep(10000000);
+    clear_screen(sockfd);
+    send_with_delay(sockfd, "\nA STRANGE GAME. ");
+    snprintf(command, sizeof(command), "espeak 'A STRANGE GAME'");
+    system(command);
+    usleep(500000);
+    send_with_delay(sockfd, "THE ONLY WINNING MOVE IS NOT TO PLAY!\n\n");
+    snprintf(command, sizeof(command), "espeak 'THE ONLY WINNING MOVE IS NOT TO PLAY!'");
+    system(command);
 }
 
 
 void joshua(int sockfd) {
 	clear_screen(sockfd);
-        char* prompt = "> ";
+        char* prompt = "";
         int i;
         for (i = 0; i < 3; i++) {
         send_without_delay(sockfd, "145          11456          11889          11893\n, 1, 0");
@@ -278,7 +411,7 @@ void joshua(int sockfd) {
         send_with_delay(sockfd, prompt);
     }
 
-    // Free the dynamically allocated memory for input
+        free(input);
 
     }
     return;
@@ -305,6 +438,7 @@ void handle_user_input(int sockfd) {
             send_with_delay(sockfd, "GLOBAL THERMONUCLEAR WAR\n\n");
             send_with_delay(sockfd, prompt);
         } else if (strcmp(input, "joshua") == 0) {
+            free(input);
             joshua(sockfd);
             clear_screen(sockfd);
             send_with_delay(sockfd, prompt);
