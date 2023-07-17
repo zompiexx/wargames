@@ -37,7 +37,7 @@ Update 25 June 2022: The plan is to re-write the WOPR (and other remote systems)
 
 Update 11 June 2023: I have started re-writing the WOPR (Server) in C on Linux. It's very early days, but the initial code can be found here: https://github.com/zompiexx/wargames/blob/main/C/wopr.c. The code is still a little untidy, but I will refine as the project develops.
 At the moment, the WOPR C code has the following features:
-* TCP Listener using telnetd for Telnet Access (different port for each system, easily changed in scripts to suit) - tested with Imsai 8080 & Kermit
+* TCP Listener using telnetd for Telnet Access (different port for each system, easily changed in scripts to suit) - tested with Imsai 8080esp (with WiFi modem) & Kermit (currently requires speech synth and shell gpt to be disabled in code, as telnetd is not logged on so will not have permission to access those resources, but will build those features into the Imsai 8080 client program to overcome this)
 * Basic WOPR (Pre-Logon) Commands
 * "Joshua" Logon sequence
 * WOPR Chat Sequence: enforce counter for sequencing of inputs/outputs
