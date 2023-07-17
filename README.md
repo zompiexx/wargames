@@ -37,26 +37,26 @@ Update 25 June 2022: The plan is to re-write the WOPR (and other remote systems)
 
 Update 11 June 2023: I have started re-writing the WOPR (Server) in C on Linux. It's very early days, but the initial code can be found here: https://github.com/zompiexx/wargames/blob/main/C/wopr.c. The code is still a little untidy, but I will refine as the project develops.
 At the moment, the WOPR C code has the following features:
-* TCP Listener for Telnet Access (TCP/9999, but easily changed in code to suit)
+* TCP Listener using telnetd for Telnet Access (different port for each system, easily changed in scripts to suit) - tested with Imsai 8080 & Kermit
 * Basic WOPR (Pre-Logon) Commands
 * "Joshua" Logon sequence
 * WOPR Chat Sequence: enforce counter for sequencing of inputs/outputs
 * Date, Time options (post logon)
 * Global Thermonuclear War Game Map
 * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
+* Integration with Chat GPT for WOPR Chat
+* Dialer Program
 
 Still to do:
 * User Accounts (for users other than "Joshua")
 * Directory Listing
 * Global Thermonuclear War Game Logic
 * Tic-Tac-Toe Game with AI
-* Fix compatability issues when connecting using the IMSAI8080esp Wi-Fi Modem in Telnet Mode with Kermit (works fine for standard telnet connections from other machines)
 
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
 * You will need a gcc compiler installed
 * You will need a telnet client installed (on the client machine)
+* You will need telnetd installed, but can be left disabled as will be called as required
 * Download https://github.com/zompiexx/wargames/blob/main/C/wopr.c
-* Compile using: gcc wopr.c -o wopr
-* execute: ./wopr
-* Telnet onto the Linux host on port 9999. If connecting using the same host, then: telnet localhost 9999
+install scipt and "manual" to follow
