@@ -52,6 +52,12 @@ Still to do:
 * Directory Listing
 * Global Thermonuclear War Game Logic
 * Tic-Tac-Toe Game with AI
+* Complete Imsai 8080 program
+* Complete School Computer System program
+* Write Bank Computer System program
+* Write Pan-Am Computer system program
+* Link all the programs together with system calls
+* Refine WOPR Speech Synth Voice (or use some samples)
 
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
