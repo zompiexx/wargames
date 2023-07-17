@@ -46,9 +46,10 @@ At the moment, the WOPR C code has the following features:
 * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
 * Integration with Chat GPT for WOPR Chat (requires shell gpt to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
 * Dialer Program
-*   Imsai 8080 - calls School (using Kermit)
-*   Imsai 8080 - Calls Dialer
-*   Dialer - Calls WOPR (and other systems when written and linked)
+*   Imsai 8080 - calls School program (using simulated Kermit)
+*   Imsai 8080 - calls Dialer program
+*   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
+*   WOPR - calls other external system commands for Speech synth, shell GPT (for Chat GPT integration) etc.
 
 Still to do:
 * User Accounts (for users other than "Joshua")
