@@ -16,7 +16,7 @@ void string_to_lowercase(char str[]) {
 
 int main(){
 	clear_screen();
-	char command[1];
+	char command[100];
 
 	sleep(1);
 	printf("64K CP/M VERS. 2.2 MCL030210-D-F8\n");
@@ -43,6 +43,9 @@ int main(){
         printf("Starting Dialer Program\n\n");
         sleep(5);
         //start dialer program
+        strcpy(command, "./dialer");
+        // Execute the command using system()
+        system(command);
 		goto imsai8080;
 	} 
   
@@ -77,6 +80,9 @@ int main(){
             printf("Connecting to School Computer\n\n");
             sleep(5);
             //connect to school computer
+            strcpy(command, "./school");
+            // Execute the command using system()
+            system(command);
         }
 	goto kermit;   
 	}
