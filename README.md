@@ -44,7 +44,7 @@ At the moment, the WOPR C code has the following features:
 * Date, Time options (post logon)
 * Global Thermonuclear War Game Map
 * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
-* Integration with Chat GPT for WOPR Chat
+* Integration with Chat GPT for WOPR Chat (requires shell gpt to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
 * Dialer Program
 
 Still to do:
@@ -56,8 +56,8 @@ Still to do:
 * Complete School Computer System program
 * Write Bank Computer System program
 * Write Pan-Am Computer system program
-* Link all the programs together with system calls
 * Refine WOPR Speech Synth Voice (or use some samples)
+* Link all the programs together with system calls
 
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
@@ -65,3 +65,5 @@ If you want to try it out for yourself, here are the steps:
 * You will need a telnet client installed (on the client machine)
 * You will need telnetd installed on the server side, but can be left disabled as will be called as required
 * Install script and "manual" to follow
+
+NOTE: The C programs are all work in progress, so expect some bugs!
