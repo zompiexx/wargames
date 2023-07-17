@@ -46,6 +46,9 @@ At the moment, the WOPR C code has the following features:
 * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
 * Integration with Chat GPT for WOPR Chat (requires shell gpt to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
 * Dialer Program
+*   Imsai 8080 - calls School (using Kermit)
+*   Imsai 8080 - Calls Dialer
+*   Dialer - Calls WOPR (and other systems when written and linked)
 
 Still to do:
 * User Accounts (for users other than "Joshua")
@@ -62,8 +65,8 @@ Still to do:
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
 * You will need a gcc compiler installed
-* You will need a telnet client installed (on the client machine)
-* You will need telnetd installed on the server side, but can be left disabled as will be called as required
+*   Optional - only needed for client/server mode: You will need a telnet client installed (on the client machine)
+*   Optional - only needed for client/server mode: You will need telnetd installed (on the server side), but can be left disabled as will be called as required
 * Install script and "manual" to follow
 
-NOTE: The C programs are all work in progress, so expect some bugs!
+NOTE: The C programs are all work in progress, so expect some bugs! The reason for using telnet instead of SSH is that the Imsai 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use SSH (although, this will require authentication, so not ideal for this simulation).
