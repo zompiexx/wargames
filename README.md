@@ -58,4 +58,4 @@ If you want to try it out for yourself, here are the steps:
 * You will need a gcc compiler installed
 * You will need a telnet client installed (on the client machine)
 * You will need telnetd installed on the server side, but can be left disabled as will be called as required
-* Install scipt and "manual" to follow
+* Install script and "manual" to follow
