@@ -40,6 +40,7 @@ void dialer() {
     int num[10];
     char input;
     char selectedsystem[100];
+	char command[100];
 
     for (int a = 1; a <= 10; a++) {
         // Read pfx(a)
@@ -142,6 +143,13 @@ void dialer() {
                 printf("\n                                ");
                 printf("SYSTEM I SELECTED\n");
                 usleep(2000000);
+			    clear_screen();
+                printf("Connecting to System I\n\n");
+                sleep(5);
+                //connect to System I (WOPR)
+                strcpy(command, "./wopr");
+                // Execute the command using system()
+                system(command);
                 goto system_list;
             } else if(strcmp(input_string, "load") == 0) {
                 //do something for system i
