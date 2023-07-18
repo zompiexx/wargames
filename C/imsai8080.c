@@ -1,22 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
 #include <ctype.h>
+#include <time.h>
 
 void clear_screen() {
     printf("\033[2J\033[H");
 }
 
-void string_to_lowercase(char str[]) {
-    for(int i = 0; str[i]; i++){
-        str[i] = tolower(str[i]);
-    }
-}
-
 int main(){
 	clear_screen();
 	char command[100];
+	char system_command[200];
 
 	sleep(1);
 	printf("64K CP/M VERS. 2.2 MCL030210-D-F8\n");
@@ -24,6 +22,15 @@ int main(){
 	imsai8080:
 	printf("A>");
 	scanf("%s", command);
+
+	// Remove trailing newline character
+    command[strcspn(command, "\n")] = '\0';
+
+    // Convert input to lowercase
+    for (int i = 0; command[i]; i++) {
+        command[i] = tolower(command[i]);
+    }
+
 	if(strcmp(command,"cls")==0) {
 		clear_screen();
 		goto imsai8080;
@@ -40,7 +47,7 @@ int main(){
     
     if(strcmp(command,"dialer")==0) {
         clear_screen();
-        printf("Starting Dialer Program\n\n");
+        printf("DIALER\n\n");
         sleep(5);
         //start dialer program
         strcpy(command, "./dialer");
@@ -75,9 +82,11 @@ int main(){
 			printf("type Control-? for command list\n");
 			sleep(2);
 			printf("ATDT3115554855\n");
+			snprintf(system_command, sizeof(system_command), "aplay dial-up-modem-01.wav -q");
+    		system(system_command);
 			sleep(5);
 			clear_screen();
-            printf("Connecting to School Computer\n\n");
+            printf("CONNECTING\n\n");
             sleep(5);
             //connect to school computer
             strcpy(command, "./school");
@@ -86,7 +95,10 @@ int main(){
         }
 	goto kermit;   
 	}
-	printf("%s", command);
+	for(int i = 0; command[i]; i++){
+      command[i] = toupper(command[i]);
+    }
+    printf("%s", command);
 	printf("? \n");
 	printf("\n");
 	goto imsai8080;

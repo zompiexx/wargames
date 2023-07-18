@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <time.h>
+#include <termios.h>
 
 #define CHARACTER_DELAY 5000  // 1000 = 1ms
 
@@ -31,6 +32,8 @@ void clear_screen() {
 
 void school_computer() {
     char input[100];
+	char password[100];
+	struct termios term, term_orig;
 	clear_screen();
 	delayed_print("PDP 11/270 PRB TIP #45                                                TTY 34/984\n");
 	delayed_print("WELCOME TO THE SEATTLE PUBLIC SCHOOL DISTRICT DATANET\n");
@@ -38,17 +41,25 @@ void school_computer() {
 	
 	while (1) {
 		delayed_print("PLEASE LOGON WITH USER PASSWORD: ");
-        fgets(input, sizeof(input), stdin);
+		tcgetattr(STDIN_FILENO, &term);
+    	term_orig = term; // Save original settings
 
+    	// Turn off ECHO
+    	term.c_lflag &= ~ECHO;
+    	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+		fgets(password, sizeof(password), stdin);
+		// Restore original terminal settings
+    	tcsetattr(STDIN_FILENO, TCSANOW, &term_orig);
+		
         // Remove trailing newline character
-        input[strcspn(input, "\n")] = '\0';
+        password[strcspn(password, "\n")] = '\0';
 
         // Convert input to lowercase
-        for (int i = 0; input[i]; i++) {
-            input[i] = tolower(input[i]);
+        for (int i = 0; password[i]; i++) {
+            input[i] = tolower(password[i]);
         }
 
-	if (strcmp(input, "pencil") == 0) {
+	if (strcmp(password, "pencil") == 0) {
               break;  // Exit the while loop
             
 	} else {
