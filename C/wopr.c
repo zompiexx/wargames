@@ -51,7 +51,8 @@ void global_thermonuclear_war() {
     delayed_print("                      \\____/                \\__/\n");
     delayed_print("\n");
     delayed_print("WHICH SIDE DO YOU WANT?\n\n");
-    snprintf(command, sizeof(command), "espeak 'WHICH SIDE DO YOU WANT?'");
+    //snprintf(command, sizeof(command), "espeak 'WHICH SIDE DO YOU WANT?'");
+    snprintf(command, sizeof(command), "aplay which-side-do-you-want.wav -q");
     system(command);
     delayed_print("  1. UNITED STATES\n");
     delayed_print("\033[5m  2. SOVIET UNION\033[0m\n\n");
@@ -78,13 +79,14 @@ void global_thermonuclear_war() {
     usleep(2500000);
     delayed_print("PLEASE LIST PRIMARY TARGETS BY\n");
     delayed_print("CITY AND/OR COUNTY NAME:\n\n");
-    snprintf(command, sizeof(command), "espeak 'PLEASE LIST PRIMARY TARGETS'");
+    //snprintf(command, sizeof(command), "espeak 'PLEASE LIST PRIMARY TARGETS'");
+    snprintf(command, sizeof(command), "aplay please-list-primary-targets.wav -q");
     system(command);
     //while loop to input targets goes here
     //delayed_print("\n\nMAX TARGETS SELECTED");
     delayed_print("\n\nTARGET SELECTION COMPLETE\n\n");
-    snprintf(command, sizeof(command), "espeak 'TARGET SELECTION COMPLETE'");
-    system(command);
+    //snprintf(command, sizeof(command), "espeak 'TARGET SELECTION COMPLETE'");
+    //system(command);
     usleep(2500000);
     
     //delayed_print("LISTING PRIMARY TARGETS:\n\n");
@@ -93,11 +95,13 @@ void global_thermonuclear_war() {
     usleep(10000000);
     clear_screen();
     delayed_print("\nA STRANGE GAME. ");
-    snprintf(command, sizeof(command), "espeak 'A STRANGE GAME'");
+    //snprintf(command, sizeof(command), "espeak 'A STRANGE GAME'");
+    snprintf(command, sizeof(command), "aplay a-strange-game.wav -q");
     system(command);
     usleep(500000);
     delayed_print("THE ONLY WINNING MOVE IS NOT TO PLAY!\n\n");
-    snprintf(command, sizeof(command), "espeak 'THE ONLY WINNING MOVE IS NOT TO PLAY!'");
+    //snprintf(command, sizeof(command), "espeak 'THE ONLY WINNING MOVE IS NOT TO PLAY!'");
+    snprintf(command, sizeof(command), "aplay the-only-winning-move-is-not-to-play.wav -q");
     system(command);
 }
 
@@ -152,7 +156,8 @@ void joshua() {
     usleep(500000);
     delayed_print("GREETINGS PROFESSOR FALKEN.\n\n");
     char command[200];
-    snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
+    //snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
+    snprintf(command, sizeof(command), "aplay greetings.wav -q");
     system(command);
     delayed_print(prompt);
     char input[100];
@@ -170,66 +175,66 @@ void joshua() {
 
         if (strcmp(input, "help") == 0) {
             delayed_print("\nVALID COMMANDS: HELP, LIST, DATE, TIME, EXIT\n\n");
-            snprintf(command, sizeof(command), "espeak 'VALID COMMANDS: HELP, LIST, DATE, TIME, EXIT'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'VALID COMMANDS: HELP, LIST, DATE, TIME, EXIT'");
+            //system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "help games") == 0) {
             delayed_print("\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
-            snprintf(command, sizeof(command), "espeak 'GAMES REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND STRATEGIC APPLICATIONS'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'GAMES REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND STRATEGIC APPLICATIONS'");
+            //system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "") == 0) {
             delayed_print("\n\n");
             delayed_print(prompt);
         } else if (strcmp(input, "list") == 0) {
             delayed_print("\nUSE SYNTAX: LIST <TYPE>\n\n");
-            snprintf(command, sizeof(command), "espeak 'USE SYNTAX: LIST TYPE'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'USE SYNTAX: LIST TYPE'");
+            //system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "list games") == 0) {
             delayed_print("\nFALKEN'S MAZE\n");
-            snprintf(command, sizeof(command), "espeak 'FALKENS MAZE'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'FALKENS MAZE'");
+            //system(command);
             delayed_print("BLACK JACK\n");
-            snprintf(command, sizeof(command), "espeak 'BLACK JACK'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'BLACK JACK'");
+            //system(command);
             delayed_print("GIN RUMMY\n");
-            snprintf(command, sizeof(command), "espeak 'GIN RUMMY'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'GIN RUMMY'");
+            //system(command);
             delayed_print("HEARTS\n");
-            snprintf(command, sizeof(command), "espeak 'HEARTS'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'HEARTS'");
+            //system(command);
             delayed_print("BRIDGE\n");
-            snprintf(command, sizeof(command), "espeak 'BRIDGE'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'BRIDGE'");
+            //system(command);
             delayed_print("CHESS\n");
-            snprintf(command, sizeof(command), "espeak 'CHESS'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'CHESS'");
+            //system(command);
             delayed_print("POKER\n");
-            snprintf(command, sizeof(command), "espeak 'POKER'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'POKER'");
+            //system(command);
             delayed_print("FIGHTER COMBAT\n");
             snprintf(command, sizeof(command), "espeak 'FIGHTER COMBAT'");
-            system(command);
+            //system(command);
             delayed_print("GUERRILLA ENGAGEMENT\n");
-            snprintf(command, sizeof(command), "espeak 'GUERRILLA ENGAGEMENT'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'GUERRILLA ENGAGEMENT'");
+            //system(command);
             delayed_print("DESERT WARFARE\n");
-            snprintf(command, sizeof(command), "espeak 'DESERT WARFARE'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'DESERT WARFARE'");
+            //system(command);
             delayed_print("AIR-TO-GROUND ACTIONS\n");
-            snprintf(command, sizeof(command), "espeak 'AIR-TO-GROUND ACTIONS'");
-            system(command);
+            //nprintf(command, sizeof(command), "espeak 'AIR-TO-GROUND ACTIONS'");
+            //system(command);
             delayed_print("THEATERWIDE TACTICAL WARFARE\n");
-            snprintf(command, sizeof(command), "espeak 'THEATERWIDE TACTICAL WARFARE'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'THEATERWIDE TACTICAL WARFARE'");
+            //system(command);
             delayed_print("THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n");
-            snprintf(command, sizeof(command), "espeak 'THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE'");
+            //system(command);
             usleep(500000);
             delayed_print("\nGLOBAL THERMONUCLEAR WAR\n\n");
-            snprintf(command, sizeof(command), "espeak 'GLOBAL THERMONUCLEAR WAR'");
-            system(command);
+            //snprintf(command, sizeof(command), "espeak 'GLOBAL THERMONUCLEAR WAR'");
+            //system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "global thermonuclear war") == 0) {
             global_thermonuclear_war();
@@ -250,36 +255,48 @@ void joshua() {
             delayed_print(prompt);
         } else if (strstr(input, "hello") != NULL && woprchat == 0) {
             delayed_print("\nHOW ARE YOU FEELING TODAY?\n\n");
-            snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
+            //snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
+            snprintf(command, sizeof(command), "aplay how-are-you-feeling-today.wav -q");
             system(command);
             delayed_print(prompt);
             woprchat = 1;
         } else if (strstr(input, "fine") != NULL && woprchat == 1) {
-            delayed_print("\nEXCELLENT. IT'S BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER\n");
-            delayed_print("ACCOUNT ON 6/23/1973?\n\n");
-            snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
+            delayed_print("\nEXCELLENT. ");
+            snprintf(command, sizeof(command), "aplay excellent.wav -q");
             system(command);
+            delayed_print("IT'S BEEN A LONG TIME. ");
+            snprintf(command, sizeof(command), "aplay its-been-long-time.wav -q");
+            system(command);
+            delayed_print("CAN YOU EXPLAIN THE REMOVAL OF YOUR USER\n");
+            delayed_print("ACCOUNT ON 6/23/1973?\n\n");
+            snprintf(command, sizeof(command), "aplay can-you-explain-the-removal-of-your-user-account.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
             delayed_print(prompt);
             woprchat = 2;
         } else if (strstr(input, "mistake") != NULL && woprchat == 2) {
             delayed_print("\nYES THEY DO. ");
-            snprintf(command, sizeof(command), "espeak 'YES THEY DO.'");
+            //snprintf(command, sizeof(command), "espeak 'YES THEY DO.'");
+            snprintf(command, sizeof(command), "aplay yes-they-do.wav -q");
             system(command);
             usleep(200000);
             delayed_print("SHALL WE PLAY A GAME?\n\n");
-            snprintf(command, sizeof(command), "espeak 'SHALL WE PLAY A GAME'");
+            //snprintf(command, sizeof(command), "espeak 'SHALL WE PLAY A GAME'");
+            snprintf(command, sizeof(command), "aplay play-a-game.wav -q");
             system(command);
             delayed_print(prompt);
             woprchat = 3;
         } else if (strstr(input, "nuclear") != NULL && woprchat == 3) {
             delayed_print("\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?\n\n");
-            snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
+            //snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
+            snprintf(command, sizeof(command), "aplay a-good-game-of-chess.wav -q");
             system(command);
             delayed_print(prompt);
             woprchat = 4;
         } else if (strstr(input, "later") != NULL && woprchat == 4) {
             delayed_print("\nFINE\n\n");
-            snprintf(command, sizeof(command), "espeak 'FINE'");
+            //snprintf(command, sizeof(command), "espeak 'FINE'");
+            snprintf(command, sizeof(command), "aplay fine.wav -q");
             system(command);
             usleep(1000000);
             global_thermonuclear_war();
@@ -292,7 +309,8 @@ void joshua() {
             // Construct the shell command
             char sgpt[200] = "sgpt --role WOPR \"";
             strcat(sgpt, input);
-            strcat(sgpt, "\" | tee /dev/tty | espeak");
+            //strcat(sgpt, "\" | tee /dev/tty | espeak");
+            strcat(sgpt, "\" ");
             printf("\n");
 
             // Call the shell command
