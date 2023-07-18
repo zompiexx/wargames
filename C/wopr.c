@@ -107,10 +107,11 @@ void global_thermonuclear_war() {
 
 
 void joshua() {
+    char command[200];
     clear_screen();
     char* prompt = "";
     int i;
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < 3; i++) {
     not_delayed_print("145          11456          11889          11893                                \n");
     not_delayed_print("PRT CON. 3.4.5. SECTRAN 9.4.3.          PORT STAT: SB-345                      \n");
     not_delayed_print("                                                                                \n");
@@ -135,6 +136,18 @@ void joshua() {
     not_delayed_print("12934-AD-43KJ: CENTR PAK                                                      \n");
     not_delayed_print("(311) 767-1083                                                                 \n");
     clear_screen();
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
     not_delayed_print("\033[7mFLD CRS: 33.34.543     HPBS: 34/56/67/83     STATUS FLT  034/304          \033[0m\n");
     not_delayed_print("\033[7m1105-45-F6-B456          NOPR STATUS: TRAK OFF     PRON ACTIVE            \033[0m\n");
     not_delayed_print("(45:45:45  WER: 45/29/01 XCOMP: 43239582 YCOMP: 3492930D ZCOMP: 343906834        \n");
@@ -143,6 +156,18 @@ void joshua() {
     not_delayed_print("-           PRT. STAT.                        CRY. DEF.                      \n");
     not_delayed_print("(311) 936-1582==============================================                \n");
     not_delayed_print("                  3453                3594                                   \n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
+    not_delayed_print("\n");
     not_delayed_print("FLJ42   TK01   BM90   R601   6J82   FP03   ZWO::   JW89                       \n");
     not_delayed_print("DEF TRPCON: 43.45342.349                                                      \n");
     not_delayed_print("\033[7mCPU AUTH RY-345-AX3     SYSCOMP STATUS: ALL PORTS ACTIVE                  \033[0m\n");
@@ -150,12 +175,10 @@ void joshua() {
     not_delayed_print("**********************************************************************        \n");
     not_delayed_print("1105-45-F6-B456                 NOPR STATUS: TRAK OFF   PRON ACTIVE          \n");
     not_delayed_print("\033[2J\033[H                                                                 \n");
-
     }
 
     usleep(500000);
     delayed_print("GREETINGS PROFESSOR FALKEN.\n\n");
-    char command[200];
     //snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
     snprintf(command, sizeof(command), "aplay greetings.wav -q");
     system(command);
@@ -325,6 +348,7 @@ void joshua() {
 void handle_user_input() {
     char* prompt = "LOGON: ";
     char input[100];
+    
     while (1) {
         fgets(input, sizeof(input), stdin);
 
@@ -366,7 +390,7 @@ void handle_user_input() {
 }
 
 int main() {
-
+        char command[200];
         // Clear screen
         clear_screen();
 
@@ -377,6 +401,8 @@ int main() {
         usleep(500);
     	}
         delayed_print("\n");
+        snprintf(command, sizeof(command), "aplay computer-beeps.wav -q");
+        system(command);
         delayed_print("\nLOGON: ");
 
         // Handle user input

@@ -4,11 +4,6 @@
 #include <string.h>
 #include <ctype.h>
 
-void clear_input_buffer();
-void print_with_padding(const char* prefix, int pf, const char* padding, int number, int alignment);
-void clear_screen();
-void dialer();
-
 void clear_input_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
@@ -86,6 +81,7 @@ void dialer() {
             printf("                        OR SELECT SYSTEM: ");
 
             char input_string[6];
+            char system_command[200];
           
             fgets(input_string, sizeof(input_string), stdin);
             input_string[strcspn(input_string, "\n")] = '\0';
@@ -143,10 +139,12 @@ void dialer() {
                 printf("\n                                ");
                 printf("SYSTEM I SELECTED\n");
                 usleep(2000000);
-			    clear_screen();
-                printf("Connecting to System I\n\n");
-                sleep(5);
-                //connect to System I (WOPR)
+                clear_screen();
+                printf("CONNECTING\n\n");
+			    snprintf(system_command, sizeof(system_command), "aplay dial-up-modem-01.wav -q");
+                system(system_command);
+                usleep(5000000);             
+    		    //connect to System I (WOPR)
                 strcpy(command, "./wopr");
                 // Execute the command using system()
                 system(command);
