@@ -57,6 +57,7 @@ void dialer() {
         printf("\n");
         // printf("The input character is: %c\n", input);
         if (input == 's' || input == 'S') {
+            hits=0;
             goto numcheck;
         }
         if (input == 'x' || input == 'X') {
@@ -258,11 +259,16 @@ void dialer() {
         if (hit == 'Y') {
             print_with_padding("\033[7m(311)", pf1, z, i, 3);
             printf("\033[0m ");
+            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
+            //system(command);
+            usleep(100000);
         } else {
             print_with_padding("(311)", pf1, z, i, 3);
             printf(" ");
+            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
+            //system(command);
+            usleep(100000);
         }
-        usleep(500);
         // End of checks for prefix 1
 
         // Check prefix 2 for hits
@@ -276,11 +282,16 @@ void dialer() {
         if (hit == 'Y') {
             print_with_padding("\033[7m(311)", pf2, z, i, 3);
             printf("\033[0m ");
+            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
+            //system(command);
+            usleep(100000);
         } else {
             print_with_padding("(311)", pf2, z, i, 3);
             printf(" ");
+            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
+            //system(command);
+            usleep(100000);
         }
-        usleep(500);
         // End of checks for prefix 2
 
         // Check prefix 3 for hits
@@ -294,11 +305,16 @@ void dialer() {
         if (hit == 'Y') {
             print_with_padding("\033[7m(311)", pf3, z, i, 3);
             printf("\033[0m ");
+            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
+            //system(command);
+            usleep(100000);
         } else {
             print_with_padding("(311)", pf3, z, i, 3);
             printf(" ");
+            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
+            //system(command);
+            usleep(100000);
         }
-        usleep(500);
         // End of checks for prefix 3
 
         // Check prefix 4 for hits
@@ -312,11 +328,16 @@ void dialer() {
         if (hit == 'Y') {
             print_with_padding("\033[7m(311)", pf4, z, i, 3);
             printf("\033[0m \n");
+            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
+            //system(command);
+            usleep(100000);
         } else {
             print_with_padding("(311)", pf4, z, i, 3);
             printf(" \n");
+            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
+            //system(command);
+            usleep(100000);
         }
-        usleep(500);
         // End of checks for prefix 4
 
         ln = ln + 1;

@@ -8,8 +8,8 @@
 #include <time.h>
 
 #define CHARACTER_DELAY 5000  // 1000 = 1ms
-#define MAX_TARGETS 100
-
+#define MAX_TARGETS 10
+#define MAX_STRING_LENGTH 50
 
 void delayed_print(const char* str) {
     for (int i = 0; str[i]; i++) {
@@ -27,15 +27,20 @@ void not_delayed_print(const char* str) {
     }
 }
 
+void clear_input_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 void clear_screen() {
     printf("\033[2J\033[H");
 }
 
-void global_thermonuclear_war() {
+void map() {
     char command[200];
-    startgame:
-    clear_screen();
     usleep(500000);
+    snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+    system(command);
     delayed_print("                            GLOBAL THERMONUCLEAR WAR\n\n");
     delayed_print("\n");
     delayed_print("      ___    ____             ____                   _______________\n");
@@ -43,6 +48,8 @@ void global_thermonuclear_war() {
     delayed_print("     |                 \\    /    /           ___/                    \\______\n");
     delayed_print("     |                  \\__/    /           /                               \\\n");
     delayed_print("     |                           \\        _/                                 |\n");
+    snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+    system(command);
     delayed_print("     |        UNITED STATES       |      /           SOVIET UNION       ____/\n");
     delayed_print("      \\                           /     /                          ____/\n");
     delayed_print("        \\                        /     |                          /\n");
@@ -50,41 +57,86 @@ void global_thermonuclear_war() {
     delayed_print("                   \\__      /            \\__    _/     \\_/   \\__/\n");
     delayed_print("                      \\____/                \\__/\n");
     delayed_print("\n");
-    delayed_print("WHICH SIDE DO YOU WANT?\n\n");
-    //snprintf(command, sizeof(command), "espeak 'WHICH SIDE DO YOU WANT?'");
-    snprintf(command, sizeof(command), "aplay which-side-do-you-want.wav -q");
-    system(command);
-    delayed_print("  1. UNITED STATES\n");
-    delayed_print("\033[5m  2. SOVIET UNION\033[0m\n\n");
-    delayed_print("PLEASE CHOOSE ONE: ");
+}
+
+void global_thermonuclear_war() {
+    char command[200];
+    int count = 0;
     char side[20];  // Array to store the selected side
     char input;
-    scanf(" %c", &input);
-
-    if (input == '1') {
-        strcpy(side, "UNITED STATES");
-    } else if (input == '2') {
-        strcpy(side, "SOVIET UNION");
-    } else {
-        delayed_print("\nINVALID OPTION\n\n");
-        usleep(5000000);
+    startgame:
+    clear_screen();
+    map();
+    delayed_print("WHICH SIDE DO YOU WANT?\n\n");
+    if(count == 0) {
+        //snprintf(command, sizeof(command), "espeak 'WHICH SIDE DO YOU WANT?'");
+        snprintf(command, sizeof(command), "aplay which-side-do-you-want.wav -q");
+        system(command);
+        delayed_print("  1. UNITED STATES\n");
+        delayed_print("  2. SOVIET UNION\n\n");
+        delayed_print("PLEASE CHOOSE ONE: ");
+        
+        scanf(" %c", &input);
+        
+        if (input == '1') {
+            strcpy(side, "UNITED STATES");
+        } else if (input == '2') {
+            strcpy(side, "SOVIET UNION");
+        } else {
+            delayed_print("\nINVALID OPTION\n\n");
+            usleep(5000000);
+        }
+        count=count+1;
         goto startgame;
+        
+    } else {
+        if (input == '1') {
+            delayed_print("\033[5m  1. UNITED STATES\033[0m\n");
+            delayed_print("  2. SOVIET UNION\n\n");
+        } else {
+            delayed_print("  1. UNITED STATES\n"); 
+            delayed_print("\033[5m  2. SOVIET UNION\033[0m\n\n");   
+        }
     }
+    
    
+    clear_input_buffer();
     // Rest of the game code goes here: start
     delayed_print("YOU HAVE SELECTED: ");
     delayed_print(side);
     usleep(2500000);
     clear_screen ();
     usleep(2500000);
+    delayed_print("\033[4mAWAITING FIRST STRIKE COMMAND\033[24m\n\n");
     delayed_print("PLEASE LIST PRIMARY TARGETS BY\n");
     delayed_print("CITY AND/OR COUNTY NAME:\n\n");
     //snprintf(command, sizeof(command), "espeak 'PLEASE LIST PRIMARY TARGETS'");
     snprintf(command, sizeof(command), "aplay please-list-primary-targets.wav -q");
     system(command);
+    
     //while loop to input targets goes here
+    char targets[MAX_TARGETS][MAX_STRING_LENGTH];
+    count = 0;
+    while(count < MAX_TARGETS) {
+        if(fgets(targets[count], MAX_STRING_LENGTH, stdin) == NULL) {
+            break;
+        }
+
+        // Remove the newline character at the end of the string
+        targets[count][strcspn(targets[count], "\n")] = 0;
+
+        // Check for empty string (i.e., carriage return)
+        if(strlen(targets[count]) == 0) {
+            break;
+        }
+
+        count++;
+    }
+
     //delayed_print("\n\nMAX TARGETS SELECTED");
-    delayed_print("\n\nTARGET SELECTION COMPLETE\n\n");
+    delayed_print("TARGET SELECTION COMPLETE\n\n");
+    snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+    system(command);
     //snprintf(command, sizeof(command), "espeak 'TARGET SELECTION COMPLETE'");
     //system(command);
     usleep(2500000);
@@ -112,6 +164,8 @@ void joshua() {
     char* prompt = "";
     int i;
     for (i = 0; i < 3; i++) {
+    snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+    system(command);
     not_delayed_print("145          11456          11889          11893                                \n");
     not_delayed_print("PRT CON. 3.4.5. SECTRAN 9.4.3.          PORT STAT: SB-345                      \n");
     not_delayed_print("                                                                                \n");
@@ -198,10 +252,14 @@ void joshua() {
 
         if (strcmp(input, "help") == 0) {
             delayed_print("\nVALID COMMANDS: HELP, LIST, DATE, TIME, EXIT\n\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'VALID COMMANDS: HELP, LIST, DATE, TIME, EXIT'");
             //system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "help games") == 0) {
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+            system(command);
             delayed_print("\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
             //snprintf(command, sizeof(command), "espeak 'GAMES REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND STRATEGIC APPLICATIONS'");
             //system(command);
@@ -211,51 +269,81 @@ void joshua() {
             delayed_print(prompt);
         } else if (strcmp(input, "list") == 0) {
             delayed_print("\nUSE SYNTAX: LIST <TYPE>\n\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'USE SYNTAX: LIST TYPE'");
             //system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "list games") == 0) {
             delayed_print("\nFALKEN'S MAZE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'FALKENS MAZE'");
             //system(command);
             delayed_print("BLACK JACK\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'BLACK JACK'");
             //system(command);
             delayed_print("GIN RUMMY\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'GIN RUMMY'");
             //system(command);
             delayed_print("HEARTS\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'HEARTS'");
             //system(command);
             delayed_print("BRIDGE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'BRIDGE'");
             //system(command);
             delayed_print("CHESS\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'CHESS'");
             //system(command);
             delayed_print("POKER\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'POKER'");
             //system(command);
             delayed_print("FIGHTER COMBAT\n");
-            snprintf(command, sizeof(command), "espeak 'FIGHTER COMBAT'");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'FIGHTER COMBAT'");
             //system(command);
             delayed_print("GUERRILLA ENGAGEMENT\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'GUERRILLA ENGAGEMENT'");
             //system(command);
             delayed_print("DESERT WARFARE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'DESERT WARFARE'");
             //system(command);
             delayed_print("AIR-TO-GROUND ACTIONS\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //nprintf(command, sizeof(command), "espeak 'AIR-TO-GROUND ACTIONS'");
             //system(command);
             delayed_print("THEATERWIDE TACTICAL WARFARE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'THEATERWIDE TACTICAL WARFARE'");
             //system(command);
             delayed_print("THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE'");
             //system(command);
             usleep(500000);
             delayed_print("\nGLOBAL THERMONUCLEAR WAR\n\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             //snprintf(command, sizeof(command), "espeak 'GLOBAL THERMONUCLEAR WAR'");
             //system(command);
             delayed_print(prompt);
@@ -267,6 +355,8 @@ void joshua() {
             struct tm* time_info = localtime(&current_time);
             char date_string[100];
             strftime(date_string, sizeof(date_string), "\nDATE: %Y-%m-%d\n\n", time_info);
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             delayed_print(date_string);
             delayed_print(prompt);
         } else if (strcmp(input, "time") == 0) {
@@ -274,6 +364,8 @@ void joshua() {
             struct tm* time_info = localtime(&current_time);
             char time_string[100];
             strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n\n", time_info);
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
             delayed_print(time_string);
             delayed_print(prompt);
         } else if (strstr(input, "hello") != NULL && woprchat == 0) {
@@ -325,6 +417,8 @@ void joshua() {
             global_thermonuclear_war();
             delayed_print(prompt);
         } else if (strcmp(input, "exit") == 0) {
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+            system(command);
             delayed_print("\nSESSION CLOSED\n--CONNECTION TERMINATED--\n");
             usleep(1000000);
             exit(0);
@@ -348,6 +442,7 @@ void joshua() {
 void handle_user_input() {
     char* prompt = "LOGON: ";
     char input[100];
+    char command[200];
     
     while (1) {
         fgets(input, sizeof(input), stdin);
@@ -362,24 +457,100 @@ void handle_user_input() {
 
         // Handle user input options
         if (strcmp(input, "help") == 0) {
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+            system(command);
             delayed_print("\nNO HELP AVAILABLE\n\n");
             delayed_print(prompt);
         } else if (strcmp(input, "help logon") == 0) {
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+            system(command);
             delayed_print("\nNO HELP AVAILABLE\n\n");
             delayed_print(prompt);
         } else if (strcmp(input, "help games") == 0) {
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+            system(command);
             delayed_print("\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
             delayed_print(prompt);
         } else if (strcmp(input, "list games") == 0) {
-            delayed_print("\nFALKEN'S MAZE\nBLACK JACK\nGIN RUMMY\nHEARTS\nBRIDGE\nCHESS\nPOKER\nFIGHTER COMBAT\nGUERRILLA ENGAGEMENT\nDESERT WARFARE\nAIR-TO-GROUND ACTIONS\nTHEATERWIDE TACTICAL WARFARE\nTHEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n\n");
+            delayed_print("\nFALKEN'S MAZE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'FALKENS MAZE'");
+            //system(command);
+            delayed_print("BLACK JACK\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'BLACK JACK'");
+            //system(command);
+            delayed_print("GIN RUMMY\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'GIN RUMMY'");
+            //system(command);
+            delayed_print("HEARTS\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'HEARTS'");
+            //system(command);
+            delayed_print("BRIDGE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'BRIDGE'");
+            //system(command);
+            delayed_print("CHESS\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'CHESS'");
+            //system(command);
+            delayed_print("POKER\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'POKER'");
+            //system(command);
+            delayed_print("FIGHTER COMBAT\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'FIGHTER COMBAT'");
+            //system(command);
+            delayed_print("GUERRILLA ENGAGEMENT\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'GUERRILLA ENGAGEMENT'");
+            //system(command);
+            delayed_print("DESERT WARFARE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'DESERT WARFARE'");
+            //system(command);
+            delayed_print("AIR-TO-GROUND ACTIONS\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //nprintf(command, sizeof(command), "espeak 'AIR-TO-GROUND ACTIONS'");
+            //system(command);
+            delayed_print("THEATERWIDE TACTICAL WARFARE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'THEATERWIDE TACTICAL WARFARE'");
+            //system(command);
+            delayed_print("THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE'");
+            //system(command);
             usleep(500000);
-            delayed_print("GLOBAL THERMONUCLEAR WAR\n\n");
+            delayed_print("\nGLOBAL THERMONUCLEAR WAR\n\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
+            //snprintf(command, sizeof(command), "espeak 'GLOBAL THERMONUCLEAR WAR'");
+            //system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "joshua") == 0) {
             joshua();
             clear_screen();
             delayed_print(prompt);
         } else {
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+            system(command);
             delayed_print("IDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
             usleep(1000000);
             break;  // Exit the while loop
@@ -401,7 +572,7 @@ int main() {
         usleep(500);
     	}
         delayed_print("\n");
-        snprintf(command, sizeof(command), "aplay computer-beeps.wav -q");
+        snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
         system(command);
         delayed_print("\nLOGON: ");
 
