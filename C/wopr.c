@@ -256,7 +256,7 @@ void joshua() {
         } else if (strstr(input, "hello") != NULL && woprchat == 0) {
             delayed_print("\nHOW ARE YOU FEELING TODAY?\n\n");
             //snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
-            snprintf(command, sizeof(command), "aplay how-are-you-feeling-today.wav -q");
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q");
             system(command);
             delayed_print(prompt);
             woprchat = 1;
