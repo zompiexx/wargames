@@ -141,7 +141,7 @@ void dialer() {
                 usleep(2000000);
                 clear_screen();
                 printf("CONNECTING\n\n");
-			    snprintf(system_command, sizeof(system_command), "aplay dial-up-modem-01.wav -q");
+                snprintf(system_command, sizeof(system_command), "aplay dial-up-modem-01.wav -q");
                 system(system_command);
                 usleep(5000000);             
     		    //connect to System I (WOPR)
