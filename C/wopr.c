@@ -41,22 +41,29 @@ void map() {
     usleep(500000);
     snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
     system(command);
-    delayed_print("                            GLOBAL THERMONUCLEAR WAR\n\n");
-    delayed_print("\n");
-    delayed_print("      ___    ____             ____                   _______________\n");
-    delayed_print("     |   \\__/    \\_____      /    |              ___/               \\\n");
-    delayed_print("     |                 \\    /    /           ___/                    \\______\n");
-    delayed_print("     |                  \\__/    /           /                               \\\n");
-    delayed_print("     |                           \\        _/                                 |\n");
+    
+    clear_screen();
+
+    delayed_print("\n\n");
+    delayed_print("     ____________/\\'--\\__         __                       ___/-\\             \n");
+    delayed_print("   _/                   \\     __/  |          _     ___--/      / __          \n");
+    delayed_print("  /                      |   /    /          / \\__--           /_/  \\/---\\    \n");
+    delayed_print("  |                       \\_/    /           \\                            \\   \n");
+    delayed_print("  |'                            /             |                            |  \n");
     snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
     system(command);
-    delayed_print("     |        UNITED STATES       |      /           SOVIET UNION       ____/\n");
-    delayed_print("      \\                           /     /                          ____/\n");
-    delayed_print("        \\                        /     |                          /\n");
-    delayed_print("          \\________          __/       \\          _____   /\\_    /\n");
-    delayed_print("                   \\__      /            \\__    _/     \\_/   \\__/\n");
-    delayed_print("                      \\____/                \\__/\n");
+    delayed_print("   \\                           |            /^                             /  \n");
+    delayed_print("    \\__                       /            |                          /---/   \n");
+    delayed_print("       \\__                   /              \\              ___    __  \\       \n");
+    delayed_print("          \\__     ___    ___ \\               \\_           /   \\__/  /_/       \n");
+    delayed_print("              \\  /    \\_/   \\ \\                \\__'-\\    /                    \n");
+    delayed_print("               \\/            \\/                      \\__/                     \n");
     delayed_print("\n");
+
+    snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+    system(command);
+    delayed_print("          UNITED STATES                               SOVIET UNION\n\n");
+
 }
 
 void global_thermonuclear_war() {
@@ -141,9 +148,15 @@ void global_thermonuclear_war() {
     //system(command);
     usleep(2500000);
     
-    //delayed_print("LISTING PRIMARY TARGETS:\n\n");
+    //display map
+    map();
+    snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+    system(command);
+    delayed_print("HERE IS WHERE WE WILL LIST TARGETS\n");
+    delayed_print("AND TRAJECTORY HEADINGS\n");
 
     // Rest of the game code goes here: finish
+
     usleep(10000000);
     clear_screen();
     delayed_print("\nA STRANGE GAME. ");
