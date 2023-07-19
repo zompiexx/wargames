@@ -12,8 +12,8 @@
 #include <time.h>
 
 #define CHARACTER_DELAY 5000  // 1000 = 1ms
-#define MAX_TARGETS 10
-#define MAX_STRING_LENGTH 50
+#define MAX_TARGETS 5
+#define MAX_STRING_LENGTH 20
 
 void delayed_print(const char* str) {
     for (int i = 0; str[i]; i++) {
@@ -59,7 +59,7 @@ void map() {
     
     clear_screen();
 
-    delayed_print("\n\n");
+    delayed_print("\n");
     delayed_print("     ____________/\\'--\\__         __                       ___/-\\             \n");
     delayed_print("   _/                   \\     __/  |          _     ___--/      / __          \n");
     delayed_print("  /                      |   /    /          / \\__--           /_/  \\/---\\    \n");
@@ -156,7 +156,7 @@ void global_thermonuclear_war() {
     }
 
     //delayed_print("\n\nMAX TARGETS SELECTED");
-    delayed_print("TARGET SELECTION COMPLETE\n\n");
+    delayed_print("\nTARGET SELECTION COMPLETE\n\n");
     snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'TARGET SELECTION COMPLETE'");
@@ -167,10 +167,25 @@ void global_thermonuclear_war() {
     map();
     snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
     system(command);
-    delayed_print("HERE IS WHERE WE WILL LIST TARGETS\n");
-    delayed_print("AND TRAJECTORY HEADINGS\n");
+    delayed_print("\033[4mPRIMARY TARGETS\033[24m\n\n");
+    
+    for (int i = 0; i < count; i++) {
+    for (int j = 0; targets[i][j] != '\0'; j++) {
+        putchar(toupper(targets[i][j]));
+    }
+        printf("\n");
+    }
+    delayed_print("\nCOMMAND (LAUNCH): ");
 
-    // Rest of the game code goes here: finish
+    char action[20];
+    scanf("%19s", action);
+
+    // Convert input to lowercase
+    for (int i = 0; action[i]; i++) {
+        action[i] = tolower(action[i]);
+    }
+   
+    // Rest of the game code goes here: when I write it!
 
     usleep(10000000);
     clear_screen();
