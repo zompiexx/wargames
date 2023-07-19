@@ -1,3 +1,7 @@
+//Wargames Movie Simulator
+//Written by Andy Glenn
+//(c) 2023
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,6 +38,18 @@ void clear_input_buffer() {
 
 void clear_screen() {
     printf("\033[2J\033[H");
+}
+
+void author() {
+    // ASCII for 'F', 'R', 'E', 'D'
+    int asciiValues[] = {65, 78, 68, 89, 32, 71, 76, 69, 78, 78};
+    int i;
+
+    printf("\n");
+    for(i = 0; i < 10; i++) {
+        printf("%c", asciiValues[i]);
+    }
+    printf("\n\n");
 }
 
 void map() {
@@ -435,6 +451,10 @@ void joshua() {
             delayed_print("\nSESSION CLOSED\n--CONNECTION TERMINATED--\n");
             usleep(1000000);
             exit(0);
+        } else if (strcmp(input, "author") == 0) {
+            snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+            system(command);
+            author();
         } else {
             // Construct the shell command
             char sgpt[200] = "sgpt --role WOPR \"";

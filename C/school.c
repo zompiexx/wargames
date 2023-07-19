@@ -1,3 +1,7 @@
+//Wargames Movie Simulator
+//Written by Andy Glenn
+//(c) 2023
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
