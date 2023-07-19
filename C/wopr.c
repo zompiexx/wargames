@@ -41,7 +41,6 @@ void clear_screen() {
 }
 
 void author() {
-    // ASCII for 'F', 'R', 'E', 'D'
     int asciiValues[] = {65, 78, 68, 89, 32, 71, 76, 69, 78, 78};
     int i;
 
