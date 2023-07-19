@@ -291,6 +291,12 @@ void dialer() {
             } else if (random_number == 30) {
                 snprintf(command, sizeof(command), "aplay hello.wav -q");
                 system(command);
+            } else if (random_number == 40) {
+                snprintf(command, sizeof(command), "aplay disconnected-2x.wav -q");
+                system(command);
+            } else if (random_number == 50) {
+                snprintf(command, sizeof(command), "aplay funny-answer-phone.wav -q");
+                system(command);
             } else {
                 snprintf(command, sizeof(command), "aplay phone-beep.wav -q");
                 system(command);
