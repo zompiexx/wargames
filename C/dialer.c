@@ -278,23 +278,23 @@ void dialer() {
             printf("(311) ");
             printf("%d %s %d", pf1, z, i);
             printf("    ");
-            random_number = rand() % 50;
+            random_number = rand() % 10;
 
             if (random_number == 10 && s1 == 0) {
                 //only play this sample once
                 s1 = 1;
                 snprintf(command, sizeof(command), "aplay sauls-fish-market.wav -q");
                 system(command);
-            } else if (random_number == 20) {
+            } else if (random_number == 1) {
                 snprintf(command, sizeof(command), "aplay phone-busy-1.wav -q");
                 system(command); 
-            } else if (random_number == 30) {
+            } else if (random_number == 3) {
                 snprintf(command, sizeof(command), "aplay hello.wav -q");
                 system(command);
-            } else if (random_number == 40) {
+            } else if (random_number == 5) {
                 snprintf(command, sizeof(command), "aplay disconnected-2x.wav -q");
                 system(command);
-            } else if (random_number == 50) {
+            } else if (random_number == 7) {
                 snprintf(command, sizeof(command), "aplay funny-answer-phone.wav -q");
                 system(command);
             } else {
