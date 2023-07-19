@@ -191,7 +191,13 @@ void dialer() {
     int pf2t = 0;
     int pf3t = 0;
     int pf4t = 0;
+    int s1=0;
+    int s2=0;
+    int s3=0;
+    int s4=0;
+    int s5=0;
     char z[6] = "";
+    int random_number;
 
     for (int i = nd_start; i <= nd_end; i++) {
         if (ln == 0 || i == (nd_start+10) || i == (nd_start+100) || i == (nd_start+1000)) {
@@ -268,10 +274,27 @@ void dialer() {
             printf("(311) ");
             printf("%d %s %d", pf1, z, i);
             printf("    ");
+            random_number = rand() % 50;
+
+            if (random_number == 10 && s1 == 0) {
+                //only play this sample once
+                s1 = 1;
+                snprintf(command, sizeof(command), "aplay sauls-fish-market.wav -q");
+                system(command);
+            } else if (random_number == 20) {
+                snprintf(command, sizeof(command), "aplay phone-busy-1.wav -q");
+                system(command); 
+            } else if (random_number == 30) {
+                snprintf(command, sizeof(command), "aplay hello.wav -q");
+                system(command);
+            } else {
+                snprintf(command, sizeof(command), "aplay phone-beep.wav -q");
+                system(command);
+            }
         }
         
         fflush(stdout); // flush the output buffer
-        usleep(100000);
+        usleep(1000000);
         
         // End of checks for prefix 1
 
@@ -293,10 +316,29 @@ void dialer() {
             printf("(311) ");
             printf("%d %s %d", pf2, z, i);
             printf("    ");
+            random_number = rand() % 50;
+
+            if (random_number == 10 && s1 == 0) {
+                //only play this sample once
+                s1 = 1;
+                snprintf(command, sizeof(command), "aplay sauls-fish-market.wav -q");
+                system(command);
+            } else if (random_number == 20) {
+                snprintf(command, sizeof(command), "aplay phone-busy-1.wav -q");
+                system(command); 
+            } else if (random_number == 30) {
+                snprintf(command, sizeof(command), "aplay hello.wav -q");
+                system(command);
+            } else {
+                snprintf(command, sizeof(command), "aplay phone-beep.wav -q");
+                system(command);
+            }
+            
+
         }
 
         fflush(stdout); // flush the output buffer
-        usleep(100000);
+        usleep(1000000);
 
         // End of checks for prefix 2
 
@@ -318,10 +360,27 @@ void dialer() {
             printf("(311) ");
             printf("%d %s %d", pf3, z, i);
             printf("    ");
+            random_number = rand() % 50;
+
+            if (random_number == 10 && s1 == 0) {
+                //only play this sample once
+                s1 = 1;
+                snprintf(command, sizeof(command), "aplay sauls-fish-market.wav -q");
+                system(command);
+            } else if (random_number == 20) {
+                snprintf(command, sizeof(command), "aplay phone-busy-1.wav -q");
+                system(command); 
+            } else if (random_number == 30) {
+                snprintf(command, sizeof(command), "aplay hello.wav -q");
+                system(command);
+            } else {
+                snprintf(command, sizeof(command), "aplay phone-beep.wav -q");
+                system(command);
+            }
         }
 
         fflush(stdout); // flush the output buffer
-        usleep(100000);
+        usleep(1000000);
         
         // End of checks for prefix 3
 
@@ -343,10 +402,27 @@ void dialer() {
             printf("(311) ");
             printf("%d %s %d", pf4, z, i);
             printf("\n");
+            random_number = rand() % 50;
+
+            if (random_number == 10 && s1 == 0) {
+                //only play this sample once
+                s1 = 1;
+                snprintf(command, sizeof(command), "aplay sauls-fish-market.wav -q");
+                system(command);
+            } else if (random_number == 20) {
+                snprintf(command, sizeof(command), "aplay phone-busy-1.wav -q");
+                system(command); 
+            } else if (random_number == 30) {
+                snprintf(command, sizeof(command), "aplay hello.wav -q");
+                system(command);
+            } else {
+                snprintf(command, sizeof(command), "aplay phone-beep.wav -q");
+                system(command);
+            }
         }
 
         fflush(stdout); // flush the output buffer
-        usleep(100000);
+        usleep(1000000);
         
         // End of checks for prefix 4
 
