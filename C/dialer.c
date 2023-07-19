@@ -15,13 +15,6 @@ void string_to_lowercase(char str[]) {
     }
 }
 
-void print_with_padding(const char* prefix, int pf, const char* padding, int number, int alignment) {
-    printf("%s %3d %s %2d", prefix, pf, padding, number);
-    for (int i = 0; i < alignment; i++) {
-        printf(" ");
-    }
-}
-
 void clear_screen() {
     printf("\033[2J\033[H");
 }
@@ -167,14 +160,23 @@ void dialer() {
     }
 
     numcheck:
+    int nd_start;
+    int nd_end;
+
     clear_screen();
-    printf("HOW MANY NUMBERS FOR EACH PREFIX TO DIAL (MAX = 9999): ");
-    int nd;
-    scanf(" %d", &nd);
-    if (nd > 9999 || nd < 1) {
-        printf("MAX = 9999\n");
+    printf("START NUMBER (1 - 9999): ");
+    scanf(" %d", &nd_start);
+    clear_input_buffer();
+
+    printf("END NUMBER   (1 - 9999): ");
+    scanf(" %d", &nd_end);
+    clear_input_buffer();
+
+    if (nd_start < 1 || nd_start > 9999 || nd_end < 0 || nd_end > 9999) {
+        printf("\nVALID RANGE (1 - 9999)\n");
         usleep(2000000);
-        nd=0;
+        nd_end=0;
+        nd_start=0;
         goto numcheck;
     }
 
@@ -191,8 +193,8 @@ void dialer() {
     int pf4t = 0;
     char z[6] = "";
 
-    for (int i = 1; i <= nd; i++) {
-        if (ln == 0 || i == 10 || i == 100 || i == 1000) {
+    for (int i = nd_start; i <= nd_end; i++) {
+        if (ln == 0 || i == (nd_start+10) || i == (nd_start+100) || i == (nd_start+1000)) {
             scan_start:
             clear_screen();
             printf("                    TO SCAN FOR CARRIER TONES, PLEASE LIST\n");
@@ -205,7 +207,7 @@ void dialer() {
                 goto pfx_set;
             }
 
-            if (ln == 0 && i == 1) {
+            if (ln == 0 && i == nd_start) {
                 printf("(311) %d          (311) %d          (311) %d          (311) %d\n", pf1, pf2, pf3, pf4);
                 printf("(311) ");
                 scanf(" %d", &pf1t);
@@ -257,18 +259,20 @@ void dialer() {
             }
         }
         if (hit == 'Y') {
-            print_with_padding("\033[7m(311)", pf1, z, i, 3);
-            printf("\033[0m ");
-            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
-            //system(command);
-            usleep(100000);
+            printf("\033[7m(311) ");
+            printf("%d %s %d", pf1, z, i);
+            printf("\033[0m    ");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
         } else {
-            print_with_padding("(311)", pf1, z, i, 3);
-            printf(" ");
-            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
-            //system(command);
-            usleep(100000);
+            printf("(311) ");
+            printf("%d %s %d", pf1, z, i);
+            printf("    ");
         }
+        
+        fflush(stdout); // flush the output buffer
+        usleep(100000);
+        
         // End of checks for prefix 1
 
         // Check prefix 2 for hits
@@ -280,18 +284,20 @@ void dialer() {
             }
         }
         if (hit == 'Y') {
-            print_with_padding("\033[7m(311)", pf2, z, i, 3);
-            printf("\033[0m ");
-            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
-            //system(command);
-            usleep(100000);
+            printf("\033[7m(311) ");
+            printf("%d %s %d", pf2, z, i);
+            printf("\033[0m    ");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
         } else {
-            print_with_padding("(311)", pf2, z, i, 3);
-            printf(" ");
-            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
-            //system(command);
-            usleep(100000);
+            printf("(311) ");
+            printf("%d %s %d", pf2, z, i);
+            printf("    ");
         }
+
+        fflush(stdout); // flush the output buffer
+        usleep(100000);
+
         // End of checks for prefix 2
 
         // Check prefix 3 for hits
@@ -303,18 +309,20 @@ void dialer() {
             }
         }
         if (hit == 'Y') {
-            print_with_padding("\033[7m(311)", pf3, z, i, 3);
-            printf("\033[0m ");
-            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
-            //system(command);
-            usleep(100000);
+            printf("\033[7m(311) ");
+            printf("%d %s %d", pf3, z, i);
+            printf("\033[0m    ");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
         } else {
-            print_with_padding("(311)", pf3, z, i, 3);
-            printf(" ");
-            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
-            //system(command);
-            usleep(100000);
+            printf("(311) ");
+            printf("%d %s %d", pf3, z, i);
+            printf("    ");
         }
+
+        fflush(stdout); // flush the output buffer
+        usleep(100000);
+        
         // End of checks for prefix 3
 
         // Check prefix 4 for hits
@@ -326,18 +334,20 @@ void dialer() {
             }
         }
         if (hit == 'Y') {
-            print_with_padding("\033[7m(311)", pf4, z, i, 3);
-            printf("\033[0m \n");
-            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
-            //system(command);
-            usleep(100000);
+            printf("\033[7m(311) ");
+            printf("%d %s %d", pf4, z, i);
+            printf("\033[0m\n");
+            snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
+            system(command);
         } else {
-            print_with_padding("(311)", pf4, z, i, 3);
-            printf(" \n");
-            //snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q &");
-            //system(command);
-            usleep(100000);
+            printf("(311) ");
+            printf("%d %s %d", pf4, z, i);
+            printf("\n");
         }
+
+        fflush(stdout); // flush the output buffer
+        usleep(100000);
+        
         // End of checks for prefix 4
 
         ln = ln + 1;
