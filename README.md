@@ -52,6 +52,9 @@ At the moment, the WOPR C code has the following features:
 *   Imsai 8080 - calls Dialer program
 *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
 *   WOPR - calls other external system commands for Speech synth, shell GPT (for Chat GPT integration) etc.
+* School Computer
+*   Includes a fully functional database
+*   Data file for student records
 
 Still to do:
 * User Accounts (for users other than "Joshua")
