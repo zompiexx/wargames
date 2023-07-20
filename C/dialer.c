@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 void clear_input_buffer() {
     int c;
@@ -23,6 +24,35 @@ void clear_screen() {
     printf("\033[2J\033[H");
 }
 
+void saveNumber(int prefix, char *z, int i) {
+    char buffer[50];
+    sprintf(buffer, "(311) %d %s %d\n", prefix, z, i); // convert number to string
+
+    FILE* file = fopen("systems.txt", "a+");
+    if (file != NULL) {
+        char line[50];
+        bool found = false;
+        while(fgets(line, sizeof(line), file) != NULL) {
+            if(strcmp(line, buffer) == 0) {
+                found = true;
+                break;
+            }
+        }
+
+        if(!found) {
+            fprintf(file, "%s", buffer); // write your data only if it's not found.
+        }
+
+        fclose(file); // always remember to close the file.
+    } else {
+        printf("Error opening file!\n");
+    }
+}
+
+int compareStrings(const void* a, const void* b) {
+    return strcmp((char*)a, (char*)b);
+}
+
 void dialer() {
     int data_pfx[] = {437, 936, 399, 437, 767, 399, 936, 767, 437};
     int data_num[] = {1083, 1493, 2364, 2977, 3395, 3582, 3923, 7305, 8739};
@@ -33,6 +63,10 @@ void dialer() {
     char input;
     char selectedsystem[100];
 	char command[100];
+    char input_string[6];
+    char system_command[200];
+    char systems[10000][100]; // An array of strings
+    int count = 0; // Variable to keep track of how many systems we've read
 
     for (int a = 1; a <= 10; a++) {
         // Read pfx(a)
@@ -52,6 +86,16 @@ void dialer() {
         scanf(" %c", &input);
         clear_input_buffer();
         printf("\n");
+        count = 0;
+        FILE* file = fopen("systems.txt", "r");
+        if (file != NULL) {
+            //printf("File opened successfully.\n");
+            while(fgets(systems[count], sizeof(systems[count]), file) != NULL && count < 10000) {
+                systems[count][strcspn(systems[count], "\n")] = 0; // remove newline character
+                count++;
+            }
+            fclose(file);
+        }
         // printf("The input character is: %c\n", input);
         if (input == 's' || input == 'S') {
             hits=0;
@@ -64,23 +108,21 @@ void dialer() {
             system_list:
             clear_screen();
             printf("                  NUMBERS FOR WHICH CARRIER TONES WERE DETECTED:\n\n");
-            if (hits == 0) {
+            if (count == 0) {
                 printf("                                NO SYSTEMS FOUND\n\n");
-                printf("         NOTE: TYPE LOAD AND PRESS ENTER KEY TO RESTORE SCAN RESULTS\n");
             } else {
-                for (int a = 1; a <= hits; a++) {
+                // Sort systems array
+                qsort(systems, count, sizeof(systems[0]), compareStrings);
+
+                for (int a = 0; a < count; a++) {
                     printf("                                ");
-                    printf("%c", (char)a+64);
-                    printf(" (311) %d %d", pfx[a], num[a]);
-                    printf("\n");
+                    printf("%c ", 'A' + a); // Prefix the output with a letter
+                    printf("%s\n", systems[a]);
                 }
             }
             printf("\n\n                        PRESS ENTER KEY TO RETURN TO MENU\n");
             printf("                        OR SELECT SYSTEM: ");
-
-            char input_string[6];
-            char system_command[200];
-          
+         
             fgets(input_string, sizeof(input_string), stdin);
             input_string[strcspn(input_string, "\n")] = '\0';
             string_to_lowercase(input_string);
@@ -147,13 +189,7 @@ void dialer() {
                 // Execute the command using system()
                 system(command);
                 goto system_list;
-            } else if(strcmp(input_string, "load") == 0) {
-                //do something for system i
-                hits=9;
-                printf("\n                                ");
-                printf("SYSTEM LIST LOADED\n");
-                usleep(2000000);
-                goto system_list;
+            
             } else {
                 printf("\n                                ");
                 printf("   NO MATCH\n");
@@ -274,27 +310,30 @@ void dialer() {
             printf("\033[0m    ");
             snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
             system(command);
+            // Save the hit to the file
+            saveNumber(pf1, z, i);
         } else {
             printf("(311) ");
             printf("%d %s %d", pf1, z, i);
             printf("    ");
             random_number = rand() % 10;
 
-            if (random_number == 10 && s1 == 0) {
+            if (random_number == 1 && s1 == 0) {
                 //only play this sample once
                 s1 = 1;
                 snprintf(command, sizeof(command), "aplay sauls-fish-market.wav -q");
                 system(command);
-            } else if (random_number == 1) {
+            } else if (random_number == 2) {
                 snprintf(command, sizeof(command), "aplay phone-busy-1.wav -q");
                 system(command); 
             } else if (random_number == 3) {
                 snprintf(command, sizeof(command), "aplay hello.wav -q");
                 system(command);
-            } else if (random_number == 5) {
+            } else if (random_number == 4) {
                 snprintf(command, sizeof(command), "aplay disconnected-2x.wav -q");
                 system(command);
-            } else if (random_number == 7) {
+            } else if (random_number == 5 && s5 == 0) {
+                s5 = 1;
                 snprintf(command, sizeof(command), "aplay funny-answer-phone.wav -q");
                 system(command);
             } else {
@@ -322,30 +361,37 @@ void dialer() {
             printf("\033[0m    ");
             snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
             system(command);
+             // Save the hit to the file
+            saveNumber(pf2, z, i);
         } else {
             printf("(311) ");
             printf("%d %s %d", pf2, z, i);
             printf("    ");
-            random_number = rand() % 50;
+            random_number = rand() % 10;
 
-            if (random_number == 10 && s1 == 0) {
+            if (random_number == 1 && s1 == 0) {
                 //only play this sample once
                 s1 = 1;
                 snprintf(command, sizeof(command), "aplay sauls-fish-market.wav -q");
                 system(command);
-            } else if (random_number == 20) {
+            } else if (random_number == 2) {
                 snprintf(command, sizeof(command), "aplay phone-busy-1.wav -q");
                 system(command); 
-            } else if (random_number == 30) {
+            } else if (random_number == 3) {
                 snprintf(command, sizeof(command), "aplay hello.wav -q");
+                system(command);
+            } else if (random_number == 4) {
+                snprintf(command, sizeof(command), "aplay disconnected-2x.wav -q");
+                system(command);
+            } else if (random_number == 5 && s5 == 0) {
+                s5 = 1;
+                snprintf(command, sizeof(command), "aplay funny-answer-phone.wav -q");
                 system(command);
             } else {
                 snprintf(command, sizeof(command), "aplay phone-beep.wav -q");
                 system(command);
             }
-            
-
-        }
+         }
 
         fflush(stdout); // flush the output buffer
         usleep(1000000);
@@ -366,22 +412,31 @@ void dialer() {
             printf("\033[0m    ");
             snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
             system(command);
+            // Save the hit to the file
+            saveNumber(pf3, z, i);
         } else {
             printf("(311) ");
             printf("%d %s %d", pf3, z, i);
             printf("    ");
-            random_number = rand() % 50;
+            random_number = rand() % 10;
 
-            if (random_number == 10 && s1 == 0) {
+            if (random_number == 1 && s1 == 0) {
                 //only play this sample once
                 s1 = 1;
                 snprintf(command, sizeof(command), "aplay sauls-fish-market.wav -q");
                 system(command);
-            } else if (random_number == 20) {
+            } else if (random_number == 2) {
                 snprintf(command, sizeof(command), "aplay phone-busy-1.wav -q");
                 system(command); 
-            } else if (random_number == 30) {
+            } else if (random_number == 3) {
                 snprintf(command, sizeof(command), "aplay hello.wav -q");
+                system(command);
+            } else if (random_number == 4) {
+                snprintf(command, sizeof(command), "aplay disconnected-2x.wav -q");
+                system(command);
+            } else if (random_number == 5 && s5 == 0) {
+                s5 = 1;
+                snprintf(command, sizeof(command), "aplay funny-answer-phone.wav -q");
                 system(command);
             } else {
                 snprintf(command, sizeof(command), "aplay phone-beep.wav -q");
@@ -408,22 +463,31 @@ void dialer() {
             printf("\033[0m\n");
             snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
             system(command);
+            // Save the hit to the file
+            saveNumber(pf4, z, i);
         } else {
             printf("(311) ");
             printf("%d %s %d", pf4, z, i);
             printf("\n");
-            random_number = rand() % 50;
+            random_number = rand() % 10;
 
-            if (random_number == 10 && s1 == 0) {
+            if (random_number == 1 && s1 == 0) {
                 //only play this sample once
                 s1 = 1;
                 snprintf(command, sizeof(command), "aplay sauls-fish-market.wav -q");
                 system(command);
-            } else if (random_number == 20) {
+            } else if (random_number == 2) {
                 snprintf(command, sizeof(command), "aplay phone-busy-1.wav -q");
                 system(command); 
-            } else if (random_number == 30) {
+            } else if (random_number == 3) {
                 snprintf(command, sizeof(command), "aplay hello.wav -q");
+                system(command);
+            } else if (random_number == 4) {
+                snprintf(command, sizeof(command), "aplay disconnected-2x.wav -q");
+                system(command);
+            } else if (random_number == 5 && s5 == 0) {
+                s5 = 1;
+                snprintf(command, sizeof(command), "aplay funny-answer-phone.wav -q");
                 system(command);
             } else {
                 snprintf(command, sizeof(command), "aplay phone-beep.wav -q");
