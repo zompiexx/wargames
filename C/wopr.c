@@ -53,7 +53,6 @@ void author() {
 
 void map() {
     char command[200];
-    usleep(500000);
     snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
     system(command);
     
@@ -164,31 +163,33 @@ void global_thermonuclear_war() {
     usleep(2500000);
     
     //display map
-    map();
-    snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
-    system(command);
-    delayed_print("\033[4mPRIMARY TARGETS\033[24m\n\n");
+    while(1) {
+        map();
+        snprintf(command, sizeof(command), "aplay computer-beeps.wav -q &");
+        system(command);
+        delayed_print("\033[4mPRIMARY TARGETS\033[24m\n\n");
     
-    for (int i = 0; i < count; i++) {
-    for (int j = 0; targets[i][j] != '\0'; j++) {
-        putchar(toupper(targets[i][j]));
-    }
-        printf("\n");
-    }
-    delayed_print("\nCOMMAND (LAUNCH): ");
+        for (int i = 0; i < count; i++) {
+        for (int j = 0; targets[i][j] != '\0'; j++) {
+            putchar(toupper(targets[i][j]));
+        }
+            printf("\n");
+        }
+        delayed_print("\nCOMMAND (L = LAUNCH): ");
+        
+        scanf(" %c", &input);
+        clear_input_buffer();
 
-    char action[20];
-    scanf("%19s", action);
-
-    // Convert input to lowercase
-    for (int i = 0; action[i]; i++) {
-        action[i] = tolower(action[i]);
+        if (input == 'l' || input == 'L') {
+            break;
+        }
     }
-   
     // Rest of the game code goes here: when I write it!
 
-    usleep(10000000);
     clear_screen();
+    fflush(stdout); // flush the output buffer
+    usleep(10000000);
+    
     delayed_print("\nA STRANGE GAME. ");
     //snprintf(command, sizeof(command), "espeak 'A STRANGE GAME'");
     snprintf(command, sizeof(command), "aplay a-strange-game.wav -q");
