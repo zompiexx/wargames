@@ -42,29 +42,29 @@ At the moment, the Wargames C code has the following features:
 * Link all the programs together with system calls
 
 * Imsai 8080 Program
-* * Simulates CP/M 2.2 running on an Imsai 8080
-* * Provides Kermit and Dialer programs
+  * Simulates CP/M 2.2 running on an Imsai 8080
+  * Provides Kermit and Dialer programs
 
 * Dialer Program
-* *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
-* *   Stores systems (WOPR, PAN-AM, BANK) in data files so it tracks progress and allows for customisation
-* *   WOPR - calls other external system commands for Speech synth, shell GPT (for Chat GPT integration) etc.
-* * Samples integration for Imsai 8080/Kermit and Dialer/Modem Sounds and more (you will need to provide your own samples): uses aplay system command call to play wav files
+  *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
+  *   Stores systems (WOPR, PAN-AM, BANK) in data files so it tracks progress and allows for customisation
+  *   WOPR - calls other external system commands for Speech synth, shell GPT (for Chat GPT integration) etc.
+  * Samples integration for Imsai 8080/Kermit and Dialer/Modem Sounds and more (you will need to provide your own samples): uses aplay system command call to play wav files
 
 * School Computer
-* *  Includes a fully functional database
-* *  Data file for student records
+  *  Includes a fully functional database
+  *  Data file for student records
 
 * WOPR
-* * Basic WOPR (Pre-Logon) Commands
-* * "Joshua" Logon sequence
-* * WOPR Chat Sequence: enforce counter for sequencing of inputs/outputs
-* * Date, Time options (post logon)
-* * Global Thermonuclear War Game Map
-* * Global Thermonuclear War Game Primary Targets handling
-* * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
-* * Samples integration for WOPR/Joshua voice (you will need to provide your own samples): uses aplay system command call to play wav file
-* * Integration with Chat GPT for WOPR Chat (requires shell gpt to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
+  * Basic WOPR (Pre-Logon) Commands
+  * "Joshua" Logon sequence
+  * WOPR Chat Sequence: enforce counter for sequencing of inputs/outputs
+  * Date, Time options (post logon)
+  * Global Thermonuclear War Game Map
+  * Global Thermonuclear War Game Primary Targets handling
+  * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
+  * Samples integration for WOPR/Joshua voice (you will need to provide your own samples): uses aplay system command call to play wav file
+  * Integration with Chat GPT for WOPR Chat (requires shell gpt to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
 
 Still to do:
 * User Accounts (for users other than "Joshua")
