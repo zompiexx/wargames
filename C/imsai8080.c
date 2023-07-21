@@ -86,6 +86,9 @@ int main(){
 			printf("type Control-? for command list\n");
 			sleep(2);
 			printf("ATDT3115554855\n");
+			snprintf(system_command, sizeof(system_command), "aplay dtmf-wopr.wav -q");
+            system(system_command);
+            usleep(250000);
 			snprintf(system_command, sizeof(system_command), "aplay 1200-modem.wav -q");
     		system(system_command);
 			sleep(5);
