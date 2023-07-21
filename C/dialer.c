@@ -108,8 +108,8 @@ void read_and_print_systems_found() {
             printf("(311) ");
             printf("%03d ", system_pfx[i]);
             printf("%04d ", system_num[i]);
-            printf("%s ", system_name[i]);
-            printf("(%s)\n", system_action[i]);
+            printf("(%s)\n", system_name[i]);
+            //printf("(%s)\n", system_action[i]);
         }
         if (record_count == 0) {
             printf("                               NO SYSTEMS FOUND\n");
