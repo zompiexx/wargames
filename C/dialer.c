@@ -9,6 +9,10 @@
 #include <ctype.h>
 #include <stdbool.h>
 
+#define MAX_RECORDS 101
+#define MAX_SYSTEM_NAME_LENGTH 31  // updated to 31, to account for the null-terminating character
+#define MAX_SYSTEM_ACTION_LENGTH 101  // updated to 101, to account for the null-terminating character
+
 void clear_input_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
@@ -24,26 +28,151 @@ void clear_screen() {
     printf("\033[2J\033[H");
 }
 
-void saveNumber(int prefix, char *z, int i) {
-    char buffer[50];
-    sprintf(buffer, "(311) %d %s %d\n", prefix, z, i); // convert number to string
+int read_data_from_file(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NAME_LENGTH], char system_action[][MAX_SYSTEM_ACTION_LENGTH]) {
+    FILE *file = fopen("systems_list.txt", "r");
+    if (file == NULL) {
+        printf("Unable to open the file.\n");
+        return -1;
+    }
 
-    FILE* file = fopen("systems.txt", "a+");
+    int valid_records = 0;
+    for (int a = 1; a < MAX_RECORDS; a++) {
+        if (fscanf(file, "%d%d%30s%100s", &system_pfx[a], &system_num[a], system_name[a], system_action[a]) == 4) {
+            valid_records++;
+        } else {
+            break;
+        }
+    }
+
+    fclose(file);
+    return valid_records;
+}
+
+void print_arrays(int valid_records, int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NAME_LENGTH], char system_action[][MAX_SYSTEM_ACTION_LENGTH]) {
+    for (int a = 1; a <= valid_records; a++) {
+        printf("Record %d:\n", a);
+        printf("system_pfx: %d\n", system_pfx[a]);
+        printf("system_num: %d\n", system_num[a]);
+        printf("system_name: %s\n", system_name[a]);
+        printf("system_action: %s\n", system_action[a]);
+        printf("\n"); // For readability
+    }
+}
+
+void read_and_print_systems_found() {
+    int system_pfx[MAX_RECORDS], system_num[MAX_RECORDS];
+    char system_name[MAX_RECORDS][MAX_SYSTEM_NAME_LENGTH], system_action[MAX_RECORDS][MAX_SYSTEM_ACTION_LENGTH];
+
+    FILE *file = fopen("systems_found.txt", "a+");
+    if (file == NULL) {
+        printf("Unable to open the file.\n");
+        return;
+    }
+
+    int record_count = 0; // Keep track of the number of records read
+
+    while(record_count < MAX_RECORDS && !feof(file)) {
+        // Read pfx
+        if (fscanf(file, "%03d", &system_pfx[record_count]) != 1) {
+            break;
+        }
+
+        // Read num
+        if (fscanf(file, "%04d", &system_num[record_count]) != 1) {
+            break;
+        }
+
+        // Read system_name
+        if (fscanf(file, "%30s", system_name[record_count]) != 1) {
+            break;
+        }
+
+        // Read system_action
+        if (fscanf(file, "%100s", system_action[record_count]) != 1) {
+            break;
+        }
+
+        record_count++;
+    }
+
+    fclose(file);
+
+    // start point
+    while(1) {
+        clear_screen();
+        printf("\n                  NUMBERS FOR WHICH CARRIER TONES WERE DETECTED:\n\n");
+
+        for(int i=0; i < record_count; i++){
+            printf("                           ");
+            printf("%c: ", 'A' + i);
+            printf("(311) ");
+            printf("%03d ", system_pfx[i]);
+            printf("%04d ", system_num[i]);
+            printf("%s ", system_name[i]);
+            printf("(%s)\n", system_action[i]);
+        }
+        if (record_count == 0) {
+            printf("                               NO SYSTEMS FOUND\n");
+        }
+        
+        printf("\n                        PRESS ENTER KEY TO RETURN TO MENU");
+        printf("\n                        OR SELECT SYSTEM: ");
+        
+        char selection[3]; // to accommodate the character, the '\n', and the null-terminating character
+        fgets(selection, sizeof(selection), stdin); // Read user's selection
+
+        // If user just pressed Enter, break the outer loop
+        if(selection[0] == '\n' && selection[1] == '\0') {
+            break;
+        }
+
+        int index = toupper(selection[0]) - 'A'; // Convert to upper case and get index
+        if (index < 0 || index >= record_count) {
+            printf("\n                                     NO MATCH\n");
+            usleep(1000000);
+        } else {
+            //printf("INITIATING CONNECTION %s: %s\n", system_name[index], system_action[index]);
+            usleep(1000000);
+            system(system_action[index]); // Execute the selected system action
+        }
+    }
+}
+
+#include <stdio.h>
+#include <string.h>
+
+void saveNumber(int prefix, int num, char *system_name, char *system_action) {
+    char buffer[200], line[200];
+    char record[800] = {0}; // Array to store a record from file.
+    int lineCount = 0;
+
+    sprintf(buffer, "%03d\n%04d\n%s\n%s\n", prefix, num, system_name, system_action); // convert number to string
+
+    // Open the file in read mode to check for duplicate entries, if file exists.
+    FILE* file = fopen("systems_found.txt", "r");
     if (file != NULL) {
-        char line[50];
-        bool found = false;
         while(fgets(line, sizeof(line), file) != NULL) {
-            if(strcmp(line, buffer) == 0) {
-                found = true;
-                break;
+            strcat(record, line); // Append the line read to record
+            lineCount++;
+
+            // After every 4 lines (a record), compare with buffer
+            if(lineCount % 4 == 0) {
+                if(strcmp(record, buffer) == 0) { // If entry already exists
+                    //printf("Duplicate entry, not writing to file.\n");
+                    fclose(file); // Always remember to close the file.
+                    return; // Exit the function early
+                }
+                memset(record, 0, sizeof(record)); // Reset record for next 4 lines
             }
         }
+        fclose(file); // Always remember to close the file after reading.
+    }
 
-        if(!found) {
-            fprintf(file, "%s", buffer); // write your data only if it's not found.
-        }
-
-        fclose(file); // always remember to close the file.
+    // If no duplicate entry was found or file didn't exist, append new entry.
+    file = fopen("systems_found.txt", "a");
+    if (file != NULL) {
+        fprintf(file, "%s", buffer); // Write your data
+        fclose(file); // Always remember to close the file.
     } else {
         printf("Error opening file!\n");
     }
@@ -53,13 +182,11 @@ int compareStrings(const void* a, const void* b) {
     return strcmp((char*)a, (char*)b);
 }
 
-void dialer() {
+void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NAME_LENGTH], char system_action[][MAX_SYSTEM_ACTION_LENGTH]) {
     int data_pfx[] = {437, 936, 399, 437, 767, 399, 936, 767, 437};
     int data_num[] = {1083, 1493, 2364, 2977, 3395, 3582, 3923, 7305, 8739};
     int data_index = 0;
     int hits = 0;
-    int pfx[10];
-    int num[10];
     char input;
     char selectedsystem[100];
 	char command[100];
@@ -68,15 +195,6 @@ void dialer() {
     char systems[10000][100]; // An array of strings
     int count = 0; // Variable to keep track of how many systems we've read
 
-    for (int a = 1; a <= 10; a++) {
-        // Read pfx(a)
-        pfx[a] = data_pfx[data_index];
-
-        // Read num(a)
-        num[a] = data_num[data_index];
-
-        data_index++;
-    }
 
     while(1) {
         menu:
@@ -86,16 +204,7 @@ void dialer() {
         scanf(" %c", &input);
         clear_input_buffer();
         printf("\n");
-        count = 0;
-        FILE* file = fopen("systems.txt", "r");
-        if (file != NULL) {
-            //printf("File opened successfully.\n");
-            while(fgets(systems[count], sizeof(systems[count]), file) != NULL && count < 10000) {
-                systems[count][strcspn(systems[count], "\n")] = 0; // remove newline character
-                count++;
-            }
-            fclose(file);
-        }
+
         // printf("The input character is: %c\n", input);
         if (input == 's' || input == 'S') {
             hits=0;
@@ -105,97 +214,7 @@ void dialer() {
             exit(0);    
         }
         if (input == 'v' || input == 'V') {
-            system_list:
-            clear_screen();
-            printf("                  NUMBERS FOR WHICH CARRIER TONES WERE DETECTED:\n\n");
-            if (count == 0) {
-                printf("                                NO SYSTEMS FOUND\n\n");
-            } else {
-                // Sort systems array
-                //qsort(systems, count, sizeof(systems[0]), compareStrings);
-
-                for (int a = 0; a < count; a++) {
-                    printf("                                ");
-                    printf("%c ", 'A' + a); // Prefix the output with a letter
-                    printf("%s\n", systems[a]);
-                }
-            }
-            printf("\n\n                        PRESS ENTER KEY TO RETURN TO MENU\n");
-            printf("                        OR SELECT SYSTEM: ");
-         
-            fgets(input_string, sizeof(input_string), stdin);
-            input_string[strcspn(input_string, "\n")] = '\0';
-            string_to_lowercase(input_string);
-            if(strcmp(input_string, "a") == 0){
-                //do something for system a
-                printf("\n                                ");
-                printf("SYSTEM A SELECTED\n");
-                usleep(2000000);
-                goto system_list;
-            } else if(strcmp(input_string, "b") == 0) {
-                //do something for system b
-                printf("\n                                ");                
-                printf("SYSTEM B SELECTED\n");
-                usleep(2000000);
-                goto system_list;
-            } else if(strcmp(input_string, "c") == 0) {
-                //do something for system c
-                printf("\n                                ");
-                printf("SYSTEM C SELECTED\n");
-                usleep(2000000);
-                goto system_list;
-            } else if(strcmp(input_string, "d") == 0) {
-                //do something for system d
-                printf("\n                                ");
-                printf("SYSTEM D SELECTED\n");
-                usleep(2000000);
-                goto system_list;
-            } else if(strcmp(input_string, "e") == 0) {
-                //do something for system e
-                printf("\n                                ");
-                printf("SYSTEM E SELECTED\n");
-                usleep(2000000);
-                goto system_list;
-            } else if(strcmp(input_string, "f") == 0) {
-                //do something for system f
-                printf("\n                                ");
-                printf("SYSTEM F SELECTED\n");
-                usleep(2000000);
-                goto system_list;
-            } else if(strcmp(input_string, "g") == 0) {
-                //do something for system g
-                printf("\n                                ");
-                printf("SYSTEM G SELECTED\n");
-                usleep(2000000);
-                goto system_list;
-            } else if(strcmp(input_string, "h") == 0) {
-                //do something for system h
-                printf("\n                                ");
-                printf("SYSTEM H SELECTED\n");
-                usleep(2000000);
-                goto system_list;
-            } else if(strcmp(input_string, "i") == 0) {
-                //do something for system i
-                printf("\n                                ");
-                printf("SYSTEM I SELECTED\n");
-                usleep(2000000);
-                clear_screen();
-                printf("CONNECTING\n\n");
-                snprintf(system_command, sizeof(system_command), "aplay 1200-modem.wav -q");
-                system(system_command);
-                usleep(5000000);             
-    		    //connect to System I (WOPR)
-                strcpy(command, "./wopr");
-                // Execute the command using system()
-                system(command);
-                goto system_list;
-            
-            } else {
-                printf("\n                                ");
-                printf("   NO MATCH\n");
-                usleep(2000000);
-                goto menu;
-            }
+            read_and_print_systems_found();
         }
     }
 
@@ -236,8 +255,8 @@ void dialer() {
     int s3=0;
     int s4=0;
     int s5=0;
-    char z[6] = "";
     int random_number;
+    int n;
 
     for (int i = nd_start; i <= nd_end; i++) {
         if (ln == 0 || i == (nd_start+10) || i == (nd_start+100) || i == (nd_start+1000)) {
@@ -286,36 +305,27 @@ void dialer() {
         }
         pfx_set:
 
-        if (i > 0 && i < 10) {
-            strcpy(z, "000");
-        } else if (i > 9 && i < 100) {
-            strcpy(z, "00");
-        } else if (i > 99 && i < 1000) {
-            strcpy(z, "0");
-        } else if (i > 999) {
-            strcpy(z, "");
-        }
-
         // Check prefix 1 for hits
         hit = 'N';
-        for (int n = 1; n < 10; n++) {
-            if ((pfx[n] == pf1) && (i == num[n])) {
+        for (n = 1; n < 10; n++) {
+            if ((system_pfx[n] == pf1) && (i == system_num[n])) {
                 hit = 'Y';
                 hits = hits + 1;
+                break;
             }
         }
         if (hit == 'Y') {
             printf("\033[7m(311) ");
-            printf("%d %s %d", pf1, z, i);
-            printf("\033[0m    ");
+            printf("%03d %04d", pf1, i);
+            printf("\033[0m     ");
             snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
             system(command);
             // Save the hit to the file
-            saveNumber(pf1, z, i);
+            saveNumber(pf1, i, system_name[n], system_action[n]);
         } else {
             printf("(311) ");
-            printf("%d %s %d", pf1, z, i);
-            printf("    ");
+            printf("%03d %04d", pf1, i);
+            printf("     ");
             random_number = rand() % 10;
 
             if (random_number == 1 && s1 == 0) {
@@ -349,24 +359,25 @@ void dialer() {
 
         // Check prefix 2 for hits
         hit = 'N';
-        for (int n = 1; n < 10; n++) {
-            if ((pfx[n] == pf2) && (i == num[n])) {
+        for (n = 1; n < 10; n++) {
+            if ((system_pfx[n] == pf2) && (i == system_num[n])) {
                 hit = 'Y';
                 hits = hits + 1;
+                break;
             }
         }
         if (hit == 'Y') {
             printf("\033[7m(311) ");
-            printf("%d %s %d", pf2, z, i);
-            printf("\033[0m    ");
+            printf("%03d %04d", pf2, i);
+            printf("\033[0m     ");
             snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
             system(command);
-             // Save the hit to the file
-            saveNumber(pf2, z, i);
+            // Save the hit to the file
+            saveNumber(pf2, i, system_name[n], system_action[n]);
         } else {
             printf("(311) ");
-            printf("%d %s %d", pf2, z, i);
-            printf("    ");
+            printf("%03d %04d", pf2, i);
+            printf("     ");
             random_number = rand() % 10;
 
             if (random_number == 1 && s1 == 0) {
@@ -400,24 +411,25 @@ void dialer() {
 
         // Check prefix 3 for hits
         hit = 'N';
-        for (int n = 1; n < 10; n++) {
-            if ((pfx[n] == pf3) && (i == num[n])) {
+        for (n = 1; n < 10; n++) {
+            if ((system_pfx[n] == pf3) && (i == system_num[n])) {
                 hit = 'Y';
                 hits = hits + 1;
+                break;
             }
         }
         if (hit == 'Y') {
             printf("\033[7m(311) ");
-            printf("%d %s %d", pf3, z, i);
-            printf("\033[0m    ");
+            printf("%03d %04d", pf3, i);
+            printf("\033[0m     ");
             snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
             system(command);
             // Save the hit to the file
-            saveNumber(pf3, z, i);
+            saveNumber(pf3, i, system_name[n], system_action[n]);
         } else {
             printf("(311) ");
-            printf("%d %s %d", pf3, z, i);
-            printf("    ");
+            printf("%03d %04d", pf3, i);
+            printf("     ");
             random_number = rand() % 10;
 
             if (random_number == 1 && s1 == 0) {
@@ -451,23 +463,24 @@ void dialer() {
 
         // Check prefix 4 for hits
         hit = 'N';
-        for (int n = 1; n < 10; n++) {
-            if ((pfx[n] == pf4) && (i == num[n])) {
+        for (n = 1; n < 10; n++) {
+            if ((system_pfx[n] == pf4) && (i == system_num[n])) {
                 hit = 'Y';
                 hits = hits + 1;
+                break;
             }
         }
         if (hit == 'Y') {
             printf("\033[7m(311) ");
-            printf("%d %s %d", pf4, z, i);
+            printf("%03d %04d", pf4, i);
             printf("\033[0m\n");
             snprintf(command, sizeof(command), "aplay computer-beeps-short.wav -q");
             system(command);
             // Save the hit to the file
-            saveNumber(pf4, z, i);
+            saveNumber(pf4, i, system_name[n], system_action[n]);
         } else {
             printf("(311) ");
-            printf("%d %s %d", pf4, z, i);
+            printf("%03d %04d", pf4, i);
             printf("\n");
             random_number = rand() % 10;
 
@@ -513,7 +526,21 @@ void dialer() {
 }
 
 int main() {
-    dialer();
+    int system_pfx[MAX_RECORDS], system_num[MAX_RECORDS];
+    char system_name[MAX_RECORDS][MAX_SYSTEM_NAME_LENGTH];
+    char system_action[MAX_RECORDS][MAX_SYSTEM_ACTION_LENGTH];
+
+    int valid_records = read_data_from_file(system_pfx, system_num, system_name, system_action);
+    if (valid_records == -1) {
+        printf("Error reading the file.\n");
+        return -1;
+    }
+
+    //for debugging only
+    //print_arrays(valid_records, system_pfx, system_num, system_name, system_action);
+    //usleep(5000000);
+
+    dialer(system_pfx, system_num, system_name, system_action);  // call the dialer function with appropriate arguments
 
     exit(0);
 }
