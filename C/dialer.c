@@ -62,6 +62,7 @@ void print_arrays(int valid_records, int system_pfx[], int system_num[], char sy
 void read_and_print_systems_found() {
     int system_pfx[MAX_RECORDS], system_num[MAX_RECORDS];
     char system_name[MAX_RECORDS][MAX_SYSTEM_NAME_LENGTH], system_action[MAX_RECORDS][MAX_SYSTEM_ACTION_LENGTH];
+    char system_command[200];
 
     FILE *file = fopen("systems_found.txt", "a+");
     if (file == NULL) {
@@ -132,7 +133,20 @@ void read_and_print_systems_found() {
             usleep(1000000);
         } else {
             //printf("INITIATING CONNECTION %s: %s\n", system_name[index], system_action[index]);
+            clear_screen();
+            fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
             usleep(1000000);
+            printf("ATDT311%03d%04d\n", system_pfx[index], system_num[index]);
+            snprintf(system_command, sizeof(system_command), "aplay dtmf-wopr.wav -q");
+            system(system_command);
+            usleep(250000);
+    		snprintf(system_command, sizeof(system_command), "aplay 1200-modem.wav -q");
+    		system(system_command);
+			clear_screen();
+            fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
+            usleep(2000000);
+			printf("CONNECTING\n\n");
+            usleep(2000000);
             system(system_action[index]); // Execute the selected system action
         }
     }
