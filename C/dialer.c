@@ -112,7 +112,7 @@ void dialer() {
                 printf("                                NO SYSTEMS FOUND\n\n");
             } else {
                 // Sort systems array
-                qsort(systems, count, sizeof(systems[0]), compareStrings);
+                //qsort(systems, count, sizeof(systems[0]), compareStrings);
 
                 for (int a = 0; a < count; a++) {
                     printf("                                ");
@@ -126,62 +126,62 @@ void dialer() {
             fgets(input_string, sizeof(input_string), stdin);
             input_string[strcspn(input_string, "\n")] = '\0';
             string_to_lowercase(input_string);
-            if((strcmp(input_string, "a") == 0) && hits >=1){
+            if(strcmp(input_string, "a") == 0){
                 //do something for system a
                 printf("\n                                ");
                 printf("SYSTEM A SELECTED\n");
                 usleep(2000000);
                 goto system_list;
-            } else if((strcmp(input_string, "b") == 0) && hits >=2){
+            } else if(strcmp(input_string, "b") == 0) {
                 //do something for system b
                 printf("\n                                ");                
                 printf("SYSTEM B SELECTED\n");
                 usleep(2000000);
                 goto system_list;
-            } else if((strcmp(input_string, "c") == 0) && hits >=3){
+            } else if(strcmp(input_string, "c") == 0) {
                 //do something for system c
                 printf("\n                                ");
                 printf("SYSTEM C SELECTED\n");
                 usleep(2000000);
                 goto system_list;
-            } else if((strcmp(input_string, "d") == 0) && hits >=4){
+            } else if(strcmp(input_string, "d") == 0) {
                 //do something for system d
                 printf("\n                                ");
                 printf("SYSTEM D SELECTED\n");
                 usleep(2000000);
                 goto system_list;
-            } else if((strcmp(input_string, "e") == 0) && hits >=5){
+            } else if(strcmp(input_string, "e") == 0) {
                 //do something for system e
                 printf("\n                                ");
                 printf("SYSTEM E SELECTED\n");
                 usleep(2000000);
                 goto system_list;
-            } else if((strcmp(input_string, "f") == 0) && hits >=6){
+            } else if(strcmp(input_string, "f") == 0) {
                 //do something for system f
                 printf("\n                                ");
                 printf("SYSTEM F SELECTED\n");
                 usleep(2000000);
                 goto system_list;
-            } else if((strcmp(input_string, "g") == 0) && hits >=7){
+            } else if(strcmp(input_string, "g") == 0) {
                 //do something for system g
                 printf("\n                                ");
                 printf("SYSTEM G SELECTED\n");
                 usleep(2000000);
                 goto system_list;
-            } else if((strcmp(input_string, "h") == 0) && hits >=8){
+            } else if(strcmp(input_string, "h") == 0) {
                 //do something for system h
                 printf("\n                                ");
                 printf("SYSTEM H SELECTED\n");
                 usleep(2000000);
                 goto system_list;
-            } else if((strcmp(input_string, "i") == 0) && hits >=9){
+            } else if(strcmp(input_string, "i") == 0) {
                 //do something for system i
                 printf("\n                                ");
                 printf("SYSTEM I SELECTED\n");
                 usleep(2000000);
                 clear_screen();
                 printf("CONNECTING\n\n");
-                snprintf(system_command, sizeof(system_command), "aplay dial-up-modem-01.wav -q");
+                snprintf(system_command, sizeof(system_command), "aplay 1200-modem.wav -q");
                 system(system_command);
                 usleep(5000000);             
     		    //connect to System I (WOPR)

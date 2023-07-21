@@ -86,7 +86,7 @@ int main(){
 			printf("type Control-? for command list\n");
 			sleep(2);
 			printf("ATDT3115554855\n");
-			snprintf(system_command, sizeof(system_command), "aplay dial-up-modem-01.wav -q");
+			snprintf(system_command, sizeof(system_command), "aplay 1200-modem.wav -q");
     		system(system_command);
 			sleep(5);
 			clear_screen();
