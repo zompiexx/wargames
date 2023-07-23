@@ -1,1 +1,0 @@
-You are now sat at the terminal of your IMSAI 8080 Computer. Use the MODEM     program to establish a connection to the school computer and then change the    Biology Grades for you and Jennifer. You know where the school write down the   password. It is currently set to: PENCIL
