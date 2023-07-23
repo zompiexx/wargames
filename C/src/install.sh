@@ -12,6 +12,7 @@ pip install shell-gpt
 cp C/src/WOPR.json ~/.config/shell_gpt/roles
 
 #compile and install C code
+cd ~/wargames
 gcc C/src/imsai8080.c -o ./imsai8080
 gcc C/src/school.c -o ./school
 gcc C/src/dialer.c -o ./dialer
