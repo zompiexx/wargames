@@ -49,7 +49,7 @@ At the moment, the Wargames C code has the following features:
   *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
   *   Stores systems (WOPR, PAN-AM, BANK) in data files so it tracks progress and allows for customisation
   *   WOPR - calls other external system commands for Speech synth, shell GPT (for Chat GPT integration) etc.
-  * Samples integration for Imsai 8080/Kermit and Dialer/Modem Sounds and more (you will need to provide your own samples): uses aplay system command call to play wav files
+  * Samples integration for Imsai 8080/Kermit and Dialer/Modem Sounds and more: uses aplay system command call to play wav files
 
 * School Computer
   *  Includes a fully functional database
@@ -63,7 +63,7 @@ At the moment, the Wargames C code has the following features:
   * Global Thermonuclear War Game Map
   * Global Thermonuclear War Game Primary Targets handling
   * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
-  * Samples integration for WOPR/Joshua voice (you will need to provide your own samples): uses aplay system command call to play wav file
+  * Samples integration for WOPR/Joshua voice: uses aplay system command call to play wav file
   * Integration with Chat GPT for WOPR Chat (requires shell gpt to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
 
 * Bank
