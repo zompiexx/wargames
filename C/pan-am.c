@@ -14,6 +14,13 @@
 #define CHARACTER_DELAY 5000  // 1000 = 1ms
 #define MAX_PASSENGERS 2
 #define NAME_LENGTH 30
+#define FLIGHT_NUMBER_LENGTH 10
+#define DEPARTURE_DATE_LENGTH 9
+#define DEPARTURE_TIME 5
+#define AIRPORT_LENGTH 50
+#define SMOKING_LENGTH 2
+#define FLIGHT_CARRIER_LENGTH 10
+#define FLIGHT_CLASS_LENGTH 2
 
 void clear_screen() {
     printf("\033[2J\033[H");
@@ -36,12 +43,24 @@ int main(){
     char input[100];
     char buffer[200];
     int choice;
-    char destination[100];
     int passengers_number = 0;
     char passenger_name[MAX_PASSENGERS][NAME_LENGTH];
     double fare = 1164.1;
     double tax = 70.9;
     double total_fare, total_tax, total;
+
+    // New variables
+    char flight_carrier[FLIGHT_CARRIER_LENGTH];
+    char flight_number[FLIGHT_NUMBER_LENGTH];
+    char flight_class[FLIGHT_CLASS_LENGTH];
+    char departure_date[DEPARTURE_DATE_LENGTH];
+    char departure_time[DEPARTURE_TIME];
+    char departure_airport[AIRPORT_LENGTH];
+    char destination_airport[AIRPORT_LENGTH];
+    char smoking[SMOKING_LENGTH];
+    char month[3];
+    char day[3];
+    char year[3];
 
     usleep(1000000);
 	
@@ -84,11 +103,11 @@ int main(){
             clear_screen();
             delayed_print("007:2312:435:936                                       PAN-AM RESERVATION SYSTEM\n");
             delayed_print("DESTINATION         : ");
-            fgets(destination, sizeof(destination), stdin);
+            fgets(destination_airport, sizeof(destination_airport), stdin);
             
             // Convert destination to uppercase
-            for (int i = 0; destination[i]; i++) {
-                destination[i] = toupper(destination[i]);
+            for (int i = 0; destination_airport[i]; i++) {
+                destination_airport[i] = toupper(destination_airport[i]);
             }
 
                       
@@ -96,15 +115,39 @@ int main(){
                 clear_screen();
                 delayed_print("007:2312:435:936                                       PAN-AM RESERVATION SYSTEM\n");
                 delayed_print("DESTINATION         : ");
-                delayed_print(destination);
+                delayed_print(destination_airport);
                 delayed_print("POINT OF DEPARTURE  : CHICAGO/O'HARE\n");
+
+                //set flight variables: start
+                strcpy(departure_airport, "CHICAGO/O'HARE");
+                strcpy(flight_carrier, "PANAM");
+                strcpy(flight_number, "114");
+                strcpy(flight_class, "Q");
+                strcpy(departure_date, "081883");
+                strcpy(departure_time, "0815");
+
+            
+
+                // Copy two characters starting at index 0 to month.
+                strncpy(month, departure_date, 2);
+                month[2] = '\0';  // Null-terminate the string.
+
+                // Copy two characters starting at index 2 to day.
+                strncpy(day, departure_date+2, 2);
+                day[2] = '\0';  // Null-terminate the string.
+
+                // Copy two characters starting at index 4 to year.
+                strncpy(year, departure_date+4, 2);
+                year[2] = '\0';  // Null-terminate the string.
+
                 delayed_print("\n009:4277:019:907                                        DATE OF ISSUE : 03/10/82\n");
                 delayed_print("\n                                           DEPART DATE : 08/18/83    FLIGHT: 114\n");
-                delayed_print("\n                            CARRIER:   FLIGHT:   CLASS:   DATE:   TIME:  STATUS:\n");
-                delayed_print("                              PANAM       114       Q     18AUG  0815A    OK\n");
+                delayed_print("\n                          CARRIER:   FLIGHT:   CLASS:   DATE:    TIME:  STATUS:\n");
+                sprintf(buffer, "                           %s       %s       %s     %s/%s/%s  %s    OK\n",flight_carrier,flight_number,flight_class, month, day, year,departure_time);
+                delayed_print(buffer);
                 delayed_print("FROM: CHICAGO/O'HARE\n"); 
                 delayed_print("  TO: ");
-                delayed_print(destination);
+                delayed_print(destination_airport);
                 delayed_print("\nNUMBER OF PASSENGERS  : ");
                 scanf("%d", &passengers_number);
                 if(passengers_number > MAX_PASSENGERS) {
