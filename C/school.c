@@ -75,37 +75,37 @@ void input_data() {
     Student new_student;
     char buffer[MAX_BUFFER_LENGTH];
 
-    snprintf(buffer, MAX_BUFFER_LENGTH, "Enter name: ");
+    snprintf(buffer, MAX_BUFFER_LENGTH, "NAME: ");
     delayed_print(buffer);
     fgets(new_student.name, MAX_FIELD_LENGTH, stdin);
     strip_newline(new_student.name);
 
-    snprintf(buffer, MAX_BUFFER_LENGTH, "Enter class: ");
+    snprintf(buffer, MAX_BUFFER_LENGTH, "CLASS: ");
     delayed_print(buffer);
     fgets(new_student.class, MAX_FIELD_LENGTH, stdin);
     strip_newline(new_student.class);
 
-    snprintf(buffer, MAX_BUFFER_LENGTH, "Enter course: ");
+    snprintf(buffer, MAX_BUFFER_LENGTH, "COURSE: ");
     delayed_print(buffer);
     fgets(new_student.course, MAX_FIELD_LENGTH, stdin);
     strip_newline(new_student.course);
 
-    snprintf(buffer, MAX_BUFFER_LENGTH, "Enter grade: ");
+    snprintf(buffer, MAX_BUFFER_LENGTH, "GRADE: ");
     delayed_print(buffer);
     new_student.grade = getchar();
     getchar(); // consume the '\n' left by getchar
 
-    snprintf(buffer, MAX_BUFFER_LENGTH, "Enter teacher: ");
+    snprintf(buffer, MAX_BUFFER_LENGTH, "TEACHER: ");
     delayed_print(buffer);
     fgets(new_student.teacher, MAX_FIELD_LENGTH, stdin);
     strip_newline(new_student.teacher);
 
-    snprintf(buffer, MAX_BUFFER_LENGTH, "Enter period: ");
+    snprintf(buffer, MAX_BUFFER_LENGTH, "PERIOD: ");
     delayed_print(buffer);
     fgets(new_student.period, MAX_FIELD_LENGTH, stdin);
     strip_newline(new_student.period);
 
-    snprintf(buffer, MAX_BUFFER_LENGTH, "Enter room: ");
+    snprintf(buffer, MAX_BUFFER_LENGTH, "ROOM: ");
     delayed_print(buffer);
     fgets(new_student.room, MAX_FIELD_LENGTH, stdin);
     strip_newline(new_student.room);
@@ -202,7 +202,7 @@ void search_data(char *query) {
     }
 
     if (!found) {
-        delayed_print("No match found for the given query\n");
+        delayed_print("NO MATCH\n");
     } else {
         delayed_print("\n");
     }
@@ -210,14 +210,16 @@ void search_data(char *query) {
     // If a matching record is found, provide the option to edit, delete the record or return to main menu
     if (found_count > 0) {
         char option;
-        delayed_print("Options: E(dit), D(elete), R(eturn): ");
+        delayed_print("OPTIONS: E(DIT), D(ELETE), R(ETURN): ");
         scanf(" %c", &option);
+
         getchar(); // consume newline
+
         option = toupper(option);
 
         if (option == 'E') {
             char classNum[MAX_FIELD_LENGTH];
-            delayed_print("Enter class number to change grade for: ");
+            delayed_print("CLASS TO CHANGE GRADE FOR: ");
             fgets(classNum, MAX_FIELD_LENGTH, stdin);
             strip_newline(classNum); // remove newline character
             to_lower_case(classNum); // convert classNum to lower case
@@ -235,18 +237,18 @@ void search_data(char *query) {
             }
 
             if (idx == -1) {
-                delayed_print("No such class number found for this student.\n");
+                delayed_print("NO MATCH ON CLASS FOR STUDENT.\n");
             } else {
-                delayed_print("Enter new grade: ");
+                delayed_print("NEW GRADE: ");
                 char tempGrade = toupper(getchar());
                 getchar(); // consume the '\n' left by getchar
                 students[idx].grade = tempGrade;
-                delayed_print("Student record updated successfully.\n");
+                delayed_print("STUDENT RECORD UPDATED.\n");
                 store_data();
             }
         } else if (option == 'D') {
             char classNum[MAX_FIELD_LENGTH];
-            delayed_print("Enter class number for record to be deleted: ");
+            delayed_print("CLASS FOR RECORD TO BE DELETED: ");
             fgets(classNum, MAX_FIELD_LENGTH, stdin);
             strip_newline(classNum); // remove newline character
             to_lower_case(classNum); // convert classNum to lower case
@@ -264,27 +266,27 @@ void search_data(char *query) {
             }
 
             if (idx == -1) {
-                delayed_print("No such class number found for this student.\n");
+                delayed_print("NO MATCH ON CLASS FOR STUDENT.\n");
             } else {
                 char confirm;
-                delayed_print("Are you sure you want to delete this record? (Y/N): ");
+                delayed_print("ARE YOU SURE? (Y/N): ");
                 scanf(" %c", &confirm);
                 getchar(); // consume newline
                 confirm = toupper(confirm);
 
                 if (confirm == 'Y') {
                     delete_record(idx);
-                    delayed_print("Student record deleted successfully.\n");
+                    delayed_print("STUDENT RECORD DELETED.\n");
                     store_data();
                 } else {
-                    delayed_print("Operation cancelled.\n");
+                    delayed_print("OPERATION CANCELLED.\n");
                 }
             }
         } else if (option == 'R') {
-            delayed_print("Returning to main menu.\n");
+            //delayed_print("Returning to main menu.\n");
             return;
         } else {
-            delayed_print("Invalid option. Returning to main menu.\n");
+            //delayed_print("Invalid option. Returning to main menu.\n");
         }
     }
 }
@@ -317,7 +319,7 @@ void show_menu() {
                 input_data();
                 break;
             case 2:
-                delayed_print("Enter search query: ");
+                delayed_print("ENTER SEARCH QUERY: ");
                 fgets(query, MAX_FIELD_LENGTH, stdin);
                 query[strcspn(query, "\n")] = 0; // remove the newline character left by fgets
                 search_data(query);
