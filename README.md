@@ -85,9 +85,10 @@ If you want to try it out for yourself, here are the steps:
 * You will need a gcc compiler installed
   *  Optional - only needed for client/server mode: You will need a telnet client installed (on the client machine)
   *  Optional - only needed for client/server mode: You will need telnetd installed (on the server side), but can be left disabled as will be called as required
-* open a shell in Linux
+* open a terminal shell in Linux
 * cd ~
 * git clone https://github.com/zompiexx/wargames
-* run: ./install.sh
+* chmod +x install.sh
+* ./install.sh
 
 NOTE: The C programs are all work in progress, so expect some bugs! The reason for using telnet instead of ssh is that the Imsai 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use SSH (although, this will require authentication - so it's not ideal for this simulation).
