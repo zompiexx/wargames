@@ -35,7 +35,7 @@ Useful Links:
 
 Update 25 June 2022: The plan is to re-write the WOPR (and other remote systems) code in C so that it can be easily compiled on various platforms. The intention is to make it client/server so that when the DIALER (running on the IMSAI 8080 or other CP/M machine) connects to a system, e.g. WOPR, Pan AM etc. these will actually be hosted on another machine, ideally Linux, each with a unique TCP listener port; assuming I can get BASIC-80 to open the uc1 port on the IMSAI 8080, so AT commands can be sent to the WiFi modem. If you are interested in working on the development of this project in C for the various systems from the Wargames movie (School Computer, Pan AM, Bank, WOPR - and maybe RIPLEY), please get in touch by logging a ticket.
 
-Update 11 June 2023: I have started re-writing the WOPR (Server) in C on Linux. It's very early days, but the initial code can be found here: https://github.com/zompiexx/wargames/blob/main/C/wopr.c. The code is still a little untidy, but I will refine as the project develops.
+Update 11 June 2023: I have started re-writing the WOPR (Server) in C on Linux. The code is still a little untidy, but I will refine as the project develops.
 
 At the moment, the Wargames C code has the following features:
 * TCP Listener using telnetd for Telnet Access (different port for each system, easily changed in scripts to suit) - tested with Imsai 8080esp (with WiFi modem) & Kermit (currently requires speech synth and shell gpt to be disabled in code, as telnetd is not logged on so will not have permission to access those resources, but will build those features into the Imsai 8080 client program to overcome this)
