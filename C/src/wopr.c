@@ -474,8 +474,8 @@ void joshua() {
             // Construct the shell command
             char sgpt[200] = "sgpt --role WOPR \"";
             strcat(sgpt, input);
-            strcat(sgpt, "\" | tee /dev/tty | espeak");
-            //strcat(sgpt, "\" ");
+            //strcat(sgpt, "\" | tee /dev/tty | espeak");
+            strcat(sgpt, "\" ");
             printf("\n");
 
             // Call the shell command
