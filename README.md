@@ -40,7 +40,7 @@ Update 25 June 2022: The plan is to re-write the WOPR (and other remote systems)
 Update 11 June 2023: I have started re-writing the Wargames programs for the various systems in C on Linux. The code is still a little untidy in places, but I will refine it as the project develops.
 
 At the moment, the Wargames C code has the following features:
-* TCP Listener using telnetd for Telnet Access (different port for each system, easily changed in scripts to suit) - tested with Imsai 8080esp (with WiFi modem) & Kermit (currently requires speech synth to be disabled in code, as telnetd is not logged on so will not have permission to access required resources, but will build those features into the Imsai 8080 client program in the future to overcome this). You can run the programs locally though, will all features, including the Speech Synth and Shell GPT (Chat GPT) integration enabled.
+* TCP Listener using telnetd for Telnet Access (different port for each system, easily changed in scripts to suit) - tested with Imsai 8080esp (with WiFi modem) & Kermit (currently requires speech synth to be disabled in code, as telnetd is not logged on so will not have permission to access required resources, but will build those features into the Imsai 8080 client program in the future to overcome this). You can run the programs locally though, with all features, including the Speech Synth integration enabled.
 * Linked all the programs together with system calls
 
 * Imsai 8080 Program
