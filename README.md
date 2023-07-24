@@ -96,4 +96,4 @@ If you want to try it out for yourself, here are the steps:
 * ./install.sh
 * now run: ./imsai8080
 
-NOTE: The C programs are all work in progress, so expect some bugs! The reason for using telnet instead of ssh is that the Imsai 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use SSH (although, this will require authentication - so it's not ideal for this simulation).
+NOTE: The C programs are all work in progress, so expect some bugs! The reason for using telnet instead of ssh is that the Imsai 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use ssh (although, this will require authentication - so it's not ideal for this simulation).
