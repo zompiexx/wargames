@@ -90,12 +90,12 @@ If you want to try it out for yourself, here are the steps:
   *  Optional - only needed for client/server mode: You will need telnetd installed (on the server side), but can be left disabled as will be called as required
 
 *  Installation:
-  * open a terminal shell in Linux
-  * cd ~
-  * git clone https://github.com/zompiexx/wargames
-  * cd wargames
-  * chmod +x install.sh
-  * run: ./install.sh
-  * run: ./imsai8080
+  *  open a terminal shell in Linux
+  *  cd ~
+  *  git clone https://github.com/zompiexx/wargames
+  *  cd wargames
+  *  chmod +x install.sh
+  *  run: ./install.sh
+  *  run: ./imsai8080
 
 NOTE: The C programs are all work in progress, so expect some bugs! The reason for using telnet instead of ssh is that the Imsai 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use ssh (although, this will require authentication - so it's not ideal for this simulation).
