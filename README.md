@@ -95,7 +95,7 @@ If you want to try it out for yourself, here are the steps:
   *  cd ~
   *  git clone https://github.com/zompiexx/wargames
   *  cd wargames
-  *  chmod +x install.sh
+  *  chmod +x *.sh
   *  run: ./install.sh
   *  For local mode, run: ./imsai8080
   *  For server mode, run: ./wargames_start.sh (this will start all of the Wargames Computer Systems listening using their assigned ports using telnetd)
