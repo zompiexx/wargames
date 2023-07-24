@@ -88,6 +88,7 @@ If you want to try it out for yourself, here are the steps:
 * open a terminal shell in Linux
 * cd ~
 * git clone https://github.com/zompiexx/wargames
+* cd wargames
 * chmod +x install.sh
 * ./install.sh
 
