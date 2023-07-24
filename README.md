@@ -88,6 +88,7 @@ If you want to try it out for yourself, here are the steps:
 * You will need a gcc compiler installed
   *  Optional - only needed for client/server mode: You will need a telnet client installed (on the client machine)
   *  Optional - only needed for client/server mode: You will need telnetd installed (on the server side), but can be left disabled as will be called as required
+
 *  Installation:
   *  open a terminal shell in Linux
   *  cd ~
