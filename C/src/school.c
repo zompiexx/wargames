@@ -117,6 +117,16 @@ void input_data() {
 void read_data() {
 	student_count = 0;
     FILE* file = fopen("students.txt", "r");
+
+    // If the file does not exist
+    if(file == NULL) {
+        // Create the file
+        file = fopen("students.txt", "w");
+        fclose(file);
+        // Open the file again for reading
+        file = fopen("students.txt", "r");
+    }
+
     Student new_student;
     char line[MAX_FIELD_LENGTH];
 
