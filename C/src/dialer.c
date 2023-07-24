@@ -282,42 +282,42 @@ void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NA
             printf("CODE PRFX NUMBER   CODE PRFX NUMBER   CODE PRFX NUMBER   CODE PRFX NUMBER\n");
             printf("________________________________________________________________________________\n\n");
 
-            if (pfxset == 1) {
-                goto pfx_set;
-            }
+            //if (pfxset == 1) {
+            //    goto pfx_set;
+            //}
 
             if (ln == 0 && i == nd_start) {
                 printf("(311) %d          (311) %d          (311) %d          (311) %d\n", pf1, pf2, pf3, pf4);
-                printf("(311) ");
-                scanf(" %d", &pf1t);
-                clear_input_buffer();
-                printf("                   (311) ");
-                scanf(" %d", &pf2t);
-                clear_input_buffer();
-                printf("                                      (311) ");
-                scanf(" %d", &pf3t);
-                clear_input_buffer();
-                printf("                                                         (311) ");
-                scanf(" %d", &pf4t);
-                clear_input_buffer();
+                //printf("(311) ");
+                //scanf(" %d", &pf1t);
+                //clear_input_buffer();
+                //printf("                   (311) ");
+                //scanf(" %d", &pf2t);
+                //clear_input_buffer();
+                //printf("                                      (311) ");
+                //scanf(" %d", &pf3t);
+                //clear_input_buffer();
+                //printf("                                                         (311) ");
+                //scanf(" %d", &pf4t);
+                //clear_input_buffer();
 
-                if (pf1t > 999 || pf2t > 999 || pf3t > 999 || pf4t > 999 || pf1t < 0 || pf2t < 0 || pf3t < 0 || pf4t < 0) {
-                    printf("\nINVALID PREFIXES ENTERED - PRESS ENTER KEY TO CONTINUE\n");
-                    fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
-                    getchar(); // Wait for the Enter key to be pressed
-                    clear_screen();
-                    goto scan_start;
-                } else {
-                    pf1 = pf1t;
-                    pf2 = pf2t;
-                    pf3 = pf3t;
-                    pf4 = pf4t;
-                    pfxset = 1;
-                    goto scan_start;
-                }
+                //if (pf1t > 999 || pf2t > 999 || pf3t > 999 || pf4t > 999 || pf1t < 0 || pf2t < 0 || pf3t < 0 || pf4t < 0) {
+                //    printf("\nINVALID PREFIXES ENTERED - PRESS ENTER KEY TO CONTINUE\n");
+                //    fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
+                //    getchar(); // Wait for the Enter key to be pressed
+                //    clear_screen();
+                //    goto scan_start;
+                //} else {
+                //    pf1 = pf1t;
+                //    pf2 = pf2t;
+                //    pf3 = pf3t;
+                //    pf4 = pf4t;
+                //    pfxset = 1;
+                //    goto scan_start;
+                //}
             }
         }
-        pfx_set:
+        //pfx_set:
 
         // Check prefix 1 for hits
         hit = 'N';
