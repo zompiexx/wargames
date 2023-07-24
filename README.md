@@ -99,7 +99,7 @@ If you want to try it out for yourself, here are the steps:
   *  run: ./install.sh
   *  For local mode, run: ./imsai8080
   *  For server mode, run: ./wargames_start.sh (this will start all of the Wargames Computer Systems listening using their assigned ports using telnetd)
-  *  Now, connect to any of the systems by using: telnet, for example, to connect to the Imsai 8080 running on the same machine, you would use: telnet localhost 9999
+  *  Now, connect to any of the systems by using telnet. For example, to connect to the Imsai 8080 running on the same machine, you would use: telnet localhost 9999
   *  To Stop Wargames server, run: ./wargames_stop.sh
 
 NOTE: The C programs are all work in progress, so expect some bugs! The reason for using telnet instead of ssh is that the Imsai 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use ssh (although, this will require authentication - so it's not ideal for this simulation).
