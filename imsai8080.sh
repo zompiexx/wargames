@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/andy/wargames
+cd $HOME/wargames
 
 ./imsai8080
 
