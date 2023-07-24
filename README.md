@@ -40,7 +40,7 @@ Update 25 June 2022: The plan is to re-write the WOPR (and other remote systems)
 Update 11 June 2023: I have started re-writing the Wargames programs for the various systems in C on Linux. The code is still a little untidy in places, but I will refine it as the project develops.
 
 At the moment, the Wargames C code has the following features:
-* TCP Listener using telnetd for Telnet Access (different port for each system, easily changed in scripts to suit) - tested with Imsai 8080esp (with WiFi modem) & Kermit (currently requires speech synth and shell gpt to be disabled in code, as telnetd is not logged on so will not have permission to access those resources, but will build those features into the Imsai 8080 client program to overcome this). You can run the programs locally though, will all features, including the Speech Synth and Shell GPT (Chat GPT) integration enabled.
+* TCP Listener using telnetd for Telnet Access (different port for each system, easily changed in scripts to suit) - tested with Imsai 8080esp (with WiFi modem) & Kermit (currently requires speech synth to be disabled in code, as telnetd is not logged on so will not have permission to access required resources, but will build those features into the Imsai 8080 client program in the future to overcome this). You can run the programs locally though, will all features, including the Speech Synth and Shell GPT (Chat GPT) integration enabled.
 * Linked all the programs together with system calls
 
 * Imsai 8080 Program
@@ -66,6 +66,7 @@ At the moment, the Wargames C code has the following features:
   * Global Thermonuclear War Game Map
   * Global Thermonuclear War Game Primary Targets handling
   * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
+    * Speech synth left disabled in the WOPR code to maintain compatability with telnet access. If running locally, you can re-enable it.
   * Samples integration for WOPR/Joshua voice: uses aplay system command call to play wav file
   * Integration with Chat GPT for WOPR Chat (requires Shell GPT to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
 
