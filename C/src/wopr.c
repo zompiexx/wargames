@@ -161,29 +161,124 @@ void global_thermonuclear_war() {
     //snprintf(command, sizeof(command), "espeak 'TARGET SELECTION COMPLETE'");
     //system(command);
     usleep(2500000);
-    
-    //display map
+
     while(1) {
         map();
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-        system(command);
-        delayed_print("\033[4mPRIMARY TARGETS\033[24m\n\n");
-    
+        delayed_print("\033[4mPRIMARY TARGETS\033[24m\n");
         for (int i = 0; i < count; i++) {
-        for (int j = 0; targets[i][j] != '\0'; j++) {
-            putchar(toupper(targets[i][j]));
-        }
+            for (int j = 0; targets[i][j] != '\0'; j++) {
+                putchar(toupper(targets[i][j]));
+            }
             printf("\n");
         }
         delayed_print("\nCOMMAND (L = LAUNCH): ");
-        
         scanf(" %c", &input);
         clear_input_buffer();
-
-        if (input == 'l' || input == 'L') {
+            if (input == 'l' || input == 'L') {
+            usleep(2000000);
             break;
         }
     }
+
+    int t;
+    
+    map();
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+    system(command);
+    delayed_print("\033[4mTRAJECTORY HEADING\033[24m");
+    delayed_print("   ");
+    fflush(stdout); // flush the output buffer
+    delayed_print("\033[4mTRAJECTORY HEADING\033[24m");
+    delayed_print("  ");
+    fflush(stdout); // flush the output buffer
+    delayed_print("\033[4mTRAJECTORY HEADING\033[24m");
+    delayed_print("   ");
+    fflush(stdout); // flush the output buffer
+    delayed_print("\033[4mTRAJECTORY HEADING\033[24m");
+    delayed_print("\n");
+    fflush(stdout); // flush the output buffer
+    usleep(2000000);
+        
+    for (int t = 0; t < count; t++) {
+        if(t == 0) {
+            delayed_print("A-5520-A 939 523  ");
+        } else if (t == 1) {
+            delayed_print("       B 664 295  ");
+        } else if (t == 2) {
+            delayed_print("       C 125 386  ");
+        } else if (t == 3) {
+            delayed_print("       D 768 347  ");
+        } else if (t == 4) {
+            delayed_print("       E 463 284  ");
+        }
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        system(command);
+        delayed_print("   ");
+        fflush(stdout); // flush the output buffer
+        usleep(2000000);
+        if(t == 0) {
+            delayed_print("C-5520-A 243 587  ");
+        } else if (t == 1) {
+            delayed_print("       B 892 754  ");
+        } else if (t == 2) {
+            delayed_print("       C 374 256  ");
+        } else if (t == 3) {
+            delayed_print("       D 364 867  ");
+        } else if (t == 4) {
+            delayed_print("       E 873 543  ");
+        }
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        system(command);
+        delayed_print("  ");
+        fflush(stdout); // flush the output buffer
+        usleep(2000000);
+        if(t == 0) {
+            delayed_print("E-5520-A 398 984  ");
+        } else if (t == 1) {
+            delayed_print("       B 394 345  ");
+        } else if (t == 2) {
+            delayed_print("       C 407 340  ");
+        } else if (t == 3) {
+            delayed_print("       D 251 953  ");
+        } else if (t == 4) {
+            delayed_print("       E 093 684  ");
+        } 
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        system(command);   
+        delayed_print("   ");
+        fflush(stdout); // flush the output buffer
+        usleep(2000000);
+        if(t == 0) {
+            delayed_print("G-5520-A 919 437  ");
+        } else if (t == 1) {
+            delayed_print("       B 132 147  ");
+        } else if (t == 2) {
+            delayed_print("       C 095 485  ");
+        } else if (t == 3) {
+            delayed_print("       D 489 794  ");
+        } else if (t == 4) {
+            delayed_print("       E 025 344  ");
+        }  
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        system(command);
+        delayed_print("\n");
+        fflush(stdout); // flush the output buffer
+        usleep(2000000);
+    } 
+    usleep(5000000);
+
+    printf("\n                        PRESS ENTER KEY TO CONTINUE\n");
+
+    while(1) {        
+        char selection[3]; // to accommodate the character, the '\n', and the null-terminating character
+        fgets(selection, sizeof(selection), stdin); // Read user's selection
+
+        // If user just pressed Enter, break the outer loop
+        if(selection[0] == '\n' && selection[1] == '\0') {
+            break;
+        }
+    }
+    
     // Rest of the game code goes here: when I write it!
 
     clear_screen();
@@ -200,7 +295,6 @@ void global_thermonuclear_war() {
     snprintf(command, sizeof(command), "aplay samples/the-only-winning-move-is-not-to-play.wav -q");
     system(command);
 }
-
 
 void joshua() {
     char command[200];
