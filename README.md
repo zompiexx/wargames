@@ -82,8 +82,6 @@ Still to do:
 * Directory Listing
 * Global Thermonuclear War Game Logic
 * Tic-Tac-Toe Game with AI
-* Write Bank Computer System program
-* Write Pan-Am Computer system program
 
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
