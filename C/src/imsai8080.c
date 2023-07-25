@@ -25,7 +25,13 @@ int main(){
 	printf("\n");
 	imsai8080:
 	printf("A>");
-	scanf("%s", command);
+	//scanf("%s", command);
+	fgets(command, sizeof(command), stdin);
+	
+	if(command[0] == '\0') { // if command is empty
+		printf("\n");
+    	goto imsai8080;
+	}
 
 	// Remove trailing newline character
     command[strcspn(command, "\n")] = '\0';
@@ -38,18 +44,14 @@ int main(){
 	if(strcmp(command,"cls")==0) {
 		clear_screen();
 		goto imsai8080;
-	} 
-	if(strcmp(command,"bye")==0) {
+	} else if(strcmp(command,"bye")==0) {
 		printf("INT disabled and HALT Op-Code reached at 0101\n");
 		goto bye;
-	}
-	if(strcmp(command,"dir")==0) {
+	} else if(strcmp(command,"dir")==0) {
 		printf("A: BYE     COM : CLS     COM : DIALER  COM: DIR     COM\n");
 		printf("A: KERMIT  COM\n");
 		goto imsai8080;
-	} 
-    
-    if(strcmp(command,"dialer")==0) {
+	} else if(strcmp(command,"dialer")==0) {
         clear_screen();
         printf("DIALER\n\n");
         sleep(5);
@@ -58,9 +60,7 @@ int main(){
         // Execute the command using system()
         system(command);
 		goto imsai8080;
-	} 
-  
-	if(strcmp(command,"kermit")==0) {
+	} else if(strcmp(command,"kermit")==0) {
 		printf("Kermit-80 v4.11 configured for Generic CP/M-80 with Generic (Dumb) CRT Terminal\n");
 		printf("type selected\n");
 		printf("\n");
@@ -100,7 +100,9 @@ int main(){
             // Execute the command using system()
             system(command);
         }
-	goto kermit;   
+		goto kermit;   
+	} else {
+		goto imsai8080;
 	}
 	for(int i = 0; command[i]; i++){
       command[i] = toupper(command[i]);
