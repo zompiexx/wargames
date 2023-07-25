@@ -220,10 +220,10 @@ void search_data(char *query) {
     // If a matching record is found, provide the option to edit, delete the record or return to main menu
     if (found_count > 0) {
         char option;
+        char optionBuffer[3];  // Buffer to hold the input and newline character
         delayed_print("OPTIONS: E(DIT), D(ELETE), R(ETURN): ");
-        scanf(" %c", &option);
-
-        getchar(); // consume newline
+        fgets(optionBuffer, 3, stdin);
+        option = optionBuffer[0];
 
         option = toupper(option);
 
@@ -279,9 +279,10 @@ void search_data(char *query) {
                 delayed_print("NO MATCH ON CLASS FOR STUDENT.\n");
             } else {
                 char confirm;
+                char confirmBuffer[3];
                 delayed_print("ARE YOU SURE? (Y/N): ");
-                scanf(" %c", &confirm);
-                getchar(); // consume newline
+                fgets(confirmBuffer, 3, stdin);
+                confirm = confirmBuffer[0];
                 confirm = toupper(confirm);
 
                 if (confirm == 'Y') {
@@ -292,7 +293,7 @@ void search_data(char *query) {
                     delayed_print("OPERATION CANCELLED.\n");
                 }
             }
-        } else if (option == 'R') {
+        } else if (option == 'R' || option == '\r') {
             //delayed_print("Returning to main menu.\n");
             return;
         } else {
@@ -314,6 +315,7 @@ void show_menu() {
     int choice;
     char query[MAX_FIELD_LENGTH];
     char buffer[MAX_BUFFER_LENGTH];
+    char choice_str[MAX_FIELD_LENGTH];
     while (1) {
         delayed_print("\n");
         delayed_print("MENU:\n");
@@ -322,8 +324,9 @@ void show_menu() {
         delayed_print("3. DISPLAY ALL STUDENT DATA\n");
         delayed_print("4. EXIT\n\n");
         delayed_print("SELECT OPTION: ");
-        scanf("%d", &choice);
-        getchar(); // to consume the newline character left by scanf
+        fgets(choice_str, MAX_FIELD_LENGTH, stdin);
+        strip_newline(choice_str);
+        choice = atoi(choice_str);
         switch (choice) {
             case 1:
                 input_data();
@@ -351,7 +354,7 @@ void school_computer() {
     char password[100];
     struct termios term, term_orig;
     char buffer[MAX_BUFFER_LENGTH];
-
+    int attempts = 0;
     while (1) {
         clear_screen();
         delayed_print("PDP 11/270 PRB TIP #45                                                TTY 34/984\n");
@@ -384,6 +387,12 @@ void school_computer() {
             delayed_print("INVALID PASSWORD\n");
             delayed_print("\n");
             usleep(1000000);
+            attempts++;
+            if(attempts >= 3){
+                delayed_print("TOO MANY UNSUCCESSFUL LOGON ATTEMPTS\n");
+                delayed_print("--DISCONNECTED--\n");
+                exit(0);
+            }
         }
     }
 }
