@@ -15,6 +15,11 @@ void clear_screen() {
     printf("\033[2J\033[H");
 }
 
+void clear_input_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 int main(){
 	clear_screen();
 	char command[100];
@@ -70,7 +75,22 @@ int main(){
 		sleep(2);
 		kermit:
 		printf("Kermit-80   0I:>");
-		scanf("%s",command);
+
+		fgets(command, sizeof(command), stdin);
+		
+		if(command[0] == '\0') { // if command is empty
+			printf("\n");
+    		goto kermit;
+		}
+
+		// Remove trailing newline character
+    	command[strcspn(command, "\n")] = '\0';
+
+    	// Convert input to lowercase
+    	for (int i = 0; command[i]; i++) {
+        	command[i] = tolower(command[i]);
+    	}
+
 		if(strcmp(command,"?")==0)
 		{
 			printf("CONNECT to host on selected port\n");
