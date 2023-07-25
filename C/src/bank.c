@@ -36,9 +36,12 @@ int main(){
     delayed_print("TGS SYSTEM A-45 34:34:33                                              Y-1293.323\n");
     delayed_print("UNION MARINE BANK - SOUTHWEST REGIONAL DATA CENTER\n\n");
     delayed_print("LOGON    > ");
-    scanf("%s",username);
+    fgets(username, sizeof(username), stdin); // fgets to replace scanf
+    username[strcspn(username, "\n")] = '\0'; // remove trailing newline
+
     delayed_print("PASSWORD > ");
-    scanf("%s",password);
+    fgets(password, sizeof(password), stdin); // fgets to replace scanf
+    password[strcspn(password, "\n")] = '\0'; // remove trailing newline
     printf("\n");
     usleep(1000000);
 
@@ -48,4 +51,3 @@ int main(){
 
 	return 0;
 }
-
