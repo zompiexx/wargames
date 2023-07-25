@@ -75,13 +75,14 @@ At the moment, the Wargames C code has the following features:
   * Very simple program, just accepts any username and password
 
 * Pan-AM
-  * Reservation is working, but needs functionaility added to store reservations in array
+  * Reservation is working, but needs functionaility added to store reservations to data file
 
 Still to do:
 * User Accounts (for users other than "Joshua")
 * Directory Listing
 * Global Thermonuclear War Game Logic
 * Tic-Tac-Toe Game with AI
+* Add search functionality to Pan-AM system
 
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
