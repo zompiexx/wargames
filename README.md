@@ -65,6 +65,7 @@ At the moment, the Wargames C code has the following features:
   * Date, Time options (post logon)
   * Global Thermonuclear War Game Map
   * Global Thermonuclear War Game Primary Targets handling
+  * Global Thermonuclear Wag Game Trajectory Heading Tracking
   * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
     * Speech synth left disabled in the WOPR code to maintain compatability with telnet access. If running locally, you can re-enable it.
   * Samples integration for WOPR/Joshua voice: uses aplay system command call to play wav file
