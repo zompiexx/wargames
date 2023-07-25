@@ -211,7 +211,7 @@ void global_thermonuclear_war() {
         } else if (t == 4) {
             delayed_print("       E 463 284  ");
         }
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);
         delayed_print("   ");
         fflush(stdout); // flush the output buffer
@@ -227,7 +227,7 @@ void global_thermonuclear_war() {
         } else if (t == 4) {
             delayed_print("       E 873 543  ");
         }
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);
         delayed_print("  ");
         fflush(stdout); // flush the output buffer
@@ -243,7 +243,7 @@ void global_thermonuclear_war() {
         } else if (t == 4) {
             delayed_print("       E 093 684  ");
         } 
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);   
         delayed_print("   ");
         fflush(stdout); // flush the output buffer
@@ -259,7 +259,7 @@ void global_thermonuclear_war() {
         } else if (t == 4) {
             delayed_print("       E 025 344  ");
         }  
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);
         delayed_print("\n");
         fflush(stdout); // flush the output buffer
