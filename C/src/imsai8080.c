@@ -121,15 +121,18 @@ int main(){
             system(command);
         }
 		goto kermit;   
+	}else if(command[0] == '\0') { // if command is empty
+		goto imsai8080;
 	} else {
+		for(int i = 0; command[i]; i++){
+      		command[i] = toupper(command[i]);
+    	}
+    	printf("%s", command);
+		printf("? \n");
+		printf("\n");
 		goto imsai8080;
 	}
-	for(int i = 0; command[i]; i++){
-      command[i] = toupper(command[i]);
-    }
-    printf("%s", command);
-	printf("? \n");
-	printf("\n");
+	
 	goto imsai8080;
 	bye:
 	return 0;
