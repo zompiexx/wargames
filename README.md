@@ -71,7 +71,7 @@ At the moment, the Wargames C code has the following features:
   * Global Thermonuclear War Game Primary Targets handling
   * Global Thermonuclear War Game Trajectory Heading Tracking
   * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Server only at the moment, would require a custom telnet client to work client side
-    * Speech synth left disabled in the WOPR code to maintain compatability with telnet access. If running locally, you can re-enable it.
+    * If you need to disable the speech synth to run in client/server mode using telnet, edit the WOPR.c file and replace the line: strcat(sgpt, "\" | tee /dev/tty | espeak"); - with strcat(sgpt, "\" ");
   * Samples integration for WOPR/Joshua voice: uses aplay system command call to play wav file
   * Integration with Chat GPT for WOPR Chat (requires Shell GPT to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
 
