@@ -53,9 +53,9 @@ At the moment, the Wargames C code has the following features:
 
 * Dialer Program
   *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
-  *   Stores systems (WOPR, PAN-AM, BANK) in data files so it tracks progress and allows for customisation
+  *   Stores systems (WOPR, PAN-AM, BANK) in data files so it tracks progress and allows for customisation such as external systems you define
   *   WOPR - calls other external system commands for Speech synth, shell GPT (for Chat GPT integration) etc.
-  *   Samples integration for Imsai 8080/Kermit and Dialer/Modem Sounds and more: uses aplay system command call to play wav files
+  *   Samples integration for IMSAI 8080/Kermit and Dialer/Modem Sounds and more: uses aplay system command call to play wav files
   *   Data files can be customised to connect to other systems
 
 * School Computer
