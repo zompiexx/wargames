@@ -75,14 +75,15 @@ At the moment, the Wargames C code has the following features:
   * Very simple program, just accepts any username and password
 
 * Pan-AM
-  * Reservation are stored to a datafile
-  * Search facility to search for passenger name against datafile
+  * Reservations are stored in a datafile
+  * Search facility to search for passenger name against datafile (quite basic at the moment)
 
 Still to do:
 * User Accounts (for users other than "Joshua")
 * Directory Listing
 * Global Thermonuclear War Game Logic
 * Tic-Tac-Toe Game with AI
+* Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
 
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
