@@ -1,8 +1,8 @@
 # wargames
-Wargames Simulator written in BASIC and later re-written/converted to C by Andy Glenn.
+Wargames Movie Simulator originally written in BASIC, and later re-written/converted to C by Andy Glenn.
 It Simulates the IMSAI 8080, WOPR and other Computer Systems from the Wargames Movie, 1983, featuring Matthew Broderick and Ally Sheedy.
 
-This is a Wargames Simulator written in BASIC and C. It has been developed using BASIC-80 on CP/M and later re-written/converted to C on Linux (more details on progress of the C code below), but could be easily ported to other platforms. To save space in memory, the BASIC code uses text files for the help pages use which are included in the project.
+It was originally developed using BASIC-80 on CP/M, and later re-written/converted to C on Linux (more details on progress of the C code below), but could be easily ported to other platforms. To save space in memory, the BASIC code uses text files for the help pages use which are included in the project.
 
 If you are intending to run this on a CP/M machine, you will need a SYSGEN 64 image/boot disk.
 
