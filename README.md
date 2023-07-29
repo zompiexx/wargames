@@ -1,8 +1,8 @@
 # wargames
-Wargames Simulator written in BASIC and C by Andy Glenn.
+Wargames Simulator written in BASIC and later re-written/converted to C by Andy Glenn.
 It Simulates the IMSAI 8080, WOPR and other Computer Systems from the Wargames Movie, 1983, featuring Matthew Broderick and Ally Sheedy.
 
-This is a Wargames Simulator written in BASIC and C. It has been developed using BASIC-80 on CP/M and C on Linux (more details on progress of the C code below), but could be easily ported to other platforms. To save space in memory, the BASIC code uses text files for the help pages use which are included in the project.
+This is a Wargames Simulator written in BASIC and C. It has been developed using BASIC-80 on CP/M and later re-written/converted to C on Linux (more details on progress of the C code below), but could be easily ported to other platforms. To save space in memory, the BASIC code uses text files for the help pages use which are included in the project.
 
 If you are intending to run this on a CP/M machine, you will need a SYSGEN 64 image/boot disk.
 
@@ -75,14 +75,14 @@ At the moment, the Wargames C code has the following features:
   * Very simple program, just accepts any username and password
 
 * Pan-AM
-  * Reservation is working, but needs functionaility added to store reservations to data file
+  * Reservation are stored to a datafile
+  * Search facility to search for passenger name against datafile
 
 Still to do:
 * User Accounts (for users other than "Joshua")
 * Directory Listing
 * Global Thermonuclear War Game Logic
 * Tic-Tac-Toe Game with AI
-* Add search functionality to Pan-AM system
 
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
