@@ -2,7 +2,7 @@
 Wargames Movie Simulator by Andy Glenn, originally written in BASIC, and later re-written/converted to C. Both the BASIC and C versions are included in this project.
 It Simulates the IMSAI 8080, WOPR and other Computer Systems from the Wargames Movie, 1983, featuring Matthew Broderick and Ally Sheedy.
 
-NOTE: The C programs are all work in progress, so expect some bugs! The client/server mode uses telnet instead of ssh because the Imsai 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use ssh (although, this will require authentication - so it's not ideal for this simulation). If you are running it in local mode, then this doesn't affect you.
+NOTE: The C programs are all work in progress, so expect some bugs! The client/server mode uses telnet instead of ssh because the IMSAI 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use ssh (although, this will require authentication - so it's not ideal for this simulation). If you are running it in local mode, then this doesn't affect you.
 
 WARNING: In addition to the simulated computer systems featured in the Wargames movie, the dialer, associated data files, and scripts may contain connection details for other systems that are period (1970s, 1980s) relevant, such as Telehack.com - which simulates the old ARPANET. You should check that the method of connection used in the scripts is acceptable for your purposes, and if not - then either modify the scripts accordingly, or not use that feature. When connecting to external systems, especially over the Internet, it is always best practice to use encrypted protocols such as ssh. For example, in order to connect to Telehack.com using ssh as opposed to telnet, you would need to modify the telehack.sh script to replace the telnet command with ssh, in the appropriate format, e.g. ssh -p 2222 username@telehack.com. It's not possible to provide the scripts for ssh access since your username to an external system will be unique, which is why the scripts provided use telnet - and are only intended to be used for guest access.
 
@@ -47,8 +47,8 @@ At the moment, the Wargames C code has the following features:
 * TCP Listener using telnetd for Telnet Access (different port for each system, easily changed in scripts to suit) - tested with Imsai 8080esp (with WiFi modem) & Kermit (currently requires speech synth to be disabled in code, as telnetd is not logged on so will not have permission to access required resources, but will build those features into the Imsai 8080 client program in the future to overcome this). You can run the programs locally though, with all features, including the Speech Synth integration enabled.
 * Linked all the programs together with system calls
 
-* Imsai 8080 Program
-  * Simulates CP/M 2.2 running on an Imsai 8080
+* IMSAI 8080 Program
+  * Simulates CP/M 2.2 running on an IMSAI 8080
   * Provides Kermit and Dialer programs
 
 * Dialer Program
