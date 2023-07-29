@@ -1,3 +1,3 @@
 #!/bin/bash
 
-telnet telehack.com
+telnet telehack.com 1337
