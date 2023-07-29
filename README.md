@@ -1,6 +1,6 @@
 # wargames
 Wargames Movie Simulator by Andy Glenn, originally written in BASIC, and later re-written/converted to C. Both the BASIC and C versions are included in this project.
-It Simulates the IMSAI 8080, WOPR and other Computer Systems from the Wargames Movie, 1983, featuring Matthew Broderick and Ally Sheedy.
+It simulates the IMSAI 8080, WOPR and other Computer Systems from the Wargames Movie, 1983, featuring Matthew Broderick and Ally Sheedy.
 
 NOTE: The C programs are all work in progress, so expect some bugs! The client/server mode uses telnet instead of ssh because the IMSAI 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use ssh (although, this will require authentication - so it's not ideal for this simulation). If you are running it in local mode, then this doesn't affect you.
 
