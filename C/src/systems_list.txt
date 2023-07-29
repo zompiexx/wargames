@@ -1,7 +1,7 @@
 437
 1083
-system
-command
+ARPANET
+./telehack.sh
 936
 1493
 system
