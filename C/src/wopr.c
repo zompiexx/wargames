@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <time.h>
+#include <ncurses.h>
 
 #define CHARACTER_DELAY 5000  // 1000 = 1ms
 #define MAX_TARGETS 5
@@ -80,11 +81,64 @@ void map() {
 
 }
 
+void map_animation(int m, int t, char side[]) {
+    //this needs work
+    //m=missile
+    //t=trajectory
+    //side=side
+
+    char command[200];
+    int col=0;
+    int row=0;
+    
+    if (strstr(side, "UNITED STATES") != NULL) {
+        col=14;
+        row=9;
+        col=(col+m);
+        row=(row-t);
+    } else if (strstr(side, "SOVIET UNION") != NULL) {
+        col=65;
+        row=9;
+        col=(col-m);
+        row=(row-t);
+    }
+
+    // Save the current cursor position
+    printf("\033[s");
+
+    // Set text color to red
+    printf("\033[31m");
+
+    // Move the cursor to the specified position and print the character
+    
+    if (strstr(side, "UNITED STATES") != NULL) {
+        printf("\033[%d;%dH%s", row, col, "^");
+    } else if (strstr(side, "SOVIET UNION") != NULL) {
+        printf("\033[%d;%dH%s", row, col, "^");
+    }  
+    fflush(stdout); // flush the output buffer
+    //snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+    //system(command);
+    //usleep(1000000);
+
+    //debug print target screen location
+    //printf("\033[%d;%dH%s", 50, 50, "");
+    //printf("row: %d col: %d",row,col);
+    
+    // Reset text color to default
+    printf("\033[0m");
+
+    // Restore the original cursor position
+    printf("\033[u");
+}
+
 void global_thermonuclear_war() {
     char command[200];
     int count = 0;
     char side[20];  // Array to store the selected side
     char input;
+    int m=0; //missile number
+    int t=0; //trajectory heading
     startgame:
     clear_screen();
     map();
@@ -168,48 +222,68 @@ void global_thermonuclear_war() {
         for (int i = 0; i < count; i++) {
             for (int j = 0; targets[i][j] != '\0'; j++) {
                 putchar(toupper(targets[i][j]));
+                usleep(CHARACTER_DELAY);
             }
+            usleep(1000000);
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
             printf("\n");
         }
+        usleep(1000000);
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+        system(command);
         delayed_print("\nCOMMAND (L = LAUNCH): ");
         scanf(" %c", &input);
         clear_input_buffer();
-            if (input == 'l' || input == 'L') {
+        if (input == 'l' || input == 'L') {
             usleep(2000000);
             break;
         }
     }
-
-    int t;
-    
+       
     map();
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-    system(command);
+    usleep(1000000);
     delayed_print("\033[4mTRAJECTORY HEADING\033[24m");
     delayed_print("   ");
     fflush(stdout); // flush the output buffer
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+    system(command);
+    usleep(500000);
     delayed_print("\033[4mTRAJECTORY HEADING\033[24m");
     delayed_print("  ");
     fflush(stdout); // flush the output buffer
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+    system(command);
+    usleep(500000);
     delayed_print("\033[4mTRAJECTORY HEADING\033[24m");
     delayed_print("   ");
     fflush(stdout); // flush the output buffer
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+    system(command);
+    usleep(500000);
     delayed_print("\033[4mTRAJECTORY HEADING\033[24m");
     delayed_print("\n");
     fflush(stdout); // flush the output buffer
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+    system(command);
     usleep(2000000);
-        
+    
     for (int t = 0; t < count; t++) {
         if(t == 0) {
             delayed_print("A-5520-A 939 523  ");
+            map_animation(m, t, side);
         } else if (t == 1) {
             delayed_print("       B 664 295  ");
+            map_animation(m, t, side);
         } else if (t == 2) {
             delayed_print("       C 125 386  ");
+            map_animation(m, t, side);
         } else if (t == 3) {
             delayed_print("       D 768 347  ");
+            map_animation(m, t, side);
         } else if (t == 4) {
             delayed_print("       E 463 284  ");
+            map_animation(m, t, side);
         }
         snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);
@@ -218,14 +292,19 @@ void global_thermonuclear_war() {
         usleep(2000000);
         if(t == 0) {
             delayed_print("C-5520-A 243 587  ");
+            map_animation(m+3, t, side);
         } else if (t == 1) {
             delayed_print("       B 892 754  ");
+            map_animation(m+3, t, side);
         } else if (t == 2) {
             delayed_print("       C 374 256  ");
+            map_animation(m+3, t, side);
         } else if (t == 3) {
             delayed_print("       D 364 867  ");
+            map_animation(m+3, t, side);
         } else if (t == 4) {
             delayed_print("       E 873 543  ");
+            map_animation(m+3, t, side);
         }
         snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);
@@ -234,14 +313,19 @@ void global_thermonuclear_war() {
         usleep(2000000);
         if(t == 0) {
             delayed_print("E-5520-A 398 984  ");
+            map_animation(m+6, t, side);
         } else if (t == 1) {
             delayed_print("       B 394 345  ");
+            map_animation(m+6, t, side);
         } else if (t == 2) {
             delayed_print("       C 407 340  ");
+            map_animation(m+6, t, side);
         } else if (t == 3) {
             delayed_print("       D 251 953  ");
+            map_animation(m+6, t, side);
         } else if (t == 4) {
             delayed_print("       E 093 684  ");
+            map_animation(m+6, t, side);
         } 
         snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);   
@@ -250,14 +334,19 @@ void global_thermonuclear_war() {
         usleep(2000000);
         if(t == 0) {
             delayed_print("G-5520-A 919 437  ");
+            map_animation(m+9, t, side);
         } else if (t == 1) {
             delayed_print("       B 132 147  ");
+            map_animation(m+9, t, side);
         } else if (t == 2) {
             delayed_print("       C 095 485  ");
+            map_animation(m+9, t, side);
         } else if (t == 3) {
             delayed_print("       D 489 794  ");
+            map_animation(m+9, t, side);
         } else if (t == 4) {
             delayed_print("       E 025 344  ");
+            map_animation(m+9, t, side);
         }  
         snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);
