@@ -13,6 +13,8 @@
 #define MAX_SYSTEM_NAME_LENGTH 31  // updated to 31, to account for the null-terminating character
 #define MAX_SYSTEM_ACTION_LENGTH 101  // updated to 101, to account for the null-terminating character
 
+int number_of_systems = 0;  // global variable for the number of systems found in systems_list.txt file
+
 void clear_input_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
@@ -45,6 +47,9 @@ int read_data_from_file(int system_pfx[], int system_num[], char system_name[][M
     }
 
     fclose(file);
+    
+    number_of_systems = valid_records;  // Set the renamed global variable
+
     return valid_records;
 }
 
@@ -152,9 +157,6 @@ void read_and_print_systems_found() {
     }
 }
 
-#include <stdio.h>
-#include <string.h>
-
 void saveNumber(int prefix, int num, char *system_name, char *system_action) {
     char buffer[200], line[200];
     char record[800] = {0}; // Array to store a record from file.
@@ -201,7 +203,7 @@ void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NA
     int data_num[] = {1083, 1493, 2364, 2977, 3395, 3582, 3923, 7305, 8739};
     int data_index = 0;
     int hits = 0;
-    char input;
+    char input[20];
     char selectedsystem[100];
 	char command[100];
     char input_string[6];
@@ -215,19 +217,19 @@ void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NA
         clear_screen();
         printf("DIALER\n\n");
         printf("MENU - (S)CAN, (V)IEW OR E(X)IT: ");
-        scanf(" %c", &input);
-        clear_input_buffer();
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\n")] = 0;
         printf("\n");
 
-        // printf("The input character is: %c\n", input);
-        if (input == 's' || input == 'S') {
+        // printf("The input character is: %c\n", input[0]);
+        if (input[0] == 's' || input[0] == 'S') {
             hits=0;
             goto numcheck;
         }
-        if (input == 'x' || input == 'X') {
+        if (input[0] == 'x' || input[0] == 'X') {
             exit(0);    
         }
-        if (input == 'v' || input == 'V') {
+        if (input[0] == 'v' || input[0] == 'V') {
             read_and_print_systems_found();
         }
     }
@@ -237,13 +239,16 @@ void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NA
     int nd_end;
 
     clear_screen();
+
     printf("START NUMBER (1 - 9999): ");
-    scanf(" %d", &nd_start);
-    clear_input_buffer();
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = 0;
+    nd_start = atoi(input);  // Converts the string to an integer
 
     printf("END NUMBER   (1 - 9999): ");
-    scanf(" %d", &nd_end);
-    clear_input_buffer();
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = 0;
+    nd_end = atoi(input);  // Converts the string to an integer
 
     if (nd_start < 1 || nd_start > 9999 || nd_end < 0 || nd_end > 9999) {
         printf("\nVALID RANGE (1 - 9999)\n");
@@ -282,46 +287,60 @@ void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NA
             printf("CODE PRFX NUMBER   CODE PRFX NUMBER   CODE PRFX NUMBER   CODE PRFX NUMBER\n");
             printf("________________________________________________________________________________\n\n");
 
-            //if (pfxset == 1) {
-            //    goto pfx_set;
-            //}
+            if (pfxset == 1) {
+                goto pfx_set;
+            }
 
             if (ln == 0 && i == nd_start) {
-                printf("(311) %d          (311) %d          (311) %d          (311) %d\n", pf1, pf2, pf3, pf4);
-                //printf("(311) ");
-                //scanf(" %d", &pf1t);
-                //clear_input_buffer();
-                //printf("                   (311) ");
-                //scanf(" %d", &pf2t);
-                //clear_input_buffer();
-                //printf("                                      (311) ");
-                //scanf(" %d", &pf3t);
-                //clear_input_buffer();
-                //printf("                                                         (311) ");
-                //scanf(" %d", &pf4t);
-                //clear_input_buffer();
+                    printf("\033[7m");
+                    printf("(311) %d          (311) %d          (311) %d          (311) %d       ", pf1, pf2, pf3, pf4);
+                    printf("\033[0m\n");
 
-                //if (pf1t > 999 || pf2t > 999 || pf3t > 999 || pf4t > 999 || pf1t < 0 || pf2t < 0 || pf3t < 0 || pf4t < 0) {
-                //    printf("\nINVALID PREFIXES ENTERED - PRESS ENTER KEY TO CONTINUE\n");
-                //    fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
-                //    getchar(); // Wait for the Enter key to be pressed
-                //    clear_screen();
-                //    goto scan_start;
-                //} else {
-                //    pf1 = pf1t;
-                //    pf2 = pf2t;
-                //    pf3 = pf3t;
-                //    pf4 = pf4t;
-                //    pfxset = 1;
-                //    goto scan_start;
-                //}
+                    printf("\033[%d;%dH%s", 9, 1, "(311) ");
+
+                    fgets(input, sizeof(input), stdin);
+                    input[strcspn(input, "\n")] = 0;
+                    pf1t = atoi(input);
+
+                    printf("\033[%d;%dH%s", 9, 20, "(311) ");
+
+                    fgets(input, sizeof(input), stdin);
+                    input[strcspn(input, "\n")] = 0;
+                    pf2t = atoi(input);
+
+                    printf("\033[%d;%dH%s", 9, 39, "(311) ");
+
+                    fgets(input, sizeof(input), stdin);
+                    input[strcspn(input, "\n")] = 0;
+                    pf3t = atoi(input);
+
+                    printf("\033[%d;%dH%s", 9, 58, "(311) ");
+
+                    fgets(input, sizeof(input), stdin);
+                    input[strcspn(input, "\n")] = 0;
+                    pf4t = atoi(input);
+
+                if (pf1t > 999 || pf2t > 999 || pf3t > 999 || pf4t > 999 || pf1t < 0 || pf2t < 0 || pf3t < 0 || pf4t < 0) {
+                    printf("\nINVALID PREFIXES ENTERED - PRESS ENTER KEY TO CONTINUE\n");
+                    fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
+                    getchar(); // Wait for the Enter key to be pressed
+                    clear_screen();
+                    goto scan_start;
+                } else {
+                    pf1 = pf1t;
+                    pf2 = pf2t;
+                    pf3 = pf3t;
+                    pf4 = pf4t;
+                    pfxset = 1;
+                    goto scan_start;
+                }
             }
         }
-        //pfx_set:
+        pfx_set:
 
         // Check prefix 1 for hits
         hit = 'N';
-        for (n = 1; n < 10; n++) {
+        for (n = 1; n < number_of_systems+1; n++) {
             if ((system_pfx[n] == pf1) && (i == system_num[n])) {
                 hit = 'Y';
                 hits = hits + 1;
@@ -373,7 +392,7 @@ void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NA
 
         // Check prefix 2 for hits
         hit = 'N';
-        for (n = 1; n < 10; n++) {
+        for (n = 1; n < number_of_systems+1; n++) {
             if ((system_pfx[n] == pf2) && (i == system_num[n])) {
                 hit = 'Y';
                 hits = hits + 1;
@@ -425,7 +444,7 @@ void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NA
 
         // Check prefix 3 for hits
         hit = 'N';
-        for (n = 1; n < 10; n++) {
+        for (n = 1; n < number_of_systems+1; n++) {
             if ((system_pfx[n] == pf3) && (i == system_num[n])) {
                 hit = 'Y';
                 hits = hits + 1;
@@ -477,7 +496,7 @@ void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NA
 
         // Check prefix 4 for hits
         hit = 'N';
-        for (n = 1; n < 10; n++) {
+        for (n = 1; n < number_of_systems+1; n++) {
             if ((system_pfx[n] == pf4) && (i == system_num[n])) {
                 hit = 'Y';
                 hits = hits + 1;
