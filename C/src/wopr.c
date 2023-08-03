@@ -13,7 +13,7 @@
 #include <ncurses.h>
 
 #define CHARACTER_DELAY 5000  // 1000 = 1ms
-#define MAX_TARGETS 5
+#define MAX_TARGETS 4
 #define MAX_STRING_LENGTH 20
 
 void delayed_print(const char* str) {
@@ -81,64 +81,15 @@ void map() {
 
 }
 
-void map_animation(int m, int t, char side[]) {
-    //this needs work
-    //m=missile
-    //t=trajectory
-    //side=side
-
-    char command[200];
-    int col=0;
-    int row=0;
-    
-    if (strstr(side, "UNITED STATES") != NULL) {
-        col=14;
-        row=9;
-        col=(col+m);
-        row=(row-t);
-    } else if (strstr(side, "SOVIET UNION") != NULL) {
-        col=65;
-        row=9;
-        col=(col-m);
-        row=(row-t);
-    }
-
-    // Save the current cursor position
-    printf("\033[s");
-
-    // Set text color to red
-    printf("\033[31m");
-
-    // Move the cursor to the specified position and print the character
-    
-    if (strstr(side, "UNITED STATES") != NULL) {
-        printf("\033[%d;%dH%s", row, col, "^");
-    } else if (strstr(side, "SOVIET UNION") != NULL) {
-        printf("\033[%d;%dH%s", row, col, "^");
-    }  
-    fflush(stdout); // flush the output buffer
-    //snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-    //system(command);
-    //usleep(1000000);
-
-    //debug print target screen location
-    //printf("\033[%d;%dH%s", 50, 50, "");
-    //printf("row: %d col: %d",row,col);
-    
-    // Reset text color to default
-    printf("\033[0m");
-
-    // Restore the original cursor position
-    printf("\033[u");
-}
-
 void global_thermonuclear_war() {
     char command[200];
     int count = 0;
     char side[20];  // Array to store the selected side
     char input;
-    int m=0; //missile number
-    int t=0; //trajectory heading
+    int col=0; //print at col
+    int row=0; //print at row
+    int t;
+    char buffer[200];
     startgame:
     clear_screen();
     map();
@@ -267,96 +218,487 @@ void global_thermonuclear_war() {
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
     system(command);
     usleep(2000000);
-    
+   
     for (int t = 0; t < count; t++) {
         if(t == 0) {
-            delayed_print("A-5520-A 939 523  ");
-            map_animation(m, t, side);
-        } else if (t == 1) {
-            delayed_print("       B 664 295  ");
-            map_animation(m, t, side);
-        } else if (t == 2) {
-            delayed_print("       C 125 386  ");
-            map_animation(m, t, side);
-        } else if (t == 3) {
-            delayed_print("       D 768 347  ");
-            map_animation(m, t, side);
-        } else if (t == 4) {
-            delayed_print("       E 463 284  ");
-            map_animation(m, t, side);
+            sprintf(buffer, "\033[%d;%dH%s", 17, 1, "A-5520-A 939 523");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 8, 10, "/\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+            
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 8, 62, "/\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 18, 1, "       B 664 295");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 7, 11, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 7, 62, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            } 
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+          
+            sprintf(buffer, "\033[%d;%dH%s", 19, 1, "       C 125 386");
+            delayed_print(buffer);
+            
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 6, 12, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+            
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 6, 61, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }    
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 20, 1, "       D 768 347");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 5, 13, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 5, 60, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 21, 1, "       E 463 284");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 4, 14, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                delayed_print(buffer);
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 4, 59, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
         }
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-        system(command);
-        delayed_print("   ");
-        fflush(stdout); // flush the output buffer
-        usleep(2000000);
-        if(t == 0) {
-            delayed_print("C-5520-A 243 587  ");
-            map_animation(m+3, t, side);
-        } else if (t == 1) {
-            delayed_print("       B 892 754  ");
-            map_animation(m+3, t, side);
-        } else if (t == 2) {
-            delayed_print("       C 374 256  ");
-            map_animation(m+3, t, side);
-        } else if (t == 3) {
-            delayed_print("       D 364 867  ");
-            map_animation(m+3, t, side);
-        } else if (t == 4) {
-            delayed_print("       E 873 543  ");
-            map_animation(m+3, t, side);
+
+        if(t == 1) {
+            sprintf(buffer, "\033[%d;%dH%s", 17, 22, "B-5520-A 243 587");
+            delayed_print(buffer);
+            
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 8, 10+5, "/\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 8, 62-5, "/\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+            
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 18, 22, "       B 892 754");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 7, 11+5, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 7, 62-5, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 19, 22, "       C 374 256");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 6, 12+5, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 6, 61-5, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 20, 22, "       D 364 867");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 5, 13+5, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 5, 60-5, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 21, 22, "       E 463 284");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 4, 14+5, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 4, 59-5, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
         }
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-        system(command);
-        delayed_print("  ");
-        fflush(stdout); // flush the output buffer
-        usleep(2000000);
-        if(t == 0) {
-            delayed_print("E-5520-A 398 984  ");
-            map_animation(m+6, t, side);
-        } else if (t == 1) {
-            delayed_print("       B 394 345  ");
-            map_animation(m+6, t, side);
-        } else if (t == 2) {
-            delayed_print("       C 407 340  ");
-            map_animation(m+6, t, side);
-        } else if (t == 3) {
-            delayed_print("       D 251 953  ");
-            map_animation(m+6, t, side);
-        } else if (t == 4) {
-            delayed_print("       E 093 684  ");
-            map_animation(m+6, t, side);
-        } 
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-        system(command);   
-        delayed_print("   ");
-        fflush(stdout); // flush the output buffer
-        usleep(2000000);
-        if(t == 0) {
-            delayed_print("G-5520-A 919 437  ");
-            map_animation(m+9, t, side);
-        } else if (t == 1) {
-            delayed_print("       B 132 147  ");
-            map_animation(m+9, t, side);
-        } else if (t == 2) {
-            delayed_print("       C 095 485  ");
-            map_animation(m+9, t, side);
-        } else if (t == 3) {
-            delayed_print("       D 489 794  ");
-            map_animation(m+9, t, side);
-        } else if (t == 4) {
-            delayed_print("       E 025 344  ");
-            map_animation(m+9, t, side);
-        }  
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-        system(command);
-        delayed_print("\n");
-        fflush(stdout); // flush the output buffer
-        usleep(2000000);
+
+
+        if(t == 2) {
+            sprintf(buffer, "\033[%d;%dH%s", 17, 42, "C-5520-A 398 984");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 8, 10+10, "/\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 8, 62-10, "/\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 18, 42, "       B 394 345");
+            delayed_print(buffer);
+            
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 7, 11+10, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 7, 62-10, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 19, 42, "       C 407 340");
+            delayed_print(buffer);
+
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 6, 12+10, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 6, 61-10, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 20, 42, "       D 251 953");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 5, 13+10, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 5, 60-10, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 21, 42, "       E 093 684");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 4, 14+10, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 4, 59-10, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+        }
+
+        if(t == 3) {
+            sprintf(buffer, "\033[%d;%dH%s", 17, 63, "D-5520-A 919 437");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 8, 10+15, "/\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+            
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 8, 62+5, "/\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 18, 63, "       B 132 147");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 7, 11+15, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 7, 62+5, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 19, 63, "       C 095 485");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 6, 12+15, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 6, 61+5, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 20, 63, "       D 489 794");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 5, 13+15, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+             printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 5, 60+5, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+
+            sprintf(buffer, "\033[%d;%dH%s", 21, 63, "       E 025 344");
+            delayed_print(buffer);
+
+            if (strstr(side, "UNITED STATES") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 4, 14+15, "/");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            if (strstr(side, "SOVIET UNION") != NULL) {
+                printf("\033[31m");
+                sprintf(buffer, "\033[%d;%dH%s", 4, 59+5, "\\");
+                delayed_print(buffer);
+                printf("\033[0m");
+            }
+
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("   ");
+            fflush(stdout); // flush the output buffer
+            usleep(1000000);
+        }
     } 
     usleep(5000000);
 
-    printf("\n                        PRESS ENTER KEY TO CONTINUE\n");
+    sprintf(buffer, "\033[%d;%dH%s", 23, 28, "PRESS ENTER KEY TO CONTINUE\n");
+    delayed_print(buffer);
 
     while(1) {        
         char selection[3]; // to accommodate the character, the '\n', and the null-terminating character
