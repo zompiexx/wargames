@@ -365,18 +365,25 @@ void school_computer() {
         term_orig = term; // Save original settings
 
         // Turn off ECHO
-        term.c_lflag &= ~ECHO;
+        term.c_lflag &= ~(ECHO | ICANON);
         tcsetattr(STDIN_FILENO, TCSANOW, &term);
-        fgets(password, sizeof(password), stdin);
+
+        // New code
+        int c;
+        int i = 0;
+        while ((c = getchar()) != '\n' && c != EOF && i < sizeof(password) - 1) {
+            password[i++] = c;
+            putchar('*');
+            fflush(stdout); // flush the output buffer
+        }
+        password[i] = '\0';
+
         // Restore original terminal settings
         tcsetattr(STDIN_FILENO, TCSANOW, &term_orig);
 
-        // Remove trailing newline character
-        password[strcspn(password, "\n")] = '\0';
-
         // Convert input to lowercase
-        for (int i = 0; password[i]; i++) {
-            input[i] = tolower(password[i]);
+        for (int j = 0; password[j]; j++) {
+            input[j] = tolower(password[j]);
         }
 
         if (strcmp(password, "pencil") == 0) {
