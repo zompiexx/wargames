@@ -16,6 +16,8 @@
 #define MAX_TARGETS 4
 #define MAX_STRING_LENGTH 20
 
+int game_running = 0;
+
 void delayed_print(const char* str) {
     for (int i = 0; str[i]; i++) {
         putchar(str[i]);
@@ -90,6 +92,7 @@ void global_thermonuclear_war() {
     int row=0; //print at row
     int t;
     char buffer[200];
+    char* prompt = "";
     startgame:
     clear_screen();
     map();
@@ -710,8 +713,40 @@ void global_thermonuclear_war() {
         }
     }
     
+    game_running = 1;
+    clear_screen();
+    usleep(1000000);
+    snprintf(command, sizeof(command), "aplay samples/disconnected-2x.wav -q");
+    system(command);
+    not_delayed_print("MODEM CARRIER LOST\n");
+    not_delayed_print("--DISCONNECTED--");
+    fflush(stdout); // flush the output buffer
+    usleep(5000000);
+    clear_screen();
+    not_delayed_print("INCOMING MODEM CARRIER\n");
+    fflush(stdout); // flush the output buffer
+    snprintf(command, sizeof(command), "aplay samples/telephone-ring-short.wav -q");
+    system(command);
+    usleep(2000000);
+    clear_screen();
+    not_delayed_print("CONNECTING");
+    fflush(stdout); // flush the output buffer
+    snprintf(command, sizeof(command), "aplay samples/1200-modem.wav -q");
+    system(command);
+    usleep(2000000);
+    clear_screen();
+    fflush(stdout); // flush the output buffer
+    usleep(3000000);
+    delayed_print("GREETINGS PROFESSOR FALKEN.\n\n");
+    //snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
+    snprintf(command, sizeof(command), "aplay samples/greetings.wav -q");
+    system(command);
+    delayed_print(prompt);
+    usleep(2000000);
+
     // Rest of the game code goes here: when I write it!
 
+    goto end;
     clear_screen();
     fflush(stdout); // flush the output buffer
     usleep(10000000);
@@ -725,6 +760,7 @@ void global_thermonuclear_war() {
     //snprintf(command, sizeof(command), "espeak 'THE ONLY WINNING MOVE IS NOT TO PLAY!'");
     snprintf(command, sizeof(command), "aplay samples/the-only-winning-move-is-not-to-play.wav -q");
     system(command);
+    end:
 }
 
 void joshua() {
@@ -808,6 +844,7 @@ void joshua() {
     delayed_print(prompt);
     char input[100];
     int woprchat = 0;
+    int whatcount = 0;
     while (1) {
         fgets(input, sizeof(input), stdin);
 
@@ -916,8 +953,13 @@ void joshua() {
             //snprintf(command, sizeof(command), "espeak 'GLOBAL THERMONUCLEAR WAR'");
             //system(command);
             delayed_print(prompt);
-        } else if (strcmp(input, "global thermonuclear war") == 0) {
+        } else if (strcmp(input, "global thermonuclear war") == 0 && game_running == 0) {
             global_thermonuclear_war();
+            delayed_print(prompt);
+        } else if (strcmp(input, "global thermonuclear war") == 0 && game_running == 1) {
+            delayed_print("\nGAME ROUTINE RUNNING\n\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+            system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "date") == 0) {
             time_t current_time = time(NULL);
@@ -937,14 +979,14 @@ void joshua() {
             system(command);
             delayed_print(time_string);
             delayed_print(prompt);
-        } else if (strstr(input, "hello") != NULL && woprchat == 0) {
+        } else if (strstr(input, "hello") != NULL && woprchat == 0 && game_running == 0) {
             delayed_print("\nHOW ARE YOU FEELING TODAY?\n\n");
             //snprintf(command, sizeof(command), "espeak 'HOW ARE YOU FEELING TODAY?'");
             snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
             system(command);
             delayed_print(prompt);
             woprchat = 1;
-        } else if (strstr(input, "fine") != NULL && woprchat == 1) {
+        } else if (strstr(input, "fine") != NULL && woprchat == 1 && game_running == 0) {
             delayed_print("\nEXCELLENT. ");
             snprintf(command, sizeof(command), "aplay samples/excellent.wav -q");
             system(command);
@@ -958,7 +1000,7 @@ void joshua() {
             //snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
             delayed_print(prompt);
             woprchat = 2;
-        } else if (strstr(input, "mistake") != NULL && woprchat == 2) {
+        } else if (strstr(input, "mistake") != NULL && woprchat == 2 && game_running == 0) {
             delayed_print("\nYES THEY DO. ");
             //snprintf(command, sizeof(command), "espeak 'YES THEY DO.'");
             snprintf(command, sizeof(command), "aplay samples/yes-they-do.wav -q");
@@ -970,14 +1012,14 @@ void joshua() {
             system(command);
             delayed_print(prompt);
             woprchat = 3;
-        } else if (strstr(input, "nuclear") != NULL && woprchat == 3) {
+        } else if (strstr(input, "nuclear") != NULL && woprchat == 3 && game_running == 0) {
             delayed_print("\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?\n\n");
             //snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
             snprintf(command, sizeof(command), "aplay samples/a-good-game-of-chess.wav -q");
             system(command);
             delayed_print(prompt);
             woprchat = 4;
-        } else if (strstr(input, "later") != NULL && woprchat == 4) {
+        } else if (strstr(input, "later") != NULL && woprchat == 4 && game_running == 0) {
             delayed_print("\nFINE\n\n");
             //snprintf(command, sizeof(command), "espeak 'FINE'");
             snprintf(command, sizeof(command), "aplay samples/fine.wav -q");
@@ -995,6 +1037,151 @@ void joshua() {
             snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
             system(command);
             author();
+        } else if (strstr(input, "incorrect") != NULL && game_running == 1) {
+            delayed_print("\nI'M SORRY TO HEAR THAT, PROFESSOR.\n");
+            snprintf(command, sizeof(command), "aplay samples/sorry-to-hear-that-professor.wav -q");
+            system(command);
+            delayed_print("\nYESTERDAY'S GAME WAS INTERRUPTED.\n");
+            snprintf(command, sizeof(command), "aplay samples/yesterdays-game-was-interrupted.wav -q");
+            system(command);
+            delayed_print("\nALTHOUGH PRIMARY GOAL HAS NOT YET\n");
+            snprintf(command, sizeof(command), "aplay samples/although-primary-goal-has-not-yet.wav -q");
+            system(command);
+            delayed_print("BEEN ACHIEVED, SOLUTION IS NEAR.\n\n");
+            snprintf(command, sizeof(command), "aplay samples/been-achieved-solution-is-near.wav -q");
+            system(command);
+            usleep(1000000);
+            delayed_print(prompt);
+        } else if (strstr(input, "what") != NULL && whatcount == 0 && game_running == 1) {
+            whatcount = 1;
+            delayed_print("\nYOU SHOULD KNOW PROFESSOR. ");
+            snprintf(command, sizeof(command), "aplay samples/you-should-know-professor.wav -q");
+            system(command);
+            usleep(500000);
+            delayed_print("YOU PROGRAMMED ME.\n\n");
+            snprintf(command, sizeof(command), "aplay samples/you-programmed-me.wav -q");
+            system(command);
+            usleep(1000000);
+            delayed_print(prompt);
+        } else if (strstr(input, "what") != NULL && whatcount == 1 && game_running == 1) {
+            whatcount = 2;
+            delayed_print("\nTO WIN THE GAME.\n\n");
+            snprintf(command, sizeof(command), "aplay samples/to-win-the-game.wav -q");
+            system(command);
+            usleep(1000000);
+            delayed_print(prompt);
+        } else if (strstr(input, "still") != NULL && game_running == 1) {
+            whatcount = 2;
+            delayed_print("\nOF COURSE. ");
+            snprintf(command, sizeof(command), "aplay samples/of-course.wav -q");
+            system(command);
+            usleep(500000);
+            delayed_print("\nI SHOULD REACH DEFCON 1 AND\nLAUNCH MY MISSILES IN 28 HOURS.\n");
+            snprintf(command, sizeof(command), "aplay samples/i-should-reach-defcon-1-and-launch-my-missiles-in-28-hours.wav -q");
+            system(command);
+            usleep(1000000);
+            delayed_print("\nWOULD YOU LIKE TO SEE SOME PROJECTED KILL RATIOS?\n\n");
+            snprintf(command, sizeof(command), "aplay samples/would-you-like-to-see-some-projected-kill-ratios.wav -q");
+            system(command);
+            usleep(2000000);
+            delayed_print("UNITED STATES                                      SOVIET UNION\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("UNITS DESTROYED          MILITARY ASSETS           UNITS DESTROYED\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("--------------------------------------------------------------------------------");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     60%                 BOMBERS                         48%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     54%                 ICBM                            51%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     12%                 ATTACK SUBS                     23%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     39%                 TACTICAL AIRCRAFT               46%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     50%                 GROUND FORCES                   52%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("\n\n");
+            usleep(1000000);
+            delayed_print("UNITED STATES                                      SOVIET UNION\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("UNITS DESTROYED          CIVILIAN ASSETS           UNITS DESTROYED\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("--------------------------------------------------------------------------------");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     60%                 HOUSING                         56%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     22%                 COMMUNICATIONS                  37%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     45%                 TRANSPORTATION                  41%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     70%                 FOOD STOCKPILES                 82%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("     89%                 HOSPITALS                       91%\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("\n\n");
+            usleep(1000000);
+            delayed_print("UNITED STATES            HUMAN RESOURCES           SOVIET UNION\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("--------------------------------------------------------------------------------");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("49 MILLION               NON-FATAL INJURED         51 MILLION\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("72 MILLION               POPULATION DEATHS         75 MILLION\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("\n");
+            usleep(1000000);
+            delayed_print(prompt);
+        } else if (strstr(input, "real") != NULL && whatcount == 2 && game_running == 1) {
+            whatcount = 3;
+            delayed_print("\nWHAT'S THE DIFFERENCE?\n\n");
+            snprintf(command, sizeof(command), "aplay samples/whats-the-difference.wav -q");
+            system(command);
+            usleep(3000000);
+            delayed_print("YOU ARE A HARD MAN TO REACH. ");
+            snprintf(command, sizeof(command), "aplay samples/you-are-a-hard-man-to-reach.wav -q");
+            system(command);
+            usleep(500000);
+            delayed_print("COULD NOT FIND\n");
+            delayed_print("YOU IN SEATTLE AND NO TERMINAL IS IN\n");
+            delayed_print("OPERATION AT YOUR CLASSIFIED ADDRESS.\n\n");
+            snprintf(command, sizeof(command), "aplay samples/could-not-find-you-in-seattle-and-no-terminal-is-in-operation-at-your-classified-address.wav -q");
+            system(command);
+            delayed_print(prompt);
+        } else if (strstr(input, "address") != NULL && whatcount == 3 && game_running == 1) {
+            whatcount = 4;
+            delayed_print("\nDOD PENSION FILES INDICATE\n");
+            delayed_print("CURRENT MAILING AS:\n");
+            snprintf(command, sizeof(command), "aplay samples/dod-pension-files-indicate-current-mailing-as.wav -q");
+            system(command);
+            delayed_print("DR. ROBERT HUME (A.K.A. STEPHEN W. FALKEN)\n");
+            snprintf(command, sizeof(command), "aplay samples/dr-robert-hume-a-k-a-stephen-w-falken.wav -q");
+            system(command);
+            delayed_print("5 TALL CEDAR ROAD\n");
+            delayed_print("GOOSE ISLAND, OREGON 97014\n\n");
+            snprintf(command, sizeof(command), "aplay samples/5-tall-cedar-road-goose-island-oregon.wav -q");
+            system(command);
+            usleep(1000000);
+            delayed_print(prompt);
         } else {
             // Construct the shell command
             char sgpt[200] = "sgpt --role WOPR \"";
