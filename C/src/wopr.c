@@ -83,6 +83,45 @@ void map() {
 
 }
 
+void end_game() {
+    int gte = 50;
+    int etr = 10;
+    char buffer[200];
+
+    for(int gc = 1; gc <= 10; gc++) {
+        gte += 1;
+        etr -= 1;
+
+        if(gte == 60) {
+            gte=0;
+        }
+
+        clear_screen();
+
+        sprintf(buffer, "\033[%d;%dH%s", 19, 1, "--------------------------------------------------------------------------------");
+        delayed_print(buffer);
+        sprintf(buffer, "\033[%d;%dH%s", 20, 1, "GAME TIME ELAPSED");
+        delayed_print(buffer);
+        sprintf(buffer, "\033[%d;%dH%s", 20, 56, "ESTIMATED TIME REMAINING");
+        delayed_print(buffer);
+
+        sprintf(buffer, "\033[%d;%dH%s", 21, 1, "31 HRS 12 MIN");
+        delayed_print(buffer);
+
+        printf(" SEC %02d", gte);
+
+        sprintf(buffer, "\033[%d;%dH%s", 21, 56, "52 HRS 17 MIN");
+        delayed_print(buffer);
+
+        printf(" SEC %02d", etr);
+        sprintf(buffer, "\033[%d;%dH%s", 22, 1, "--------------------------------------------------------------------------------");
+        delayed_print(buffer);
+
+        usleep(1000000);
+    }
+    clear_screen();
+}
+
 void global_thermonuclear_war() {
     char command[200];
     int count = 0;
@@ -1181,6 +1220,7 @@ void joshua() {
             snprintf(command, sizeof(command), "aplay samples/5-tall-cedar-road-goose-island-oregon.wav -q");
             system(command);
             usleep(1000000);
+            end_game();
             delayed_print(prompt);
         } else {
             // Construct the shell command
