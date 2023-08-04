@@ -87,6 +87,7 @@ void end_game() {
     int gte = 50;
     int etr = 10;
     char buffer[200];
+    char command[200];
 
     for(int gc = 1; gc <= 10; gc++) {
         gte += 1;
@@ -119,7 +120,25 @@ void end_game() {
 
         usleep(1000000);
     }
+    
+
+    //rest of game goes here
+    //this should include: Joshua searching/finding launch codes
+    //tic-tac-toe sequence
+
     clear_screen();
+    fflush(stdout); // flush the output buffer
+    usleep(10000000);
+    
+    delayed_print("\nA STRANGE GAME. ");
+    //snprintf(command, sizeof(command), "espeak 'A STRANGE GAME'");
+    snprintf(command, sizeof(command), "aplay samples/a-strange-game.wav -q");
+    system(command);
+    usleep(500000);
+    delayed_print("THE ONLY WINNING MOVE IS NOT TO PLAY!\n\n");
+    //snprintf(command, sizeof(command), "espeak 'THE ONLY WINNING MOVE IS NOT TO PLAY!'");
+    snprintf(command, sizeof(command), "aplay samples/the-only-winning-move-is-not-to-play.wav -q");
+    system(command);
 }
 
 void global_thermonuclear_war() {
@@ -783,23 +802,7 @@ void global_thermonuclear_war() {
     delayed_print(prompt);
     usleep(2000000);
 
-    // Rest of the game code goes here: when I write it!
-
-    goto end;
-    clear_screen();
-    fflush(stdout); // flush the output buffer
-    usleep(10000000);
-    
-    delayed_print("\nA STRANGE GAME. ");
-    //snprintf(command, sizeof(command), "espeak 'A STRANGE GAME'");
-    snprintf(command, sizeof(command), "aplay samples/a-strange-game.wav -q");
-    system(command);
-    usleep(500000);
-    delayed_print("THE ONLY WINNING MOVE IS NOT TO PLAY!\n\n");
-    //snprintf(command, sizeof(command), "espeak 'THE ONLY WINNING MOVE IS NOT TO PLAY!'");
-    snprintf(command, sizeof(command), "aplay samples/the-only-winning-move-is-not-to-play.wav -q");
-    system(command);
-    end:
+    //control returned to joshua function
 }
 
 void joshua() {
