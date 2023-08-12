@@ -17,6 +17,7 @@
 #define MAX_STRING_LENGTH 20
 
 int game_running = 0;
+int defcon = 5;
 
 void delayed_print(const char* str) {
     for (int i = 0; str[i]; i++) {
@@ -106,22 +107,40 @@ void end_game() {
         sprintf(buffer, "\033[%d;%dH%s", 20, 56, "ESTIMATED TIME REMAINING");
         delayed_print(buffer);
 
-        sprintf(buffer, "\033[%d;%dH%s", 21, 1, "31 HRS 12 MIN");
-        delayed_print(buffer);
+        if(gte >0) {
+            sprintf(buffer, "\033[%d;%dH%s", 21, 1, "31 HRS 12 MIN");
 
+        } else {
+            sprintf(buffer, "\033[%d;%dH%s", 21, 1, "31 HRS 13 MIN");
+        }
+        delayed_print(buffer);
         printf(" SEC %02d", gte);
 
-        sprintf(buffer, "\033[%d;%dH%s", 21, 56, "52 HRS 17 MIN");
+        sprintf(buffer, "\033[%d;%dH%s", 21, 56, "52 HRS 17 MIN");        
         delayed_print(buffer);
-
         printf(" SEC %02d", etr);
+
         sprintf(buffer, "\033[%d;%dH%s", 22, 1, "--------------------------------------------------------------------------------");
         delayed_print(buffer);
 
         usleep(1000000);
     }
+    usleep(2000000);
+    clear_screen();
+    delayed_print("TERMINAL ECHO: WAR ROOM\n\n");
+    delayed_print("                         MISSILES TARGETED AND READY\n");
+    delayed_print("                         ---------------------------\n\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+    system(command);
+    usleep(3000000);
+    delayed_print("\033[5m                             CHANGES LOCKED OUT\033[0m\n");
+    delayed_print("                             ------------------\n");
+    snprintf(command, sizeof(command), "aplay samples/buzzer-sounds.wav -q");
+    system(command);
+    usleep(2000000);
+    defcon=1;
+    usleep(5000000);
     
-
     //rest of game goes here
     //this should include: Joshua searching/finding launch codes
     //tic-tac-toe sequence
@@ -249,6 +268,7 @@ void global_thermonuclear_war() {
         clear_input_buffer();
         if (input == 'l' || input == 'L') {
             usleep(2000000);
+            defcon=3;
             break;
         }
     }
@@ -1224,6 +1244,13 @@ void joshua() {
             system(command);
             usleep(1000000);
             end_game();
+            delayed_print(prompt);
+        } else if (strcmp(input, "defcon") == 0) {
+            delayed_print("\nDEFCON: ");
+            printf("%d",defcon);
+            delayed_print("\n\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
             delayed_print(prompt);
         } else {
             // Construct the shell command
