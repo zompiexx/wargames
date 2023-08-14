@@ -68,7 +68,7 @@ void guesscode() {
             clear_screen();
             for (int B = 1; B <= 10; B++) printf("\n");
             for (int B = 1; B <= 30; B++) printf(" ");
-            for (int B = 1; B <= LC_percent; B++) printf("\033[5m%c \033[0m", LC[B - 1]);
+            for (int B = 1; B <= LC_percent; B++) printf("%c ", LC[B - 1]);
             for (int B = 1; B <= strlen(LC) - LC_percent; B++) printf("- ");
             printf("\n");
 
@@ -88,6 +88,10 @@ void guesscode() {
 
         LC_percent++;
     }
+    usleep(2000000);
+    clear_screen();
+    sprintf(buffer, "\033[%d;%dH%s", 10, 30, "\033[5mC P E 1 7 0 4 T K S\033[0m");        
+    delayed_print(buffer);
     usleep(10000000);
     sprintf(buffer, "\033[%d;%dH%s", 23, 28, "PRESS ENTER KEY TO CONTINUE\n");
     delayed_print(buffer);
@@ -177,62 +181,71 @@ void end_game() {
     usleep(2000000);
     clear_screen();
     delayed_print("\033[7mTERMINAL ECHO: WAR ROOM\033[0m\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
     delayed_print("TRZ. 34/53/76               SYS PROC 3435.45.6456           XCOMP STATUS: PV-456\n");
     delayed_print("ACTIVE PORTS: 34,53,75,94                                     CPU TM USED: 23:43\n");
     delayed_print("#45/34/53.           ALT MODE FUNCT: PV-8-AY345              STANDBY MODE ACTIVE\n");
     delayed_print("#543.654      #989.283       #028.392       #099.293      #934.905      #261.372\n");
     delayed_print("\n");
+
     delayed_print("                         MISSILES TARGETED AND READY\n");
     delayed_print("                         ---------------------------\n\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+    system(command);
+    usleep(1000000);
+    delayed_print("\033[5m                             CHANGES LOCKED OUT\033[0m\n");
+    delayed_print("                             ------------------\n"); 
+    snprintf(command, sizeof(command), "aplay samples/buzzer-sounds.wav -q &");
     system(command);
     usleep(3000000);
-    delayed_print("\033[5m                             CHANGES LOCKED OUT\033[0m\n");
-    delayed_print("                             ------------------\n");
-    snprintf(command, sizeof(command), "aplay samples/buzzer-sounds.wav -q");
-    system(command);
-    usleep(2000000);
+
     defcon=1;
+
     usleep(5000000);
     clear_screen();
     delayed_print("\033[7mTERMINAL ECHO: WAR ROOM\033[0m\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
     delayed_print("TRZ. 34/53/76               SYS PROC 3435.45.6456           XCOMP STATUS: PV-456\n");
     delayed_print("ACTIVE PORTS: 34,53,75,94                                     CPU TM USED: 23:43\n");
     delayed_print("#45/34/53.           ALT MODE FUNCT: PV-8-AY345              STANDBY MODE ACTIVE\n");
     delayed_print("#543.654      #989.283       #028.392       #099.293      #934.905      #261.372\n");
     delayed_print("\n");
+
     delayed_print("                            PRIMARY TARGET IMPACT\n");
     delayed_print("                            ---------------------\n\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
-    usleep(3000000);
+    usleep(1000000);
+
     delayed_print("                    LORING AIRFORCE BASE      : ");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
-    usleep(500000);
+    usleep(1000000);
     delayed_print("NO IMPACT\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
     system(command);
     usleep(1000000);
+
     delayed_print("                    ELMENDORF AIRFORCE BASE   : ");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
-    usleep(500000);
+    usleep(1000000);
     delayed_print("NO IMPACT\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
     system(command);
     usleep(1000000);
+
     delayed_print("                    GRAND FORKS AIRFORCE BASE : ");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
-    usleep(500000);
+    usleep(1000000);
     delayed_print("NO IMPACT\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
     system(command);
+    usleep(1000000);
+
     usleep(10000000);
     guesscode();
     
