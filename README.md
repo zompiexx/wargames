@@ -70,7 +70,8 @@ At the moment, the Wargames C code has the following features:
   * Global Thermonuclear War Game Map
   * Global Thermonuclear War Game Primary Targets handling
   * Global Thermonuclear War Game Trajectory Heading Tracking
-  * Global Thermonuclear War Game Logic - needs to call Tic-Tac-Toe (when it exists)
+  * Global Thermonuclear War Game Logic - calls Tic-Tac-Toe
+  * Tic-Tac-Toe Game with Zero Players Option
   * Text to speech for WOPR/Joshua (requires espeak to be installed: sudo apt install espeak): Only works in local mode at the moment, would require a custom IMSAI 8080 (plus telnet) client to work in client/server mode
     * If you need to disable the speech synth so you can run in client/server mode using telnet, edit the WOPR.c file and modify the sgpt lines so that output is not piped to espeak. If you are running locally, this doesn't affect you.
   * Samples integration for WOPR/Joshua voice: uses aplay system command call to play wav file
@@ -86,7 +87,6 @@ At the moment, the Wargames C code has the following features:
 Still to do:
 * User Accounts (for users other than "Joshua")
 * Directory Listing
-* Tic-Tac-Toe Game with AI
 * Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
 
 If you want to try it out for yourself, here are the steps:
