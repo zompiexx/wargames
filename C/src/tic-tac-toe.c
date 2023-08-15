@@ -1,10 +1,13 @@
+//Wargames Movie Simulator
+//Written by Andy Glenn
+//(c) 2023
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-
 
 #define SIZE 3
 

@@ -113,7 +113,9 @@ void guesscode() {
             break;
         }
     }
-    // Rest of code if needed
+    clear_screen();
+    snprintf(command, sizeof(command), "./tic-tac-toe");
+    system(command);
 }
 
 void map() {
