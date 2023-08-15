@@ -186,6 +186,9 @@ void end_game() {
         sprintf(buffer, "\033[%d;%dH%s", 22, 1, "--------------------------------------------------------------------------------");
         delayed_print(buffer);
 
+        snprintf(command, sizeof(command), "aplay samples/estimated-time-remaining.wav -q &");
+        system(command);
+
         usleep(1000000);
     }
     usleep(2000000);
