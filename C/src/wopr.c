@@ -20,9 +20,12 @@ int game_running = 0;
 int defcon = 5;
 
 void delayed_print(const char* str) {
+    //char command[200];
     for (int i = 0; str[i]; i++) {
         putchar(str[i]);
         fflush(stdout);
+        //snprintf(command, sizeof(command), "aplay samples/phone-beep.wav -q &");
+        //system(command);
         usleep(CHARACTER_DELAY);
     }
 }
@@ -62,12 +65,16 @@ void guesscode() {
 
     srand(time(0)); // Initialize random seed
 
+    int row = 10; // Desired row position
+    int col = 32; // Desired column position
+
+    clear_screen();
+    delayed_print("\033[7mTERMINAL ECHO: WAR ROOM\033[0m\n");
+
     for (int A = 1; A <= strlen(LC); A++) {
         int LCG;
         do {
-            clear_screen();
-            for (int B = 1; B <= 10; B++) printf("\n");
-            for (int B = 1; B <= 30; B++) printf(" ");
+            printf("\033[%d;%dH", row, col);
             for (int B = 1; B <= LC_percent; B++) printf("%c ", LC[B - 1]);
             for (int B = 1; B <= strlen(LC) - LC_percent; B++) printf("- ");
             printf("\n");
@@ -75,22 +82,21 @@ void guesscode() {
             LCG = (rand() % (90 - 48 + 1)) + 48;
             if (LCG > 57 && LCG < 65) continue;
 
-            clear_screen();
-            for (int B = 1; B <= 10; B++) printf("\n");
-            for (int B = 1; B <= 30; B++) printf(" ");
+            printf("\033[%d;%dH", row, col);
             for (int B = 1; B <= LC_percent; B++) printf("%c ", LC[B - 1]);
             printf("%c ", (char)LCG);
             for (int B = 1; B <= strlen(LC) - LC_percent - 1; B++) printf("- ");
             printf("\n");
 
-            usleep(500 * 1000); // 500ms delay
+            usleep(100 * 1000); // 100ms delay
         } while ((char)LCG != LC[A - 1]);
 
         LC_percent++;
     }
     usleep(2000000);
     clear_screen();
-    sprintf(buffer, "\033[%d;%dH%s", 10, 30, "\033[5mC P E 1 7 0 4 T K S\033[0m");        
+    delayed_print("\033[7mTERMINAL ECHO: WAR ROOM\033[0m\n");
+    sprintf(buffer, "\033[%d;%dH%s", 10, 32, "\033[5mC P E 1 7 0 4 T K S\033[0m");        
     delayed_print(buffer);
     usleep(10000000);
     sprintf(buffer, "\033[%d;%dH%s", 23, 28, "PRESS ENTER KEY TO CONTINUE\n");
