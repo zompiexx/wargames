@@ -62,6 +62,7 @@ void guesscode() {
     char LC[] = "CPE1704TKS";
     int LC_percent = 0;
     char buffer[200];
+    char command[200];
 
     srand(time(0)); // Initialize random seed
 
@@ -85,12 +86,13 @@ void guesscode() {
             printf("\033[%d;%dH", row, col);
             for (int B = 1; B <= LC_percent; B++) printf("%c ", LC[B - 1]);
             printf("%c ", (char)LCG);
-            for (int B = 1; B <= strlen(LC) - LC_percent - 1; B++) printf("- ");
+                        for (int B = 1; B <= strlen(LC) - LC_percent - 1; B++) printf("- ");
             printf("\n");
 
-            usleep(100 * 1000); // 100ms delay
+            usleep(250 * 1000); // delay
         } while ((char)LCG != LC[A - 1]);
-
+        snprintf(command, sizeof(command), "aplay samples/number-locked-in.wav -q &");
+        system(command);
         LC_percent++;
     }
     usleep(2000000);
