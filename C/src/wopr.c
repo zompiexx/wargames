@@ -115,7 +115,40 @@ void guesscode() {
     }
     clear_screen();
     snprintf(command, sizeof(command), "./tic-tac-toe");
-    system(command);
+    int status = system(command); // Only call system(command) once
+    if (WIFEXITED(status)) {
+        int exit_status = WEXITSTATUS(status);
+        if (exit_status == 1) {
+            //printf("The tic-tac-toe program exited with status 1\n");
+            clear_screen();
+            fflush(stdout); // flush the output buffer
+            usleep(10000000);
+            delayed_print("\nA STRANGE GAME. ");
+            snprintf(command, sizeof(command), "aplay samples/a-strange-game.wav -q");
+            system(command);
+            usleep(500000);
+            delayed_print("THE ONLY WINNING MOVE IS NOT TO PLAY!\n\n");
+            snprintf(command, sizeof(command), "aplay samples/the-only-winning-move-is-not-to-play.wav -q");
+            system(command);
+            usleep(5000000);
+            defcon=5;
+            game_running = 0;
+        } else {
+            //printf("The tic-tac-toe program exited with status %d\n", exit_status);
+            clear_screen();
+            fflush(stdout); // flush the output buffer
+            usleep(10000000);
+            delayed_print("\nYOU FAILED TO PREVENT WOPR FROM LAUNCHING THE MISSILES. ");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+            system(command);
+            usleep(500000);
+            delayed_print("WWIII HAS COMMENCED!\n\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+            system(command);
+            usleep(5000000);
+            defcon=1;
+        }
+    }
 }
 
 void map() {
@@ -266,19 +299,6 @@ void end_game() {
     //this should include: Joshua searching/finding launch codes
     //tic-tac-toe sequence
 
-    clear_screen();
-    fflush(stdout); // flush the output buffer
-    usleep(10000000);
-    
-    delayed_print("\nA STRANGE GAME. ");
-    //snprintf(command, sizeof(command), "espeak 'A STRANGE GAME'");
-    snprintf(command, sizeof(command), "aplay samples/a-strange-game.wav -q");
-    system(command);
-    usleep(500000);
-    delayed_print("THE ONLY WINNING MOVE IS NOT TO PLAY!\n\n");
-    //snprintf(command, sizeof(command), "espeak 'THE ONLY WINNING MOVE IS NOT TO PLAY!'");
-    snprintf(command, sizeof(command), "aplay samples/the-only-winning-move-is-not-to-play.wav -q");
-    system(command);
 }
 
 void global_thermonuclear_war() {
