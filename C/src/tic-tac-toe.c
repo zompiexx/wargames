@@ -214,11 +214,64 @@ void get_player_choice(int *row, int *col, char side) {
     }
 }
 
+int minimax(char board[SIZE][SIZE], int depth, bool isMax, char computerSide, char playerSide) {
+    char winner = '\0';
+    if (check_winner(computerSide)) return +10 - depth;
+    if (check_winner(playerSide)) return -10 + depth;
+    if (check_draw()) return 0;
+
+    if (isMax) {
+        int bestVal = -1000;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (board[i][j] == '\0') {
+                    board[i][j] = computerSide;
+                    int value = minimax(board, depth + 1, !isMax, computerSide, playerSide);
+                    bestVal = (value > bestVal) ? value : bestVal;
+                    board[i][j] = '\0'; // Undo move
+                }
+            }
+        }
+        return bestVal;
+    } else {
+        int bestVal = 1000;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (board[i][j] == '\0') {
+                    board[i][j] = playerSide;
+                    int value = minimax(board, depth + 1, !isMax, computerSide, playerSide);
+                    bestVal = (value < bestVal) ? value : bestVal;
+                    board[i][j] = '\0'; // Undo move
+                }
+            }
+        }
+        return bestVal;
+    }
+}
+
 void get_computer_choice(int *row, int *col, char side) {
-    do {
-        *row = rand() % SIZE;
-        *col = rand() % SIZE;
-    } while (board[*row][*col] != '\0');
+    int bestVal = -1000;
+    int moveRow = -1;
+    int moveCol = -1;
+    char playerSide = (side == 'x') ? 'o' : 'x';
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (board[i][j] == '\0') {
+                board[i][j] = side;
+                int moveVal = minimax(board, 0, false, side, playerSide);
+                board[i][j] = '\0'; // Undo move
+                if (moveVal > bestVal) {
+                    moveRow = i;
+                    moveCol = j;
+                    bestVal = moveVal;
+                }
+            }
+        }
+    }
+
+    *row = moveRow;
+    *col = moveCol;
 }
 
 int get_number_of_users() {
