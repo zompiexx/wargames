@@ -332,8 +332,15 @@ void monitor_cpu_utilization() {
         peak_utilization = current_utilization;
     }
 
-    if (current_utilization >= previous_utilization + 30 || peak_utilization >= previous_utilization + 30) {
+    gotoxy(0, 19);
+    printf("CPU Utilization: %03d%%\n", current_utilization);
+    printf("Peak Utilization: %03d%%\n", peak_utilization);
+    printf("CPU Overload: %c\n", cpu_overload);
+
+    if (current_utilization >= previous_utilization + 25 || peak_utilization >= previous_utilization + 25) {
         cpu_overload = 'Y';
+        gotoxy(0, 21);
+        printf("CPU Overload: %c\n", cpu_overload);
         gotoxy(0, 15);
         printf("\033[31m");
         printf("SYSTEM OVERLOAD\n");
@@ -348,11 +355,6 @@ void monitor_cpu_utilization() {
         system(command);
         exit(0);
     }
-
-    gotoxy(0, 19);
-    printf("CPU Utilization: %03d%%\n", current_utilization);
-    printf("Peak Utilization: %03d%%\n", peak_utilization);
-    printf("CPU Overload: %c\n", cpu_overload);
 
     previous_utilization = current_utilization;
 }
@@ -490,6 +492,6 @@ int main() {
             goto game_start;
         }
     }
-
+    gotoxy(0, 23);
     return 0;
 }
