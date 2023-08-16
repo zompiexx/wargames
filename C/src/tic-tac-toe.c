@@ -11,6 +11,10 @@
 
 #define SIZE 3
 
+static int previous_utilization = 0;
+static int peak_utilization = 0;
+static char cpu_overload = 'N';
+
 char board[SIZE][SIZE]; // Game board
 
 void clear_screen() {
@@ -292,6 +296,67 @@ int get_number_of_users() {
     return users;
 }
 
+void get_cpu_times(long long *idle, long long *total) {
+    FILE *fp = fopen("/proc/stat", "r");
+    if (fp == NULL) {
+        perror("Failed to open /proc/stat");
+        exit(EXIT_FAILURE);
+    }
+
+    char buffer[1024];
+    fgets(buffer, sizeof(buffer), fp);
+
+    char cpu[10];
+    long long user, nice, system, idle_time, iowait, irq, softirq, steal;
+    sscanf(buffer, "%s %lld %lld %lld %lld %lld %lld %lld %lld", cpu, &user, &nice, &system, &idle_time, &iowait, &irq, &softirq, &steal);
+
+    *idle = idle_time + iowait;
+    *total = user + nice + system + idle_time + iowait + irq + softirq + steal;
+
+    fclose(fp);
+}
+
+void monitor_cpu_utilization() {
+    char command[200];
+    long long prev_idle, prev_total, idle, total;
+    get_cpu_times(&prev_idle, &prev_total);
+    usleep(5000); // Sleep for 5 milliseconds
+    get_cpu_times(&idle, &total);
+
+    long long total_diff = total - prev_total;
+    long long idle_diff = idle - prev_idle;
+
+    int current_utilization = 100 * (total_diff - idle_diff) / total_diff;
+
+    if (current_utilization > peak_utilization) {
+        peak_utilization = current_utilization;
+    }
+
+    if (current_utilization >= previous_utilization + 30 || peak_utilization >= previous_utilization + 30) {
+        cpu_overload = 'Y';
+        gotoxy(0, 15);
+        printf("\033[31m");
+        printf("SYSTEM OVERLOAD\n");
+        snprintf(command, sizeof(command), "aplay samples/caught-in-a-loop.wav -q");
+        system(command);
+        usleep(2000000);
+        printf("\033[5m");
+        printf("MISSILE SYSTEMS OFF-LINE\n");
+        printf("\033[0m");
+        gotoxy(0, 23);
+        snprintf(command, sizeof(command), "aplay samples/short-circuit-sound.wav -q");
+        system(command);
+        exit(0);
+    }
+
+    gotoxy(0, 19);
+    printf("CPU Utilization: %03d%%\n", current_utilization);
+    printf("Peak Utilization: %03d%%\n", peak_utilization);
+    printf("CPU Overload: %c\n", cpu_overload);
+
+    previous_utilization = current_utilization;
+}
+
 int main() {
     int users;
     char player1, player2;
@@ -400,6 +465,7 @@ int main() {
             snprintf(command, sizeof(command), "aplay samples/learn.wav -q &");
             system(command);
             fflush(stdout); // flush the output buffer
+            monitor_cpu_utilization();
             usleep(move_delay/game_count);
             
             if (check_winner(side)) {
