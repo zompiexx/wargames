@@ -35,7 +35,9 @@ void draw_nought(int row_offset, int col_offset) {
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 7; j++) {
             gotoxy(col_offset + j, row_offset + i);
+            printf("\033[34m");
             printf("%c", nought[i][j]);
+            printf("\033[0m");
         }
     }
 }
@@ -54,7 +56,9 @@ void draw_cross(int row_offset, int col_offset) {
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 7; j++) {
             gotoxy(col_offset + j, row_offset + i);
+            printf("\033[31m");
             printf("%c", cross[i][j]);
+            printf("\033[0m");
         }
     }
 }
