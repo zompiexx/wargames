@@ -86,7 +86,7 @@ int rows = 24, cols = 80;
         for (int col = 1; col <= grid_size; col++) {
             int x = start_col + (col - 1) * cell_size + (cell_size / 2);
             int y = start_row + row * cell_size + cell_size - 1;
-            gotoxy(x - 1, y);
+            gotoxy(x, y);
             printf("%c%d", row_labels[row], col);
         }
     }
