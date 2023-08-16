@@ -124,8 +124,8 @@ void get_grid_choice(int *row, int *col, char player) {
     gotoxy(0, 3 + player);
     printf("Player %d, choose grid square (e.g., a1): ", player + 1);
     scanf(" %c%d", &row_choice, col);
-    gotoxy(0, 7);
-    printf("                              ");
+    gotoxy(0, 3);
+    printf("                                               ");
 
     *row = row_choice - 'a';
     *col -= 1;
@@ -133,8 +133,8 @@ void get_grid_choice(int *row, int *col, char player) {
     while (*row < 0 || *row >= SIZE || *col < 0 || *col >= SIZE || board[*row][*col] != '\0') {
         gotoxy(0, 3 + player);
         printf("Invalid square! Player %d, choose grid square (e.g., a1): ", player + 1);
-        gotoxy(0, 7);
-        printf("                              ");
+        gotoxy(0, 3);
+        printf("                                                               ");
         scanf(" %c%d", &row_choice, col);
         *row = row_choice - 'a';
         *col -= 1;
@@ -197,8 +197,8 @@ void get_player_choice(int *row, int *col, char side) {
     gotoxy(0, 5);
     printf("Choose grid square (e.g., a1): ");
     scanf(" %c%d", &row_choice, col);
-    gotoxy(0, 7);
-    printf("                              ");
+    gotoxy(0, 5);
+    printf("                                    ");
 
     *row = row_choice - 'a';
     *col -= 1;
@@ -207,8 +207,8 @@ void get_player_choice(int *row, int *col, char side) {
         gotoxy(0, 5);
         printf("Invalid square! Choose grid square (e.g., a1): ");
         scanf(" %c%d", &row_choice, col);
-        gotoxy(1, 7);
-        printf("                              ");
+        gotoxy(0,5);
+        printf("                                                    ");
         *row = row_choice - 'a';
         *col -= 1;
     }
