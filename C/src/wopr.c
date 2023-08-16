@@ -1373,6 +1373,13 @@ void joshua() {
             snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
             system(command);
             delayed_print(prompt);
+        } else if (strcmp(input, "tic-tac-toe") == 0) {
+            snprintf(command, sizeof(command), "./tic-tac-toe");
+            system(command);
+            delayed_print(prompt);
+        } else if (strcmp(input, "cls") == 0) {
+            clear_screen();
+            delayed_print(prompt);
         } else {
             // Construct the shell command
             char sgpt[200] = "sgpt --role WOPR \"";
