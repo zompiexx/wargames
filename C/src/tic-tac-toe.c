@@ -353,6 +353,7 @@ void monitor_cpu_utilization() {
         gotoxy(0, 23);
         snprintf(command, sizeof(command), "aplay samples/short-circuit-sound.wav -q");
         system(command);
+        usleep(5000000);
         exit(1); // check for this condition where this program is called
     }
 
