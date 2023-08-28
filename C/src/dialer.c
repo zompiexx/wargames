@@ -234,7 +234,7 @@ void dialer(int system_pfx[], int system_num[], char system_name[][MAX_SYSTEM_NA
         }
     }
 
-    numcheck:
+    numcheck:;
     int nd_start;
     int nd_end;
 
