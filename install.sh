@@ -4,13 +4,14 @@
 #install dependencies
 sudo apt install git
 sudo apt install espeak
-echo you are running Python Version
-python --version
-sudo apt install python3-pip
-pip install shell-gpt
+sudo apt install libncurses5-dev
 
-#install shell-gpt WOPR role
-cp C/src/WOPR.json ~/.config/shell_gpt/roles
+#install shell-gpt & WOPR role
+#echo you are running Python Version
+#python --version
+#sudo apt install python3-pip
+#pip install shell-gpt
+#cp C/src/WOPR.json ~/.config/shell_gpt/roles
 
 #compile and install C code
 gcc C/src/imsai8080.c -o ./imsai8080
