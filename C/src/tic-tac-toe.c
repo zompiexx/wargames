@@ -11,6 +11,7 @@
 
 #define SIZE 3
 
+static int cpu_threshold = 99; //change this value to suit your system - lower value for fast system
 static int previous_utilization = 0;
 static int peak_utilization = 0;
 static char cpu_overload = 'N';
@@ -337,7 +338,7 @@ void monitor_cpu_utilization() {
     printf("Peak Utilization: %03d%%\n", peak_utilization);
     printf("CPU Overload: %c\n", cpu_overload);
 
-    if (current_utilization >= previous_utilization + 25 || peak_utilization >= previous_utilization + 25) {
+    if (current_utilization >= previous_utilization + cpu_threshold || peak_utilization >= previous_utilization + cpu_threshold) {
         cpu_overload = 'Y';
         gotoxy(0, 21);
         printf("CPU Overload: %c\n", cpu_overload);
