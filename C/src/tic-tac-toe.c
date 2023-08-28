@@ -11,7 +11,7 @@
 
 #define SIZE 3
 
-static int cpu_threshold = 99; //change this value to suit your system - lower value for fast system
+static int cpu_threshold = 65; //change this value to suit your system - lower value for fast system. 65 seems about right for a Raspberry PI4
 static int previous_utilization = 0;
 static int peak_utilization = 0;
 static char cpu_overload = 'N';
