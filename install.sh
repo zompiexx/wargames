@@ -24,6 +24,9 @@ gcc C/src/wopr.c -o ./wopr
 #install data files
 cp C/src/*.txt ./
 
+#make scripts executable
+chmod +x ~/wargames/*.sh
+
 echo install complete
 
 
