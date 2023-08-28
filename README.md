@@ -111,8 +111,10 @@ If you want to try it out for yourself, here are the steps:
   *  Now, connect using: telnet localhost 9999
   *  Replace localhost with the hostname or IP address of the server machine as appropriate
 
-  *  NOTE: Edit install.sh as required
-    * Optional - only needed for client/server mode: You will need a telnet client installed (on the client machine)
-    * Optional - only needed for client/server mode: You will need telnetd installed (on the server side), but can be left disabled as will be called as required
+*  NOTE: Edit install.sh as required
+  *  Optional - only needed for client/server mode: You will need a telnet client installed (on the client machine)
+  *  Optional - only needed for client/server mode: You will need telnetd installed (on the server side), but can be left disabled as will be called as required
+
+* Warning: If running in client/server mode using telnet & telnetd, please be aware that Telnet is an unencrypted protocol.
 
 
