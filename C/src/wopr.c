@@ -1074,7 +1074,7 @@ void joshua() {
             //system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "") == 0) {
-            delayed_print("\n\n");
+            //delayed_print("\n\n");
             delayed_print(prompt);
         } else if (strcmp(input, "list") == 0) {
             delayed_print("\nUSE SYNTAX: LIST <TYPE>\n\n");
@@ -1400,17 +1400,17 @@ void joshua() {
         } else if (strcmp(input, "cls") == 0) {
             clear_screen();
             delayed_print(prompt);
-        } else {
+        //} else {
             // Construct the shell command
-            char sgpt[200] = "sgpt --role WOPR \"";
-            strcat(sgpt, input);
-            strcat(sgpt, "\" | tee /dev/tty | espeak");
+            //char sgpt[200] = "sgpt --role WOPR \"";
+            //strcat(sgpt, input);
+            //strcat(sgpt, "\" | tee /dev/tty | espeak");
             //strcat(sgpt, "\" ");
-            printf("\n");
+            //printf("\n");
 
             // Call the shell command
-            system(sgpt);
-            printf("\n");
+            //system(sgpt);
+            //printf("\n");
         }
     }
 
