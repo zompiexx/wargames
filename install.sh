@@ -1,9 +1,12 @@
 #!/bin/bash
 
-
 #install dependencies
-sudo apt install git
 sudo apt install libncurses5-dev
+echo We will now install the Telnet Daemon
+echo This is only required for client/server mode
+echo If you will only be running the software locally then answer NO when prompted to install telnetd
+sleep 10
+sudo apt install telnetd
 
 #install shell-gpt & WOPR role (needs to be enabled in wopr.c)
 #echo you are running Python Version
