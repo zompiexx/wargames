@@ -3,12 +3,12 @@
 
 #install dependencies
 sudo apt install git
-sudo apt install espeak
 sudo apt install libncurses5-dev
 
-#install shell-gpt & WOPR role
+#install shell-gpt & WOPR role (needs to be enabled in wopr.c)
 #echo you are running Python Version
 #python --version
+#sudo apt install espeak
 #sudo apt install python3-pip
 #pip install shell-gpt
 #cp C/src/WOPR.json ~/.config/shell_gpt/roles
@@ -20,6 +20,7 @@ gcc C/src/dialer.c -o ./dialer
 gcc C/src/pan-am.c -o ./pan-am
 gcc C/src/bank.c -o ./bank
 gcc C/src/wopr.c -o ./wopr
+gcc C/src/tic-tac-toe.c -o ./tic-tac-toe
 
 #install data files
 cp C/src/*.txt ./
