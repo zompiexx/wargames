@@ -97,8 +97,7 @@ Still to do:
 If you want to try it out for yourself, here are the steps:
 * You will need a Linux machine
 * You will need a gcc compiler installed
-  *  Optional - only needed for client/server mode: You will need a telnet client installed (on the client machine)
-  *  Optional - only needed for client/server mode: You will need telnetd installed (on the server side), but can be left disabled as will be called as required
+* You will need git installed: sudo apt install git
 
 *  Installation:
   *  open a terminal shell in Linux
@@ -108,8 +107,12 @@ If you want to try it out for yourself, here are the steps:
   *  chmod +x *.sh
   *  run: ./install.sh
   *  For local mode, run: ./imsai8080
-  *  For server mode, run: ./wargames_start.sh (this will start all of the Wargames Computer Systems listening using their assigned ports using telnetd)
-  *  Now, connect to any of the systems by using telnet. For example, to connect to the Imsai 8080 running on the same machine, you would use: telnet localhost 9999
-  *  To Stop Wargames server, run: ./wargames_stop.sh
+  *  For server mode, run: ./imsai8080_start.sh
+  *  Now, connect using: telnet localhost 9999
+  *  Replace localhost with the hostname or IP address of the server machine as appropriate
+
+  *  NOTE: Edit install.sh as required
+    * Optional - only needed for client/server mode: You will need a telnet client installed (on the client machine)
+    * Optional - only needed for client/server mode: You will need telnetd installed (on the server side), but can be left disabled as will be called as required
 
 
