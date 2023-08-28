@@ -2,7 +2,8 @@
 
 #install dependencies
 sudo apt install libncurses5-dev
-#If you will only be running the software locally there is no need to install telnetd
+#If you will only be running the software locally there is no need to install telnet and telnetd
+sudo apt install telnet
 sudo apt install telnetd
 
 #install shell-gpt & WOPR role (needs to be enabled in wopr.c)
