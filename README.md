@@ -100,7 +100,7 @@ If you want to try it out for yourself, here are the steps:
 * You will need git installed: sudo apt install git
 
 *  Installation:
-  *  open a terminal shell in Linux
+  * open a terminal shell in Linux
   *  cd ~
   *  git clone https://github.com/zompiexx/wargames
   *  cd wargames
