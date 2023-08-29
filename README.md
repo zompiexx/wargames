@@ -107,6 +107,9 @@ Installation:
 *  git clone https://github.com/zompiexx/wargames
 *  cd wargames
 *  Run: chmod +x *.sh
+*  Edit install.sh (if required)
+*  telnet (Optional - only needed for client/server mode)
+*  telnetd (Optional - only needed for client/server mode)
 *  Run: ./install.sh
 
 Running the Software (Local Mode):
@@ -116,10 +119,6 @@ Running the Software (Client/Server Mode):
 * Run: ./imsai8080_start.sh
 * Connect using: telnet <host> 9999
 * Replace <host> with the hostname or IP address of the server machine as appropriate
-
-NOTE: Edit install.sh as required
-* telnet (Optional - only needed for client/server mode)
-* telnetd (Optional - only needed for client/server mode)
 
 WARNING:
 * If running in client/server mode using telnet & telnetd, please be aware that telnet is an unencrypted protocol
