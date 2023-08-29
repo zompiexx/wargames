@@ -120,6 +120,12 @@ Running the Software (Client/Server Mode):
 * Connect using: telnet host 9999
 * Replace host with the hostname or IP address of the server machine as appropriate
 
+Connecting using IMSAI8080esp
+* Run: KERMIT.COM (you should find this on the comms.dsk disk image)
+* In Kermit: set port uc1
+* In Kermit: connect
+* In Kermit: ATDhost:9999
+
 WARNING:
 * If running in client/server mode using telnet & telnetd, please be aware that telnet is an unencrypted protocol
 
