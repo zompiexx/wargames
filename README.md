@@ -117,8 +117,8 @@ Running the Software (Local Mode):
 
 Running the Software (Client/Server Mode):
 * Run: ./imsai8080_start.sh
-* Connect using: telnet <host> 9999
-* Replace <host> with the hostname or IP address of the server machine as appropriate
+* Connect using: telnet host 9999
+* Replace host with the hostname or IP address of the server machine as appropriate
 
 WARNING:
 * If running in client/server mode using telnet & telnetd, please be aware that telnet is an unencrypted protocol
