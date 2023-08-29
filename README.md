@@ -95,26 +95,33 @@ Still to do:
 * Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
 
 If you want to try it out for yourself, here are the steps:
+
+Pre-requisites:
 * You will need a Linux machine
 * You will need a gcc compiler installed
 * You will need git installed: sudo apt install git
 
-*  Installation:
-  * open a terminal shell in Linux
-  *  cd ~
-  *  git clone https://github.com/zompiexx/wargames
-  *  cd wargames
-  *  chmod +x *.sh
-  *  run: ./install.sh
-  *  For local mode, run: ./imsai8080
-  *  For server mode, run: ./imsai8080_start.sh
-  *  Now, connect using: telnet localhost 9999
-  *  Replace localhost with the hostname or IP address of the server machine as appropriate
+Installation:
+* open a terminal shell in Linux
+*  cd ~
+*  git clone https://github.com/zompiexx/wargames
+*  cd wargames
+*  Run: chmod +x *.sh
+*  Run: ./install.sh
+
+Running the Software:
+(Local Mode)
+* Run: ./imsai8080
+(Client/Server Mode)
+* Run: ./imsai8080_start.sh
+* Connect using: telnet <host> 9999
+* Replace <host> with the hostname or IP address of the server machine as appropriate
 
 NOTE: Edit install.sh as required
-  *  telnet (Optional - only needed for client/server mode)
-  *  telnetd (Optional - only needed for client/server mode)
+* telnet (Optional - only needed for client/server mode)
+* telnetd (Optional - only needed for client/server mode)
 
-WARNING: If running in client/server mode using telnet & telnetd, please be aware that telnet is an unencrypted protocol
+WARNING:
+* If running in client/server mode using telnet & telnetd, please be aware that telnet is an unencrypted protocol
 
 
