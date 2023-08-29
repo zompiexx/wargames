@@ -109,10 +109,10 @@ Installation:
 *  Run: chmod +x *.sh
 *  Run: ./install.sh
 
-Running the Software:
-(Local Mode)
+Running the Software (Local Mode):
 * Run: ./imsai8080
-(Client/Server Mode)
+
+Running the Software (Client/Server Mode):
 * Run: ./imsai8080_start.sh
 * Connect using: telnet <host> 9999
 * Replace <host> with the hostname or IP address of the server machine as appropriate
