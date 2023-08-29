@@ -479,6 +479,15 @@ int main() {
         gotoxy(0, 1);
         printf("How Many Games: ");
         scanf("%d",&games);
+      
+        while(games<=0) {
+            gotoxy(0, 1);
+            printf("                              ");
+            gotoxy(0, 1);
+            printf("How Many Games (>0): ");
+            scanf("%d",&games);
+        }
+
         game_loop:
         reset_board();
 
