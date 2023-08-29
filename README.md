@@ -121,6 +121,7 @@ Running the Software (Client/Server Mode):
 * Replace host with the hostname or IP address of the server machine as appropriate
 
 Connecting using IMSAI8080esp:
+* Suggest setting serial port for Terminal and AT (WiFi) Modem to 115200 (or unlimited)
 * Run: KERMIT.COM (you should find this on the comms.dsk disk image)
 * In Kermit: set port uc1
 * In Kermit: connect
