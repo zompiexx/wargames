@@ -482,6 +482,13 @@ int main() {
         game_loop:
         reset_board();
 
+        // The random first move
+        int randomRow = rand() % 3;  // random number between 0 and 2
+        int randomCol = rand() % 3;  // random number between 0 and 2
+        board[randomRow][randomCol] = sides[turn];
+        draw_symbol(randomRow, randomCol, sides[turn]);
+        turn = 1 - turn;  // Alternate the turn immediately after the first move
+
         while (true) {
             int row, col;
             char side = sides[turn];
