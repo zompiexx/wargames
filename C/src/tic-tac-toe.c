@@ -11,7 +11,9 @@
 
 #define SIZE 3
 
-static int cpu_threshold = 65; //change this value to suit your system - lower value for fast system. 65 seems about right for a Raspberry PI4
+static int cpu_threshold = 22; //this is the cpu_threshold - set a lower value for a fast system
+static int cpu_threshold_trigger = 3; //this is the number of times the cpu_threshold needs to be met
+static int cpu_threshold_trigger_count = 0; //this counts the number of times the cpu_threshold has been triggered
 static int previous_utilization = 0;
 static int peak_utilization = 0;
 static char cpu_overload = 'N';
@@ -334,28 +336,32 @@ void monitor_cpu_utilization() {
     }
 
     gotoxy(0, 19);
-    printf("CPU Utilization: %03d%%\n", current_utilization);
-    printf("Peak Utilization: %03d%%\n", peak_utilization);
+    //printf("CPU Utilization: %03d%%\n", current_utilization);
+    printf("CPU Peak Utilization: %03d%%\n", peak_utilization);
+    printf("CPU Threshold Trigger Count: %d\n", cpu_threshold_trigger_count);
     printf("CPU Overload: %c\n", cpu_overload);
 
     if (current_utilization >= previous_utilization + cpu_threshold || peak_utilization >= previous_utilization + cpu_threshold) {
-        cpu_overload = 'Y';
-        gotoxy(0, 21);
-        printf("CPU Overload: %c\n", cpu_overload);
-        gotoxy(0, 15);
-        printf("\033[31m");
-        printf("SYSTEM OVERLOAD\n");
-        snprintf(command, sizeof(command), "aplay samples/caught-in-a-loop.wav -q");
-        system(command);
-        usleep(2000000);
-        printf("\033[5m");
-        printf("MISSILE SYSTEMS OFF-LINE\n");
-        printf("\033[0m");
-        gotoxy(0, 23);
-        snprintf(command, sizeof(command), "aplay samples/short-circuit-sound.wav -q");
-        system(command);
-        usleep(5000000);
-        exit(1); // check for this condition where this program is called
+        cpu_threshold_trigger_count=cpu_threshold_trigger_count+1;
+        if(cpu_threshold_trigger_count > cpu_threshold_trigger) {      
+            cpu_overload = 'Y';
+            gotoxy(0, 21);
+            printf("CPU Overload: %c\n", cpu_overload);
+            gotoxy(0, 15);
+            printf("\033[31m");
+            printf("SYSTEM OVERLOAD\n");
+            snprintf(command, sizeof(command), "aplay samples/caught-in-a-loop.wav -q");
+            system(command);
+            usleep(2000000);
+            printf("\033[5m");
+            printf("MISSILE SYSTEMS OFF-LINE\n");
+            printf("\033[0m");
+            gotoxy(0, 23);
+            snprintf(command, sizeof(command), "aplay samples/short-circuit-sound.wav -q");
+            system(command);
+            usleep(5000000);
+            exit(1); // check for this condition where this program is called
+        }
     }
 
     previous_utilization = current_utilization;
@@ -366,8 +372,11 @@ int main() {
     char player1, player2;
     char command[200];
 
+    start_game:;
+
     srand(time(NULL));
     clear_screen();
+    reset_board();
     draw_grid();
 
     users = get_number_of_users();
@@ -404,6 +413,13 @@ int main() {
             }
 
             turn = 1 - turn; // Alternate between players
+        }
+        char playagain;
+        gotoxy(0,23);
+        printf("Play again (Y/N): ");
+        scanf("%s", &playagain);
+        if (playagain == 'Y' || playagain == 'y') {
+            goto start_game;
         }
     } else if (users == 1) {
         char playerSide = get_side_choice();
@@ -444,6 +460,13 @@ int main() {
                 break;
             }
         }
+        char playagain;
+        gotoxy(0,23);
+        printf("Play again (Y/N): ");
+        scanf("%s", &playagain);
+        if (playagain == 'Y' || playagain == 'y') {
+            goto start_game;
+        }
     } else if (users == 0) {
         char sides[2] = {'x', 'o'};
         int turn = 0;
@@ -456,7 +479,7 @@ int main() {
         gotoxy(0, 1);
         printf("How Many Games: ");
         scanf("%d",&games);
-        game_start:
+        game_loop:
         reset_board();
 
         while (true) {
@@ -491,7 +514,15 @@ int main() {
         game_count=game_count+1;
         usleep(move_delay/game_count);
         if(game_count < games+1) {
-            goto game_start;
+            goto game_loop;
+        } else {
+            char playagain;
+            gotoxy(0,23);
+            printf("Play again (Y/N): ");
+            scanf("%s", &playagain);
+            if (playagain == 'Y' || playagain == 'y') {
+                goto start_game;
+            }
         }
     }
     gotoxy(0, 23);
