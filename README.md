@@ -107,7 +107,7 @@ Installation:
 *  git clone https://github.com/zompiexx/wargames
 *  cd wargames
 *  Run: chmod +x *.sh
-*  Edit install.sh (if required)
+*  Edit install.sh (if required): nano install.sh
 *  telnet (Optional - only needed for client/server mode)
 *  telnetd (Optional - only needed for client/server mode)
 *  Run: ./install.sh
