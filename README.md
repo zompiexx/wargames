@@ -90,6 +90,7 @@ At the moment, the Wargames C code has the following features:
   * Computer moves use AI logic
   * 0 Player option causes computer to play itself, "learning" (getting faster) as it plays each round
   * Grid and O and X are generated using character maps
+  * Simulation of System Overload for 0 player mode using CPU utilisation monitoring
 
 Still to do:
 * User Accounts (for users other than "Joshua")
