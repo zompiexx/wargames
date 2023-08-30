@@ -16,7 +16,7 @@ NOTE: Boot your IMSAI 8080esp using this disk image and then run: MBASIC WARGAME
 
 You are free to use and modify the code for your own purposes, but must credit the author, Andy Glenn, under all circumstances.
 
-This BASIC code is fully functional, but there are some additional features that I planned to include. Most of these have been written into the C code::
+This BASIC code is fully functional, but there are some additional features that I planned to include. Most of these have been written into the C code:
 
 *  Zero (0) Players option in Tic-Tac-Toe game (completed in C code version)
 *  Completed tasks/status/score page at end of "game" (not really applicable in C code version, but something similar written into C code)
