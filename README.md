@@ -101,7 +101,7 @@ If you want to try it out for yourself, here are the steps:
 
 Pre-requisites:
 * You will need a Linux machine
-* You will need a gcc compiler installed
+* You will need a gcc compiler installed: sudo apt install build-essential
 * You will need git installed: sudo apt install git
 
 Installation:
