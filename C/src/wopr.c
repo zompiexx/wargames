@@ -11,10 +11,20 @@
 #include <ctype.h>
 #include <time.h>
 #include <ncurses.h>
+#include <termios.h>
 
 #define CHARACTER_DELAY 5000  // 1000 = 1ms
 #define MAX_TARGETS 4
 #define MAX_STRING_LENGTH 20
+
+// Struct for user data
+typedef struct {
+    char username[100];
+    char password[100];
+    char name[100];
+    int access_level;
+    char last_logon[100];
+} User;
 
 int game_running = 0;
 int defcon = 5;
@@ -50,12 +60,437 @@ void clear_screen() {
 void author() {
     int asciiValues[] = {65, 78, 68, 89, 32, 71, 76, 69, 78, 78};
     int i;
+    char command[200];
+
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
 
     printf("\n");
     for(i = 0; i < 10; i++) {
         printf("%c", asciiValues[i]);
     }
     printf("\n\n");
+}
+
+void help_games() {
+    char command[200];
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+    system(command);
+    delayed_print("\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
+    //snprintf(command, sizeof(command), "espeak 'GAMES REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND STRATEGIC APPLICATIONS'");
+    //system(command);
+}
+
+void list_games() {
+    char command[200];
+    delayed_print("\nFALKEN'S MAZE\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'FALKENS MAZE'");
+    //system(command);
+    delayed_print("BLACK JACK\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'BLACK JACK'");
+    //system(command);
+    delayed_print("GIN RUMMY\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'GIN RUMMY'");
+    //system(command);
+    delayed_print("HEARTS\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'HEARTS'");
+    //system(command);
+    delayed_print("BRIDGE\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'BRIDGE'");
+    //system(command);
+    delayed_print("CHECKERS\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'CHECKERS'");
+    //system(command);
+    delayed_print("CHESS\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'CHESS'");
+    //system(command);
+    delayed_print("POKER\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'POKER'");
+    //system(command);
+    delayed_print("FIGHTER COMBAT\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'FIGHTER COMBAT'");
+    //system(command);
+    delayed_print("GUERRILLA ENGAGEMENT\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'GUERRILLA ENGAGEMENT'");
+    //system(command);
+    delayed_print("DESERT WARFARE\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'DESERT WARFARE'");
+    //system(command);
+    delayed_print("AIR-TO-GROUND ACTIONS\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //nprintf(command, sizeof(command), "espeak 'AIR-TO-GROUND ACTIONS'");
+    //system(command);
+    delayed_print("THEATERWIDE TACTICAL WARFARE\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'THEATERWIDE TACTICAL WARFARE'");
+    //system(command);
+    delayed_print("THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE'");
+    //system(command);
+    usleep(500000);
+    delayed_print("\nGLOBAL THERMONUCLEAR WAR\n\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'GLOBAL THERMONUCLEAR WAR'");
+    //system(command);
+}
+
+void manageUsers() {
+    int choice;
+    char inputBuffer[256];
+
+    while (1) {
+        printf("\n");
+        printf("1. Create User\n2. Amend User\n3. Delete User\n4. List Users\nEnter choice (or press Enter to exit): ");
+        
+        fgets(inputBuffer, sizeof(inputBuffer), stdin);
+        if (sscanf(inputBuffer, "%d", &choice) != 1) {
+            break;  // Break out of the loop if no valid number is provided
+        }
+
+        FILE* file;
+        User tempUser;
+        char inputUsername[100];
+
+        switch (choice) {
+            case 1:
+                file = fopen("users.txt", "a");
+                if (!file) {
+                    printf("Error opening or creating users.txt!\n");
+                    return;
+                }
+                printf("Enter username: ");
+                fgets(tempUser.username, sizeof(tempUser.username), stdin);
+                strtok(tempUser.username, "\n");
+                
+                printf("Enter password: ");
+                fgets(tempUser.password, sizeof(tempUser.password), stdin);
+                strtok(tempUser.password, "\n");
+                
+                printf("Enter name: ");
+                fgets(tempUser.name, sizeof(tempUser.name), stdin);
+                strtok(tempUser.name, "\n");
+                
+                printf("Enter access level: ");
+                fgets(inputBuffer, sizeof(inputBuffer), stdin);
+                sscanf(inputBuffer, "%d", &tempUser.access_level);
+
+                strcpy(tempUser.last_logon, "Never");
+
+                fprintf(file, "%s\n%s\n%s\n%d\n%s\n", tempUser.username, tempUser.password, tempUser.name, 
+                        tempUser.access_level, tempUser.last_logon);
+
+                fclose(file);
+                printf("User created successfully.\n");
+                break;
+
+            case 2:
+                file = fopen("users.txt", "r");
+                if (!file) {
+                    printf("users.txt not found. Create a user first.\n");
+                    return;
+                }
+                printf("Enter username to amend: ");
+                fgets(inputUsername, sizeof(inputUsername), stdin);
+                strtok(inputUsername, "\n");
+
+                FILE* tempFile = fopen("temp.txt", "w");
+                if (!tempFile) {
+                    printf("Error creating temp file!\n");
+                    fclose(file);
+                    return;
+                }
+                
+                int amended = 0;
+                while (fscanf(file, "%s\n%s\n%s\n%d\n%s\n", tempUser.username, tempUser.password, tempUser.name, 
+                        &tempUser.access_level, tempUser.last_logon) != EOF) {
+                    if (strcmp(tempUser.username, inputUsername) == 0) {
+                        printf("Enter new password: ");
+                        fgets(tempUser.password, sizeof(tempUser.password), stdin);
+                        strtok(tempUser.password, "\n");
+                        
+                        printf("Enter new name: ");
+                        fgets(tempUser.name, sizeof(tempUser.name), stdin);
+                        strtok(tempUser.name, "\n");
+                        
+                        printf("Enter new access level: ");
+                        fgets(inputBuffer, sizeof(inputBuffer), stdin);
+                        sscanf(inputBuffer, "%d", &tempUser.access_level);
+
+                        amended = 1;
+                    }
+                    fprintf(tempFile, "%s\n%s\n%s\n%d\n%s\n", tempUser.username, tempUser.password, tempUser.name, 
+                            tempUser.access_level, tempUser.last_logon);
+                }
+
+                fclose(file);
+                fclose(tempFile);
+                remove("users.txt");
+                rename("temp.txt", "users.txt");
+
+                if (amended) {
+                    printf("User amended successfully.\n");
+                } else {
+                    printf("User not found.\n");
+                }
+                break;
+
+            case 3:
+                file = fopen("users.txt", "r");
+                if (!file) {
+                    printf("users.txt not found. Create a user first.\n");
+                    return;
+                }
+                printf("Enter username to delete: ");
+                fgets(inputUsername, sizeof(inputUsername), stdin);
+                strtok(inputUsername, "\n");
+
+                FILE* delFile = fopen("delete.txt", "w");
+                if (!delFile) {
+                    printf("Error creating delete file!\n");
+                    fclose(file);
+                    return;
+                }
+
+                int deleted = 0;
+                while (fscanf(file, "%s\n%s\n%s\n%d\n%s\n", tempUser.username, tempUser.password, tempUser.name, 
+                        &tempUser.access_level, tempUser.last_logon) != EOF) {
+                    if (strcmp(tempUser.username, inputUsername) != 0) {
+                        fprintf(delFile, "%s\n%s\n%s\n%d\n%s\n", tempUser.username, tempUser.password, tempUser.name, 
+                                tempUser.access_level, tempUser.last_logon);
+                    } else {
+                        deleted = 1;
+                    }
+                }
+
+                fclose(file);
+                fclose(delFile);
+                remove("users.txt");
+                if (deleted) {
+                    rename("delete.txt", "users.txt");
+                    printf("User deleted successfully.\n");
+                } else {
+                    remove("delete.txt");
+                    printf("User not found.\n");
+                }
+                break;
+
+            case 4:
+                file = fopen("users.txt", "r");
+                if (!file) {
+                    printf("users.txt not found. Create a user first.\n");
+                    return;
+                }
+                printf("\nList of Users:\n");
+                printf("-------------------------------------------------\n");
+                printf("| %-10s | %-15s | %-15s |\n", "Username", "Name", "Access Level");
+                printf("-------------------------------------------------\n");
+                while (fscanf(file, "%s\n%s\n%s\n%d\n%s\n", tempUser.username, tempUser.password, tempUser.name, 
+                        &tempUser.access_level, tempUser.last_logon) != EOF) {
+                    printf("| %-10s | %-15s | %-15d |\n", tempUser.username, tempUser.name, tempUser.access_level);
+                }
+                printf("-------------------------------------------------\n");
+                fclose(file);
+                break;
+
+            default:
+                printf("Invalid choice. Exiting...\n");
+                return;  // Exit the function
+        }
+    }
+    printf("\n");
+}
+
+void logged_on_user(User user) {
+    char command[200];
+    char buffer[500]; // Buffer to hold formatted output
+    char input[100];
+    
+    clear_screen();
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+    system(command);
+    delayed_print("TRZ. 34/53/76               SYS PROC 3435.45.6456           XCOMP STATUS: PV-456\n");
+    delayed_print("ACTIVE PORTS: 34,53,75,94                                     CPU TM USED: 23:43\n");
+    delayed_print("#45/34/53.           ALT MODE FUNCT: PV-8-AY345              STANDBY MODE ACTIVE\n");
+    delayed_print("#543.654      #989.283       #028.392       #099.293      #934.905      #261.372\n");
+    delayed_print("\n");
+
+    sprintf(buffer, "USER         : %s\n", user.username);
+    delayed_print(buffer);
+
+    sprintf(buffer, "NAME         : %s\n", user.name);
+    delayed_print(buffer);
+    
+    sprintf(buffer, "ACCESS LEVEL : %d\n", user.access_level);
+    delayed_print(buffer);
+
+    delayed_print("\n");
+    
+    while(1) {
+        delayed_print("> ");
+        fgets(input, sizeof(input), stdin);
+        
+        // Remove trailing newline character
+        input[strcspn(input, "\n")] = '\0';
+
+        // If user just pressed Enter (carriage return)
+        if (input[0] == '\0') {
+            continue; // Go back to the start of the while loop
+        }
+
+        // Convert input to lowercase
+        for (int i = 0; input[i]; i++) {
+            input[i] = tolower(input[i]);
+        }
+        
+        // Check commands
+        if (strcmp(input, "help games") == 0) {
+            help_games();
+        }
+        else if (strcmp(input, "list games") == 0) {
+            list_games();
+        }
+        else if (strcmp(input, "author") == 0) {
+            author();
+        }
+        else if (strcmp(input, "whoami") == 0) {
+            delayed_print("\nUSER: ");
+            printf("%s",user.username);
+            delayed_print("\n\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+        }
+        else if (strcmp(input, "defcon") == 0) {
+            delayed_print("\nDEFCON: ");
+            printf("%d",defcon);
+            delayed_print("\n\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+        }
+        else if (strcmp(input, "cls") == 0) {
+            clear_screen();
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+            system(command);
+            delayed_print("TRZ. 34/53/76               SYS PROC 3435.45.6456           XCOMP STATUS: PV-456\n");
+            delayed_print("ACTIVE PORTS: 34,53,75,94                                     CPU TM USED: 23:43\n");
+            delayed_print("#45/34/53.           ALT MODE FUNCT: PV-8-AY345              STANDBY MODE ACTIVE\n");
+            delayed_print("#543.654      #989.283       #028.392       #099.293      #934.905      #261.372\n");
+            delayed_print("\n");
+        }
+        else if (strcmp(input, "users") == 0) {
+            if (user.access_level == 2) {
+                manageUsers();
+            } else {
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+                system(command);
+                delayed_print("\nPERMISSION DENIED. INSUFFICIENT ACCESS LEVEL.\n\n");
+            }
+           
+        }
+        else if (strcmp(input, "exit") == 0) {
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+            system(command);
+            delayed_print("\nLOGGING OUT OF SESSION\n--CONNECTION TERMINATED--\n");
+            usleep(1000000);
+            exit(0);
+        }
+        else {
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("\nINVALID COMMAND\n\n");
+        }
+    }
+}
+
+void getPassword(char* password, size_t size) {
+    struct termios old, new;
+    int n = 0;
+    char ch;
+
+    // Disable buffering for terminal I/O so the PASS key is available.
+    setvbuf(stdin, NULL, _IONBF, 0); 
+
+    // Disable echo
+    tcgetattr(fileno(stdin), &old);
+    new = old;
+    new.c_lflag &= ~(ECHO | ICANON);  // Disable echo and buffered input
+    new.c_lflag |= ECHONL;
+
+    if (tcsetattr(fileno(stdin), TCSAFLUSH, &new) != 0) {
+        perror("tcsetattr");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("PASSWORD: ");
+    
+    // Read characters one by one, mask them with '*', and store in password array
+    while (n < size - 1) {
+        ch = getchar();
+        if(ch == '\n')
+            break;
+        putchar('*');
+        password[n] = ch;
+        n++;
+    }
+    password[n] = '\0';  // Null terminate the string
+
+    // Restore terminal
+    (void) tcsetattr(fileno(stdin), TCSAFLUSH, &old);
+}
+
+void authenticateUser(char* username) {
+    char inputPassword[100];
+    FILE* file = fopen("users.txt", "r");
+    if (!file) {
+        printf("users.txt not found. Ensure a user exists.\n");
+        return;
+    }
+
+    User tempUser;
+
+    getPassword(inputPassword, sizeof(inputPassword));
+
+    int authenticated = 0;
+    while (fscanf(file, "%99s\n%99s\n%99s\n%d\n%99s\n", tempUser.username, tempUser.password, tempUser.name, 
+            &tempUser.access_level, tempUser.last_logon) != EOF) {
+        if (strcmp(tempUser.username, username) == 0 && strcmp(tempUser.password, inputPassword) == 0) {
+            authenticated = 1;
+            break;
+        }
+    }
+    fclose(file);
+
+    if (authenticated) {
+        printf("\nUSER AUTHENTICATION SUCCESSFUL\n");
+        usleep(1000000);
+        logged_on_user(tempUser); // Call this function if authenticated
+    }
 }
 
 void guesscode() {
@@ -966,95 +1401,6 @@ void global_thermonuclear_war() {
     //control returned to joshua function
 }
 
-void help_games() {
-    char command[200];
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-    system(command);
-    delayed_print("\n'GAMES' REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND\nSTRATEGIC APPLICATIONS\n\n");
-    //snprintf(command, sizeof(command), "espeak 'GAMES REFERS TO MODELS, SIMULATIONS, AND GAMES WHICH HAVE TACTICAL AND STRATEGIC APPLICATIONS'");
-    //system(command);
-}
-
-void list_games() {
-    char command[200];
-    delayed_print("\nFALKEN'S MAZE\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'FALKENS MAZE'");
-    //system(command);
-    delayed_print("BLACK JACK\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'BLACK JACK'");
-    //system(command);
-    delayed_print("GIN RUMMY\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'GIN RUMMY'");
-    //system(command);
-    delayed_print("HEARTS\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'HEARTS'");
-    //system(command);
-    delayed_print("BRIDGE\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'BRIDGE'");
-    //system(command);
-    delayed_print("CHECKERS\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'CHECKERS'");
-    //system(command);
-    delayed_print("CHESS\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'CHESS'");
-    //system(command);
-    delayed_print("POKER\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'POKER'");
-    //system(command);
-    delayed_print("FIGHTER COMBAT\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'FIGHTER COMBAT'");
-    //system(command);
-    delayed_print("GUERRILLA ENGAGEMENT\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'GUERRILLA ENGAGEMENT'");
-    //system(command);
-    delayed_print("DESERT WARFARE\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'DESERT WARFARE'");
-    //system(command);
-    delayed_print("AIR-TO-GROUND ACTIONS\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //nprintf(command, sizeof(command), "espeak 'AIR-TO-GROUND ACTIONS'");
-    //system(command);
-    delayed_print("THEATERWIDE TACTICAL WARFARE\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'THEATERWIDE TACTICAL WARFARE'");
-    //system(command);
-    delayed_print("THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE'");
-    //system(command);
-    usleep(500000);
-    delayed_print("\nGLOBAL THERMONUCLEAR WAR\n\n");
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-    system(command);
-    //snprintf(command, sizeof(command), "espeak 'GLOBAL THERMONUCLEAR WAR'");
-    //system(command);
-}
-
 void joshua() {
     char command[200];
     clear_screen();
@@ -1252,8 +1598,6 @@ void joshua() {
             usleep(1000000);
             exit(0);
         } else if (strcmp(input, "author") == 0) {
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-            system(command);
             author();
         } else if (strstr(input, "incorrect") != NULL && game_running == 1) {
             delayed_print("\nI'M SORRY TO HEAR THAT, PROFESSOR.\n");
@@ -1415,6 +1759,8 @@ void joshua() {
         } else if (strcmp(input, "cls") == 0) {
             clear_screen();
             delayed_print(prompt);
+        } else if (strcmp(input, "users") == 0) {
+            manageUsers();
         //} else {
             // Construct the shell command
             //char sgpt[200] = "sgpt --role WOPR \"";
@@ -1443,6 +1789,15 @@ void handle_user_input() {
         // Remove trailing newline character
         input[strcspn(input, "\n")] = '\0';
 
+        // Check if user just pressed Enter (carriage return)
+        if (input[0] == '\0') {
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+            system(command);
+            delayed_print("IDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
+            usleep(1000000);
+            break;  // Exit the while loop
+        }
+
         // Convert input to lowercase
         for (int i = 0; input[i]; i++) {
             input[i] = tolower(input[i]);
@@ -1470,9 +1825,10 @@ void handle_user_input() {
             clear_screen();
             delayed_print(prompt);
         } else {
+            authenticateUser(input);  // Call the authentication function for that username
             snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
             system(command);
-            delayed_print("IDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
+            delayed_print("\nIDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
             usleep(1000000);
             break;  // Exit the while loop
         }
