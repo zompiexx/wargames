@@ -1128,7 +1128,7 @@ void joshua() {
     not_delayed_print("\033[2J\033[H                                                                 \n");
     }
 
-    usleep(500000);
+    usleep(5000000);
     delayed_print("GREETINGS PROFESSOR FALKEN.\n\n");
     //snprintf(command, sizeof(command), "espeak 'GREETINGS PROFESSOR FALKEN'");
     snprintf(command, sizeof(command), "aplay samples/greetings.wav -q");
