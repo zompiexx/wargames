@@ -123,6 +123,15 @@ Running the Software (Client/Server Mode):
 * Connect using: telnet host 9999
 * Replace host with the hostname or IP address of the server machine as appropriate
 
+NOTE: If you would prefer to have all the computer systems from the wargames movie running using unique TCP listeners, then:
+* Run: ./wargames_start.sh
+
+OR: The computer systems can be started individually using the following:
+* For School Computer, Run: ./school_start.sh
+* For Bank, Run: ./bank_start.sh
+* For Pan-AM, Run: ./pan-am.sh
+* For WOPR, Run: ./wopr_start.sh
+
 Connecting using IMSAI8080esp:
 * Suggest setting serial port for Terminal and AT (WiFi) Modem to 115200 (or unlimited)
 * Run: KERMIT.COM (you should find this on the comms.dsk disk image)
