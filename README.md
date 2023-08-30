@@ -11,6 +11,7 @@ The code was originally developed on a Sinclair QL using SuperBasic, but then I 
 If you are intending to run this on a CP/M machine, you will need a SYSGEN 64 image/boot disk.
 
 You can use the included disk image file to create your own media or mount it using the Z80PACK or IMSAI 8080esp: [https://github.com/zompiexx/wargames/blob/main/wargames.dsk](https://github.com/zompiexx/wargames/blob/main/BASIC/wargames.dsk)
+
 NOTE: Boot your IMSAI 8080esp using this disk image and then run: MBASIC WARGAMES
 
 You are free to use and modify the code for your own purposes, but must credit the author, Andy Glenn, under all circumstances.
