@@ -116,10 +116,10 @@ Installation:
 *  Run: ./install.sh
 
 Running the Software (Local Mode):
-* Run: ./imsai8080
+* To start IMSAI 8080, Run: ./imsai8080
 
 Running the Software (Client/Server Mode):
-* Run: ./imsai8080_start.sh
+* To start IMSAI 8080 (TCP 9999), Run: ./imsai8080_start.sh
 * Connect using: telnet host 9999
 * Replace host with the hostname or IP address of the server machine as appropriate
 
@@ -127,10 +127,10 @@ NOTE: If you would prefer to have all the computer systems from the wargames mov
 * Run: ./wargames_start.sh
 
 OR: The computer systems can be started individually using the following:
-* For School Computer, Run: ./school_start.sh
-* For Bank, Run: ./bank_start.sh
-* For Pan-AM, Run: ./pan-am.sh
-* For WOPR, Run: ./wopr_start.sh
+* For School Computer (TCP 9991), Run: ./school_start.sh
+* For Bank (TCP 9992), Run: ./bank_start.sh
+* For Pan-AM (TCP 9993), Run: ./pan-am.sh
+* For WOPR (TCP 9994), Run: ./wopr_start.sh
 
 Connecting using IMSAI8080esp:
 * Suggest setting serial port for Terminal and AT (WiFi) Modem to 115200 (or unlimited)
