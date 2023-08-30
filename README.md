@@ -77,6 +77,7 @@ At the moment, the Wargames C code has the following features:
     * If you need to disable the speech synth so you can run in client/server mode using telnet, edit the WOPR.c file and modify the sgpt lines so that output is not piped to espeak. If you are running locally, this doesn't affect you.
   * Samples integration for WOPR/Joshua voice: uses aplay system command call to play wav file
   * Integration with Chat GPT for WOPR Chat (requires Shell GPT to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
+  * User Accounts (for users other than "Joshua")
 
 * Bank
   * Very simple program, just accepts any username and password
@@ -93,7 +94,6 @@ At the moment, the Wargames C code has the following features:
   * Simulation of System Overload for 0 player mode using CPU utilisation monitoring
 
 Still to do:
-* User Accounts (for users other than "Joshua")
 * Directory Listing
 * Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
 
