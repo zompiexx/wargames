@@ -11,15 +11,16 @@ The code was originally developed on a Sinclair QL using SuperBasic, but then I 
 If you are intending to run this on a CP/M machine, you will need a SYSGEN 64 image/boot disk.
 
 You can use the included disk image file to create your own media or mount it using the Z80PACK or IMSAI 8080esp: [https://github.com/zompiexx/wargames/blob/main/wargames.dsk](https://github.com/zompiexx/wargames/blob/main/BASIC/wargames.dsk)
+NOTE: Boot your IMSAI 8080esp using this disk image and then run: MBASIC WARGAMES
 
 You are free to use and modify the code for your own purposes, but must credit the author, Andy Glenn, under all circumstances.
 
-This code is fully functional, but there are some additional features that I plan to include, as follows:
+This BASIC code is fully functional, but there are some additional features that I planned to include. Most of these have been written into the C code::
 
-*  Zero (0) Players option in Tic-Tac-Toe game
-*  Completed tasks/status/score page at end of "game"
-*  AT modem connections to BBS systems (for some/all of the "dummy" systems)
-*  Speech synth output via RS-232 (ASCII)
+*  Zero (0) Players option in Tic-Tac-Toe game (completed in C code version)
+*  Completed tasks/status/score page at end of "game" (not really applicable in C code version, but something similar written into C code)
+*  AT modem connections to BBS systems (for some/all of the "dummy" systems) (completed in C code version)
+*  Speech synth output via RS-232 (ASCII) (completed in C code version - optional)
 
 NOTE: The code will run using a BASIC-80 interpreter (on a SYSGEN 64 image/boot disk), but it may not be possible to compile and link the code as it stands because of the 64KB TPA Memory limit of CP/M. To overcome this limitation of CP/M and to enable the code to be compiled and linked, I am considering breaking the code up into a series of smaller programs and using data files to share variables between them.
 
