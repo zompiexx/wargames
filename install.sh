@@ -6,6 +6,9 @@ sudo apt install libncurses5-dev
 sudo apt install telnet
 sudo apt install telnetd
 
+#install Lynx text based web-browser
+sudo apt install lynx
+
 #install shell-gpt & WOPR role (needs to be enabled in wopr.c)
 #echo you are running Python Version
 #python --version
