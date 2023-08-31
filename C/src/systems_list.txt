@@ -4,8 +4,8 @@ ARPANET
 ./telehack.sh
 936
 1493
-system
-command
+INTERNET
+./internet.sh
 399
 2364
 BANK
