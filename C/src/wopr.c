@@ -476,6 +476,8 @@ void logged_on_user(User user) {
             if (user.access_level == 2) {
                 char buffer[10];
                 int user_input;
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 delayed_print("\nSET STATUS (0 = DISABLED, 1 = ENABLED): ");
                 fgets(buffer, sizeof(buffer), stdin);
                 
@@ -483,8 +485,12 @@ void logged_on_user(User user) {
                 user_input = atoi(buffer);
 
                 if (set_status_to_file("joshua.txt", user_input) != 0) {
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
                     delayed_print("ERROR SETTING STATUS.\n\n");
                 } else {
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
                     delayed_print("STATUS UPDATED.\n\n");
                 }
             } else {
