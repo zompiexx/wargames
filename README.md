@@ -59,6 +59,7 @@ At the moment, the Wargames C code has the following features:
   *   WOPR - calls other external system commands for Speech synth, shell GPT (for Chat GPT integration) etc.
   *   Samples integration for IMSAI 8080/Kermit and Dialer/Modem Sounds and more: uses aplay system command call to play wav files
   *   Data files can be customised to connect to other systems
+  *   Internet (using lynx browser) added to systems_list.txt and install.sh
 
 * School Computer
   *  Includes a fully functional database
