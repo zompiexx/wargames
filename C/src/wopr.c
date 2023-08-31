@@ -1917,6 +1917,8 @@ void handle_user_input() {
                 snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
                 system(command);
                 delayed_print("\nIDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
+                snprintf(command, sizeof(command), "aplay samples/theyve-taken-out-my-password.wav -q");
+                system(command);
                 usleep(1000000);
                 break;  // Exit the while loop  
             }   
