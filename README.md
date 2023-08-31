@@ -23,11 +23,11 @@ This BASIC code is fully functional, but there are some additional features that
 *  AT modem connections to BBS systems (for some/all of the "dummy" systems) (completed in C code version)
 *  Speech synth output via RS-232 (ASCII) (completed in C code version - optional)
 
-NOTE: The code will run using a BASIC-80 interpreter (on a SYSGEN 64 image/boot disk), but it may not be possible to compile and link the code as it stands because of the 64KB TPA Memory limit of CP/M. To overcome this limitation of CP/M and to enable the code to be compiled and linked, I am considering breaking the code up into a series of smaller programs and using data files to share variables between them.
+NOTE: The code will run using a BASIC-80 interpreter (on a SYSGEN 64 image/boot disk), but it may not be possible to compile and link the code as it stands because of the 64KB TPA Memory limit of CP/M. To overcome this limitation of CP/M and to enable the code to be compiled and linked, I am considering breaking the code up into a series of smaller programs and using data files to share variables between them (in fact this is thje approach that I have taken with the C code, but not due to resource limtations, simply because it's easier to develop the code that way).
 
 If you want to see a demo of the BASIC code in action, running on an IMSAI 8080esp (albeit, a slightly earlier version of the code), please watch these Youtube videos: https://youtu.be/GsTtD4rpM6E and https://youtu.be/U8yCnbcdOrg
 
-The C code is almost the same, but will a few extra features, such as Speech Synth, Samples for WOPR voice, and AI integration using Chat GPT. If you want to see a demo of the C code in action, please watch these Youtube videos: https://youtu.be/v-t_O3rKOhM and https://youtu.be/FdS34ddK4-4
+The C code is almost the same, but with a few extra features, such as Speech Synth, Samples for WOPR voice, AI tic-tac-toe, customisable systems list for dialer with connectivity to external systems, and AI integration using Chat GPT. If you want to see a demo of the C code in action, please watch these Youtube videos: https://youtu.be/v-t_O3rKOhM and https://youtu.be/FdS34ddK4-4
 
 Useful Links: 
 
