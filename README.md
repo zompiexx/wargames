@@ -78,6 +78,7 @@ At the moment, the Wargames C code has the following features:
   * Samples integration for WOPR/Joshua voice: uses aplay system command call to play wav file
   * Integration with Chat GPT for WOPR Chat (requires Shell GPT to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
   * User Accounts (for users other than "Joshua")
+  * Option to disable "Joshua" backdoor account when logged in using a level 2 (sysadmin) account using the command: backdoor
 
 * Bank
   * Very simple program, just accepts any username and password
