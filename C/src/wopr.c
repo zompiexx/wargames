@@ -72,6 +72,65 @@ void author() {
     printf("\n\n");
 }
 
+const char *check_status_from_file(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    
+    if (!file) {
+        // If the file doesn't exist, create it with default content "enabled"
+        file = fopen(filename, "w");
+        if (!file) {
+            perror("Error creating file");
+            return "error";
+        }
+        fprintf(file, "enabled");
+        fclose(file);
+        
+        // Return the default status
+        return "enabled";
+    }
+
+    char status[10];  // enough to hold "enabled" or "disabled" and a null terminator
+    if (fscanf(file, "%9s", status) != 1) {
+        fclose(file);
+        return "error";
+    }
+
+    fclose(file);
+
+    if (strcmp(status, "enabled") == 0) {
+        return "enabled";
+    } else if (strcmp(status, "disabled") == 0) {
+        return "disabled";
+    } else {
+        return "error";
+    }
+}
+
+int set_status_to_file(const char *filename, int status_input) {
+    const char *status;
+    if (status_input == 0) {
+        status = "disabled";
+    } else if (status_input == 1) {
+        status = "enabled";
+    } else {
+        fprintf(stderr, "Invalid input: %d\n", status_input);
+        return -1;  // Return an error code
+    }
+
+    // Open the file for writing, which will create it if it doesn't exist
+    // or overwrite its content if it does.
+    FILE *file = fopen(filename, "w");
+    if (!file) {
+        perror("Unable to open file for writing");
+        return -1;  // Return an error code
+    }
+
+    fprintf(file, "%s", status);
+    fclose(file);
+
+    return 0;  // Successful write
+}
+
 void help_games() {
     char command[200];
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
@@ -406,6 +465,28 @@ void logged_on_user(User user) {
         else if (strcmp(input, "users") == 0) {
             if (user.access_level == 2) {
                 manageUsers();
+            } else {
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+                system(command);
+                delayed_print("\nPERMISSION DENIED. INSUFFICIENT ACCESS LEVEL.\n\n");
+            }
+           
+        }
+        else if (strcmp(input, "backdoor") == 0) {
+            if (user.access_level == 2) {
+                char buffer[10];
+                int user_input;
+                delayed_print("\nSET STATUS (0 = DISABLED, 1 = ENABLED): ");
+                fgets(buffer, sizeof(buffer), stdin);
+                
+                // Convert the string to an integer
+                user_input = atoi(buffer);
+
+                if (set_status_to_file("joshua.txt", user_input) != 0) {
+                    delayed_print("ERROR SETTING STATUS.\n\n");
+                } else {
+                    delayed_print("STATUS UPDATED.\n\n");
+                }
             } else {
                 snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
                 system(command);
@@ -1821,9 +1902,18 @@ void handle_user_input() {
             list_games();
             delayed_print(prompt);
         } else if (strcmp(input, "joshua") == 0) {
-            joshua();
-            clear_screen();
-            delayed_print(prompt);
+            const char *status = check_status_from_file("joshua.txt");
+            if (strcmp(status, "enabled") == 0) {
+                joshua();
+                clear_screen();
+                delayed_print(prompt);
+            } else {
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+                system(command);
+                delayed_print("\nIDENTIFICATION NOT RECOGNIZED BY SYSTEM\n--CONNECTION TERMINATED--\n");
+                usleep(1000000);
+                break;  // Exit the while loop  
+            }   
         } else {
             authenticateUser(input);  // Call the authentication function for that username
             snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
