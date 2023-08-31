@@ -585,6 +585,7 @@ void guesscode() {
     int LC_percent = 0;
     char buffer[200];
     char command[200];
+    char input[100];
 
     srand(time(0)); // Initialize random seed
 
@@ -645,6 +646,17 @@ void guesscode() {
             clear_screen();
             fflush(stdout); // flush the output buffer
             usleep(10000000);
+            delayed_print("GREETINGS PROFESSOR FALKEN\n\n");
+            snprintf(command, sizeof(command), "aplay samples/greetings.wav -q");
+            system(command);
+            fgets(input, sizeof(input), stdin);
+            // Remove trailing newline character
+            input[strcspn(input, "\n")] = '\0';
+            // Convert input to lowercase
+            for (int i = 0; input[i]; i++) {
+            input[i] = tolower(input[i]);
+            }
+            //optionally, do something with the input - but not necessary
             delayed_print("\nA STRANGE GAME. ");
             snprintf(command, sizeof(command), "aplay samples/a-strange-game.wav -q");
             system(command);
@@ -653,6 +665,9 @@ void guesscode() {
             snprintf(command, sizeof(command), "aplay samples/the-only-winning-move-is-not-to-play.wav -q");
             system(command);
             usleep(5000000);
+            delayed_print("HOW ABOUT A NICE GAME OF CHESS?\n\n");
+            snprintf(command, sizeof(command), "aplay samples/how-about-a-nice-game-of-chess.wav -q");
+            system(command);
             defcon=5;
             game_running = 0;
         } else {
