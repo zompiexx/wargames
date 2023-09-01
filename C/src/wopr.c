@@ -246,6 +246,10 @@ void manageUsers() {
                 }
                 printf("Enter username: ");
                 fgets(tempUser.username, sizeof(tempUser.username), stdin);
+                // Convert username to lowercase
+                for (int i = 0; tempUser.username[i]; i++) {
+                    tempUser.username[i] = tolower(tempUser.username[i]);
+                }
                 strtok(tempUser.username, "\n");
                 
                 printf("Enter password: ");
