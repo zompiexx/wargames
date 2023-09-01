@@ -12,10 +12,13 @@
 #include <time.h>
 #include <ncurses.h>
 #include <termios.h>
+#include <stdbool.h>
 
 #define CHARACTER_DELAY 5000  // 1000 = 1ms
 #define MAX_TARGETS 4
 #define MAX_STRING_LENGTH 20
+#define INBOX 1
+#define SENT_ITEMS 2
 
 // Struct for user data
 typedef struct {
@@ -25,6 +28,16 @@ typedef struct {
     int access_level;
     char last_logon[100];
 } User;
+
+// Define the Mail structure
+typedef struct {
+    char sender[100];
+    char recipient[100];
+    char subject[100];
+    char message[500];
+    char date[15];      // Format: DD-MM-YYYY
+    char time[10];      // Format: HH:MM:SS
+} Mail;
 
 int game_running = 0;
 int defcon = 5;
@@ -131,6 +144,296 @@ int set_status_to_file(const char *filename, int status_input) {
     return 0;  // Successful write
 }
 
+bool userExists(const char* username) {
+    FILE *file = fopen("users.txt", "r");
+    if (!file) {
+        printf("Error opening users database.\n");
+        return false;
+    }
+
+    char lineBuffer[100];
+    User user;
+    while (fgets(lineBuffer, sizeof(lineBuffer), file)) {
+        // Trim newline and copy username
+        lineBuffer[strcspn(lineBuffer, "\n")] = 0;
+        strcpy(user.username, lineBuffer);
+
+        // Compare usernames
+        if (strcmp(user.username, username) == 0) {
+            fclose(file);
+            return true;
+        }
+
+        // Skip next 4 lines, which are password, name, access_level, and last_logon for the user.
+        for (int i = 0; i < 4; i++) {
+            fgets(lineBuffer, sizeof(lineBuffer), file);
+        }
+    }
+    fclose(file);
+    return false;
+}
+
+void getCurrentDateTime(char* date, char* curr_time) {
+    time_t now;
+    struct tm newtime;
+    
+    time(&now);
+    newtime = *localtime(&now);
+    
+    strftime(date, 15, "%d-%m-%Y", &newtime);
+    strftime(curr_time, 10, "%H:%M:%S", &newtime);
+}
+
+void addMail(Mail mail) {
+    getCurrentDateTime(mail.date, mail.time);
+    FILE *file = fopen("mail.txt", "a+");
+    fwrite(&mail, sizeof(Mail), 1, file);
+    fclose(file);
+}
+
+// For the deleteAll function:
+void deleteAll(const char* username, int mode) {
+    FILE *file, *tempFile;
+    Mail mail;
+
+    file = fopen("mail.txt", "r");
+    tempFile = fopen("tempMail.txt", "w");
+
+    if (file == NULL || tempFile == NULL) {
+        printf("ERROR OPENING FILE\n");
+        return;
+    }
+
+    while (fread(&mail, sizeof(Mail), 1, file)) {
+        if (mode == 0) { // Delete all from Inbox
+            if (strcmp(mail.recipient, username) != 0) {
+                fwrite(&mail, sizeof(Mail), 1, tempFile);
+            }
+        } else if (mode == 1) { // Delete all from Sent items
+            if (strcmp(mail.sender, username) != 0) {
+                fwrite(&mail, sizeof(Mail), 1, tempFile);
+            }
+        }
+    }
+
+    fclose(file);
+    fclose(tempFile);
+
+    remove("mail.txt");
+    rename("tempMail.txt", "mail.txt");
+}
+
+void emailFunction(User logged_on_user) {
+    char choiceBuffer[10];
+    int choice;
+
+    do {
+        clear_screen();
+        printf("WOPR EMAIL SYSTEM\n\n");
+        printf("1. CREATE\n2. INBOX\n3. SENT ITEMS\n4. HOUSEKEEPING\n5. EXIT\n\n");
+        printf("SELECT OPTION: ");
+        
+        fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
+        choice = atoi(choiceBuffer);
+
+        FILE *file;
+        Mail mail;
+        Mail mails[100];
+        int mailCount = 0;
+
+        switch (choice) {
+            case 1:
+                printf("RECIPIENT: ");
+                fgets(mail.recipient, sizeof(mail.recipient), stdin);
+                mail.recipient[strcspn(mail.recipient, "\n")] = 0;
+
+                if (!userExists(mail.recipient)) {
+                    printf("USER DOES NOT EXIST!\n");
+                    usleep(1000000);
+                    continue;
+                }
+
+                strcpy(mail.sender, logged_on_user.username);
+                printf("SUBJECT: ");
+                fgets(mail.subject, sizeof(mail.subject), stdin);
+                mail.subject[strcspn(mail.subject, "\n")] = 0;
+
+                printf("MESSAGE: ");
+                fgets(mail.message, sizeof(mail.message), stdin);
+                mail.message[strcspn(mail.message, "\n")] = 0;
+
+                addMail(mail);
+                printf("EMAIL SENT!\n");
+                usleep(1000000);
+                continue;
+
+            case 2: // INBOX
+                file = fopen("mail.txt", "a+");
+                while (fread(&mail, sizeof(Mail), 1, file)) {
+                    if (strcmp(mail.recipient, logged_on_user.username) == 0) {
+                        mails[mailCount++] = mail;
+                    }
+                }
+                fclose(file);
+
+                if (mailCount == 0) {
+                    printf("YOU HAVE NO MAIL\n");
+                    usleep(1000000);
+                    continue;
+                }
+
+                int keepCheckingMailsInbox = 1; // Flag
+
+                while (keepCheckingMailsInbox) {
+                    printf("\n%-4s %-20s %-30s %-12s %-10s\n", "No.", "From", "Subject", "Date", "Time");
+                    for (int i = 0; i < mailCount; i++) {
+                        printf("%-4d %-20s %-30s %-12s %-10s\n", i + 1, mails[i].sender, mails[i].subject, mails[i].date, mails[i].time);
+                    }
+
+                    printf("\nSELECT EMAIL NUMBER (0 = MENU): ");
+                    fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
+                    int mailChoice = atoi(choiceBuffer);
+
+                    if (mailChoice == 0) {
+                        keepCheckingMailsInbox = 0;
+                        continue;
+                    }
+
+                    if (mailChoice > 0 && mailChoice <= mailCount) {
+                        printf("\nFROM: %s\nDATE: %s\nTIME: %s\nSUBJECT: %s\nMESSAGE: %s\n\n", 
+                            mails[mailChoice-1].sender, 
+                            mails[mailChoice-1].date, 
+                            mails[mailChoice-1].time, 
+                            mails[mailChoice-1].subject, 
+                            mails[mailChoice-1].message);
+            
+                        printf("1. REPLY TO EMAIL\n2. RETURN TO LIST\n\nSELECT OPTION: ");
+                        fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
+                        int replyChoice = atoi(choiceBuffer);
+
+                    if (replyChoice == 1) {
+                        strcpy(mail.recipient, mails[mailChoice-1].sender);
+                        strcpy(mail.sender, logged_on_user.username);
+    
+                        printf("RE: %s\n", mails[mailChoice-1].subject);
+                        strcpy(mail.subject, "RE: ");
+                        strcat(mail.subject, mails[mailChoice-1].subject);
+
+                        printf("MESSAGE: ");
+                        fgets(mail.message, sizeof(mail.message), stdin);
+                        mail.message[strcspn(mail.message, "\n")] = 0;
+
+                        addMail(mail);
+                        printf("EMAIL SENT!\n");
+                        usleep(1000000);
+                    
+                    } else if (replyChoice == 2) {
+                            continue;
+                        } else {
+                            printf("INVALID CHOICE. PLEASE TRY AGAIN.\n");
+                        }
+                    } else {
+                        printf("INVALID EMAIL NUMBER. PLEASE TRY AGAIN.\n");
+                    }
+                }
+                continue;
+
+            case 3: // SENT ITEMS
+                file = fopen("mail.txt", "a+");
+                while (fread(&mail, sizeof(Mail), 1, file)) {
+                    if (strcmp(mail.sender, logged_on_user.username) == 0) {
+                        mails[mailCount++] = mail;
+                    }
+                }
+                fclose(file);
+
+                if (mailCount == 0) {
+                    printf("YOU HAVE NO SENT MAILS\n");
+                    usleep(1000000);
+                    continue;
+                }
+
+                int keepCheckingSentMails = 1;
+
+                while (keepCheckingSentMails) {
+                    printf("\n%-4s %-20s %-30s %-12s %-10s\n", "No.", "To", "Subject", "Date", "Time");
+                    for (int i = 0; i < mailCount; i++) {
+                        printf("%-4d %-20s %-30s %-12s %-10s\n", i + 1, mails[i].recipient, mails[i].subject, mails[i].date, mails[i].time);
+                    }
+
+                    printf("\nSELECT EMAIL NUMBER (0 = MENU): ");
+                    fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
+                    int mailChoice = atoi(choiceBuffer);
+
+                    if (mailChoice == 0) {
+                        keepCheckingSentMails = 0;
+                        continue;
+                    }
+
+                    if (mailChoice > 0 && mailChoice <= mailCount) {
+                        printf("\nTO: %s\nDATE: %s\nTIME: %s\nSUBJECT: %s\nMESSAGE: %s\n\n", 
+                            mails[mailChoice-1].recipient, 
+                            mails[mailChoice-1].date, 
+                            mails[mailChoice-1].time, 
+                            mails[mailChoice-1].subject, 
+                            mails[mailChoice-1].message);
+                        
+                        printf("1. RETURN TO LIST\n\nSELECT OPTION: ");
+                        fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
+                        int sentChoice = atoi(choiceBuffer);
+                        
+                        if (sentChoice == 1) {
+                            continue;
+                        } else {
+                            printf("INVALID CHOICE. PLEASE TRY AGAIN.\n");
+                        }
+                    } else {
+                        printf("INVALID EMAIL NUMBER. PLEASE TRY AGAIN.\n");
+                    }
+                }
+                continue;
+
+            case 4: // HOUSEKEEPING
+                clear_screen();
+                printf("HOUSEKEEPING\n\n");
+                printf("1. DELETE ALL INBOX ITEMS\n2. DELETE ALL SENT ITEMS\n3. RETURN TO MENU\n\n");
+                printf("SELECT OPTION: ");
+                fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
+                int housekeepingChoice = atoi(choiceBuffer);
+
+                switch (housekeepingChoice) {
+                    case 1: // DELETE ALL INBOX ITEMS
+                        deleteAll(logged_on_user.username, 0);
+                        printf("ALL INBOX ITEMS DELETED!\n");
+                        usleep(1000000);
+                        break;
+                    case 2: // DELETE ALL SENT ITEMS
+                        deleteAll(logged_on_user.username, 1);
+                        printf("ALL SENT ITEMS DELETED!\n");
+                        usleep(1000000);
+                        break;
+                    case 3: // RETURN TO MAIN MENU
+                        continue;
+                    default:
+                        printf("INVALID CHOICE.\n");
+                        usleep(1000000);
+                        break;
+                }
+                break;
+
+            case 5:
+                printf("EXITING WOPR EMAIL\n");
+                usleep(1000000);
+                break;
+
+            default:
+                printf("INVALID CHOICE.\n");
+                usleep(1000000);
+                continue;
+        }
+    } while(choice != 5);
+}
+
 void help_games() {
     char command[200];
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
@@ -226,7 +529,7 @@ void manageUsers() {
 
     while (1) {
         printf("\n");
-        printf("1. Create User\n2. Amend User\n3. Delete User\n4. List Users\nEnter choice (or press Enter to exit): ");
+        printf("1. CREATE USER\n2. AMEND USER\n3. DELETE USER\n4. LIST USERS\n\nSELECT OPTION: ");
         
         fgets(inputBuffer, sizeof(inputBuffer), stdin);
         if (sscanf(inputBuffer, "%d", &choice) != 1) {
@@ -244,7 +547,7 @@ void manageUsers() {
                     printf("Error opening or creating users.txt!\n");
                     return;
                 }
-                printf("Enter username: ");
+                printf("USERNAME           : ");
                 fgets(tempUser.username, sizeof(tempUser.username), stdin);
                 // Convert username to lowercase
                 for (int i = 0; tempUser.username[i]; i++) {
@@ -252,15 +555,15 @@ void manageUsers() {
                 }
                 strtok(tempUser.username, "\n");
                 
-                printf("Enter password: ");
+                printf("PASSWORD           : ");
                 fgets(tempUser.password, sizeof(tempUser.password), stdin);
                 strtok(tempUser.password, "\n");
                 
-                printf("Enter name: ");
+                printf("NAME               : ");
                 fgets(tempUser.name, sizeof(tempUser.name), stdin);
                 strtok(tempUser.name, "\n");
                 
-                printf("Enter access level: ");
+                printf("ACCESS LEVEL       : ");
                 fgets(inputBuffer, sizeof(inputBuffer), stdin);
                 sscanf(inputBuffer, "%d", &tempUser.access_level);
 
@@ -270,7 +573,7 @@ void manageUsers() {
                         tempUser.access_level, tempUser.last_logon);
 
                 fclose(file);
-                printf("User created successfully.\n");
+                printf("USER ACCOUNTED CREATED.\n");
                 break;
 
             case 2:
@@ -279,7 +582,7 @@ void manageUsers() {
                     printf("users.txt not found. Create a user first.\n");
                     return;
                 }
-                printf("Enter username to amend: ");
+                printf("USERNAME TO AMEND  : ");
                 fgets(inputUsername, sizeof(inputUsername), stdin);
                 strtok(inputUsername, "\n");
 
@@ -294,15 +597,15 @@ void manageUsers() {
                 while (fscanf(file, "%s\n%s\n%s\n%d\n%s\n", tempUser.username, tempUser.password, tempUser.name, 
                         &tempUser.access_level, tempUser.last_logon) != EOF) {
                     if (strcmp(tempUser.username, inputUsername) == 0) {
-                        printf("Enter new password: ");
+                        printf("NEW PASSWORD       : ");
                         fgets(tempUser.password, sizeof(tempUser.password), stdin);
                         strtok(tempUser.password, "\n");
                         
-                        printf("Enter new name: ");
+                        printf("NEW NAME           : ");
                         fgets(tempUser.name, sizeof(tempUser.name), stdin);
                         strtok(tempUser.name, "\n");
                         
-                        printf("Enter new access level: ");
+                        printf("NEW ACCESS LEVEL   : ");
                         fgets(inputBuffer, sizeof(inputBuffer), stdin);
                         sscanf(inputBuffer, "%d", &tempUser.access_level);
 
@@ -318,7 +621,7 @@ void manageUsers() {
                 rename("temp.txt", "users.txt");
 
                 if (amended) {
-                    printf("User amended successfully.\n");
+                    printf("USER ACCOUNT AMENDED.\n");
                 } else {
                     printf("User not found.\n");
                 }
@@ -330,7 +633,7 @@ void manageUsers() {
                     printf("users.txt not found. Create a user first.\n");
                     return;
                 }
-                printf("Enter username to delete: ");
+                printf("USERNAME TO DELETE : ");
                 fgets(inputUsername, sizeof(inputUsername), stdin);
                 strtok(inputUsername, "\n");
 
@@ -357,7 +660,7 @@ void manageUsers() {
                 remove("users.txt");
                 if (deleted) {
                     rename("delete.txt", "users.txt");
-                    printf("User deleted successfully.\n");
+                    printf("USER ACCOUNT DELETED.\n");
                 } else {
                     remove("delete.txt");
                     printf("User not found.\n");
@@ -370,7 +673,7 @@ void manageUsers() {
                     printf("users.txt not found. Create a user first.\n");
                     return;
                 }
-                printf("\nList of Users:\n");
+                printf("\nUSERS:\n");
                 printf("-------------------------------------------------\n");
                 printf("| %-10s | %-15s | %-15s |\n", "Username", "Name", "Access Level");
                 printf("-------------------------------------------------\n");
@@ -504,6 +807,9 @@ void logged_on_user(User user) {
             }
            
         }
+        else if (strcmp(input, "mail") == 0) {
+            emailFunction(user);
+        }        
         else if (strcmp(input, "exit") == 0) {
             snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
             system(command);
