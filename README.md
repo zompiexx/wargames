@@ -136,7 +136,7 @@ OR: The computer systems can be started individually using the following:
 
 Connecting using IMSAI8080esp:
 * Suggest setting serial port for Terminal and AT (WiFi) Modem to 115200 (or unlimited)
-* Run: KERMIT.COM (you should find this on the comms.dsk disk image)
+* Run: KERMIT.COM (you should find this on the comms.dsk disk image supplied with your IMSAI8080esp, but if not it is available online, refer to useful links above)
 * In Kermit: set port uc1
 * In Kermit: connect
 * In Kermit: ATDhost:9999
