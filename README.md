@@ -158,6 +158,7 @@ Connecting using IMSAI8080esp:
 * In Kermit: set port uc1
 * In Kermit: connect
 * In Kermit: ATDhost:9999
+* Replace host with the hostname or IP address of the server machine as appropriate and the port number of the system
 
 WARNING:
 * If running in client/server mode using telnet & telnetd, please be aware that telnet is an unencrypted protocol
