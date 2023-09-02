@@ -59,7 +59,7 @@ int main(){
 	} else if(strcmp(command,"dialer")==0) {
         clear_screen();
         printf("DIALER\n\n");
-        sleep(5);
+        sleep(2);
         //start dialer program
         strcpy(command, "./dialer");
         // Execute the command using system()

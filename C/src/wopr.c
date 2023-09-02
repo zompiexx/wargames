@@ -75,7 +75,7 @@ void author() {
     int i;
     char command[200];
 
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
     system(command);
 
     printf("\n");
@@ -226,12 +226,15 @@ void deleteAll(const char* username, int mode) {
 void emailFunction(User logged_on_user) {
     char choiceBuffer[10];
     int choice;
+    char command[200];
+    char buffer[500]; // Buffer to hold formatted output
 
     do {
         clear_screen();
-        printf("WOPR EMAIL SYSTEM\n\n");
-        printf("1. CREATE\n2. INBOX\n3. SENT ITEMS\n4. HOUSEKEEPING\n5. EXIT\n\n");
-        printf("SELECT OPTION: ");
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        system(command);
+        delayed_print("WOPR EMAIL SYSTEM\n\n");
+        delayed_print("1. CREATE\n2. INBOX\n3. SENT ITEMS\n4. HOUSEKEEPING\n5. EXIT\n\nSELECT OPTION: ");
         
         fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
         choice = atoi(choiceBuffer);
@@ -243,27 +246,37 @@ void emailFunction(User logged_on_user) {
 
         switch (choice) {
             case 1:
-                printf("RECIPIENT: ");
+                delayed_print("RECIPIENT: ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 fgets(mail.recipient, sizeof(mail.recipient), stdin);
                 mail.recipient[strcspn(mail.recipient, "\n")] = 0;
 
                 if (!userExists(mail.recipient)) {
-                    printf("USER DOES NOT EXIST!\n");
+                    delayed_print("USER DOES NOT EXIST!\n");
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
                     usleep(1000000);
                     continue;
                 }
 
                 strcpy(mail.sender, logged_on_user.username);
-                printf("SUBJECT: ");
+                delayed_print("SUBJECT: ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 fgets(mail.subject, sizeof(mail.subject), stdin);
                 mail.subject[strcspn(mail.subject, "\n")] = 0;
 
-                printf("MESSAGE: ");
+                delayed_print("MESSAGE: ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 fgets(mail.message, sizeof(mail.message), stdin);
                 mail.message[strcspn(mail.message, "\n")] = 0;
 
                 addMail(mail);
-                printf("EMAIL SENT!\n");
+                delayed_print("EMAIL SENT!\n");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 usleep(1000000);
                 continue;
 
@@ -278,6 +291,8 @@ void emailFunction(User logged_on_user) {
 
                 if (mailCount == 0) {
                     printf("YOU HAVE NO MAIL\n");
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
                     usleep(1000000);
                     continue;
                 }
@@ -285,12 +300,15 @@ void emailFunction(User logged_on_user) {
                 int keepCheckingMailsInbox = 1; // Flag
 
                 while (keepCheckingMailsInbox) {
-                    printf("\n%-4s %-20s %-30s %-12s %-10s\n", "No.", "From", "Subject", "Date", "Time");
+                    sprintf(buffer, "\n%-4s %-20s %-30s %-12s %-10s\n", "No.", "From", "Subject", "Date", "Time");
+                    delayed_print(buffer);
                     for (int i = 0; i < mailCount; i++) {
                         printf("%-4d %-20s %-30s %-12s %-10s\n", i + 1, mails[i].sender, mails[i].subject, mails[i].date, mails[i].time);
                     }
 
-                    printf("\nSELECT EMAIL NUMBER (0 = MENU): ");
+                    delayed_print("\nSELECT EMAIL NUMBER (0 = MENU): ");
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
                     fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
                     int mailChoice = atoi(choiceBuffer);
 
@@ -307,7 +325,9 @@ void emailFunction(User logged_on_user) {
                             mails[mailChoice-1].subject, 
                             mails[mailChoice-1].message);
             
-                        printf("1. REPLY TO EMAIL\n2. RETURN TO LIST\n\nSELECT OPTION: ");
+                        delayed_print("1. REPLY TO EMAIL\n2. RETURN TO LIST\n\nSELECT OPTION: ");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
                         int replyChoice = atoi(choiceBuffer);
 
@@ -319,21 +339,29 @@ void emailFunction(User logged_on_user) {
                         strcpy(mail.subject, "RE: ");
                         strcat(mail.subject, mails[mailChoice-1].subject);
 
-                        printf("MESSAGE: ");
+                        delayed_print("MESSAGE: ");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         fgets(mail.message, sizeof(mail.message), stdin);
                         mail.message[strcspn(mail.message, "\n")] = 0;
 
                         addMail(mail);
-                        printf("EMAIL SENT!\n");
+                        delayed_print("EMAIL SENT!\n");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         usleep(1000000);
                     
                     } else if (replyChoice == 2) {
                             continue;
                         } else {
-                            printf("INVALID CHOICE. PLEASE TRY AGAIN.\n");
+                            delayed_print("INVALID CHOICE. PLEASE TRY AGAIN.\n");
+                            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                            system(command);
                         }
                     } else {
-                        printf("INVALID EMAIL NUMBER. PLEASE TRY AGAIN.\n");
+                        delayed_print("INVALID EMAIL NUMBER. PLEASE TRY AGAIN.\n");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                     }
                 }
                 continue;
@@ -348,7 +376,9 @@ void emailFunction(User logged_on_user) {
                 fclose(file);
 
                 if (mailCount == 0) {
-                    printf("YOU HAVE NO SENT MAILS\n");
+                    delayed_print("YOU HAVE NO SENT MAILS\n");
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
                     usleep(1000000);
                     continue;
                 }
@@ -361,7 +391,9 @@ void emailFunction(User logged_on_user) {
                         printf("%-4d %-20s %-30s %-12s %-10s\n", i + 1, mails[i].recipient, mails[i].subject, mails[i].date, mails[i].time);
                     }
 
-                    printf("\nSELECT EMAIL NUMBER (0 = MENU): ");
+                    delayed_print("\nSELECT EMAIL NUMBER (0 = MENU): ");
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
                     fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
                     int mailChoice = atoi(choiceBuffer);
 
@@ -378,56 +410,73 @@ void emailFunction(User logged_on_user) {
                             mails[mailChoice-1].subject, 
                             mails[mailChoice-1].message);
                         
-                        printf("1. RETURN TO LIST\n\nSELECT OPTION: ");
+                        delayed_print("1. RETURN TO LIST\n\nSELECT OPTION: ");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
                         int sentChoice = atoi(choiceBuffer);
                         
                         if (sentChoice == 1) {
                             continue;
                         } else {
-                            printf("INVALID CHOICE. PLEASE TRY AGAIN.\n");
+                            delayed_print("INVALID CHOICE. PLEASE TRY AGAIN.\n");
+                            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                            system(command);
                         }
                     } else {
-                        printf("INVALID EMAIL NUMBER. PLEASE TRY AGAIN.\n");
+                        delayed_print("INVALID EMAIL NUMBER. PLEASE TRY AGAIN.\n");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                     }
                 }
                 continue;
 
             case 4: // HOUSEKEEPING
                 clear_screen();
-                printf("HOUSEKEEPING\n\n");
-                printf("1. DELETE ALL INBOX ITEMS\n2. DELETE ALL SENT ITEMS\n3. RETURN TO MENU\n\n");
-                printf("SELECT OPTION: ");
+                delayed_print("HOUSEKEEPING\n\n");
+                delayed_print("1. DELETE ALL INBOX ITEMS\n2. DELETE ALL SENT ITEMS\n3. RETURN TO MENU\n\nSELECT OPTION: ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+                system(command);
                 fgets(choiceBuffer, sizeof(choiceBuffer), stdin);
                 int housekeepingChoice = atoi(choiceBuffer);
 
                 switch (housekeepingChoice) {
                     case 1: // DELETE ALL INBOX ITEMS
                         deleteAll(logged_on_user.username, 0);
-                        printf("ALL INBOX ITEMS DELETED!\n");
+                        delayed_print("ALL INBOX ITEMS DELETED!\n");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         usleep(1000000);
                         break;
                     case 2: // DELETE ALL SENT ITEMS
                         deleteAll(logged_on_user.username, 1);
-                        printf("ALL SENT ITEMS DELETED!\n");
+                        delayed_print("ALL SENT ITEMS DELETED!\n");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         usleep(1000000);
                         break;
                     case 3: // RETURN TO MAIN MENU
                         continue;
                     default:
-                        printf("INVALID CHOICE.\n");
+                        delayed_print("INVALID CHOICE.\n");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         usleep(1000000);
                         break;
                 }
                 break;
 
             case 5:
-                printf("EXITING WOPR EMAIL\n");
+                delayed_print("EXITING WOPR EMAIL\n");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 usleep(1000000);
                 break;
 
             default:
-                printf("INVALID CHOICE.\n");
+                delayed_print("INVALID CHOICE.\n");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 usleep(1000000);
                 continue;
         }
@@ -526,10 +575,14 @@ void list_games() {
 void manageUsers() {
     int choice;
     char inputBuffer[256];
+    char command[200];
+    char buffer[500]; // Buffer to hold formatted output
 
     while (1) {
-        printf("\n");
-        printf("1. CREATE USER\n2. AMEND USER\n3. DELETE USER\n4. LIST USERS\n\nSELECT OPTION: ");
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        system(command);
+        delayed_print("\n");
+        delayed_print("1. CREATE USER\n2. AMEND USER\n3. DELETE USER\n4. LIST USERS\n\nSELECT OPTION: ");
         
         fgets(inputBuffer, sizeof(inputBuffer), stdin);
         if (sscanf(inputBuffer, "%d", &choice) != 1) {
@@ -547,7 +600,9 @@ void manageUsers() {
                     printf("Error opening or creating users.txt!\n");
                     return;
                 }
-                printf("USERNAME           : ");
+                delayed_print("USERNAME           : ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 fgets(tempUser.username, sizeof(tempUser.username), stdin);
                 // Convert username to lowercase
                 for (int i = 0; tempUser.username[i]; i++) {
@@ -555,15 +610,21 @@ void manageUsers() {
                 }
                 strtok(tempUser.username, "\n");
                 
-                printf("PASSWORD           : ");
+                delayed_print("PASSWORD           : ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 fgets(tempUser.password, sizeof(tempUser.password), stdin);
                 strtok(tempUser.password, "\n");
                 
-                printf("NAME               : ");
+                delayed_print("NAME               : ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 fgets(tempUser.name, sizeof(tempUser.name), stdin);
                 strtok(tempUser.name, "\n");
                 
-                printf("ACCESS LEVEL       : ");
+                delayed_print("ACCESS LEVEL       : ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 fgets(inputBuffer, sizeof(inputBuffer), stdin);
                 sscanf(inputBuffer, "%d", &tempUser.access_level);
 
@@ -573,7 +634,9 @@ void manageUsers() {
                         tempUser.access_level, tempUser.last_logon);
 
                 fclose(file);
-                printf("USER ACCOUNTED CREATED.\n");
+                delayed_print("USER ACCOUNTED CREATED.\n");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 break;
 
             case 2:
@@ -582,7 +645,9 @@ void manageUsers() {
                     printf("users.txt not found. Create a user first.\n");
                     return;
                 }
-                printf("USERNAME TO AMEND  : ");
+                delayed_print("USERNAME TO AMEND  : ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 fgets(inputUsername, sizeof(inputUsername), stdin);
                 strtok(inputUsername, "\n");
 
@@ -597,15 +662,21 @@ void manageUsers() {
                 while (fscanf(file, "%s\n%s\n%s\n%d\n%s\n", tempUser.username, tempUser.password, tempUser.name, 
                         &tempUser.access_level, tempUser.last_logon) != EOF) {
                     if (strcmp(tempUser.username, inputUsername) == 0) {
-                        printf("NEW PASSWORD       : ");
+                        delayed_print("NEW PASSWORD       : ");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         fgets(tempUser.password, sizeof(tempUser.password), stdin);
                         strtok(tempUser.password, "\n");
                         
-                        printf("NEW NAME           : ");
+                        delayed_print("NEW NAME           : ");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         fgets(tempUser.name, sizeof(tempUser.name), stdin);
                         strtok(tempUser.name, "\n");
                         
-                        printf("NEW ACCESS LEVEL   : ");
+                        delayed_print("NEW ACCESS LEVEL   : ");
+                        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                        system(command);
                         fgets(inputBuffer, sizeof(inputBuffer), stdin);
                         sscanf(inputBuffer, "%d", &tempUser.access_level);
 
@@ -621,7 +692,9 @@ void manageUsers() {
                 rename("temp.txt", "users.txt");
 
                 if (amended) {
-                    printf("USER ACCOUNT AMENDED.\n");
+                    delayed_print("USER ACCOUNT AMENDED.\n");
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
                 } else {
                     printf("User not found.\n");
                 }
@@ -633,7 +706,9 @@ void manageUsers() {
                     printf("users.txt not found. Create a user first.\n");
                     return;
                 }
-                printf("USERNAME TO DELETE : ");
+                delayed_print("USERNAME TO DELETE : ");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
                 fgets(inputUsername, sizeof(inputUsername), stdin);
                 strtok(inputUsername, "\n");
 
@@ -660,7 +735,9 @@ void manageUsers() {
                 remove("users.txt");
                 if (deleted) {
                     rename("delete.txt", "users.txt");
-                    printf("USER ACCOUNT DELETED.\n");
+                    delayed_print("USER ACCOUNT DELETED.\n");
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
                 } else {
                     remove("delete.txt");
                     printf("User not found.\n");
@@ -673,15 +750,18 @@ void manageUsers() {
                     printf("users.txt not found. Create a user first.\n");
                     return;
                 }
-                printf("\nUSERS:\n");
-                printf("-------------------------------------------------\n");
-                printf("| %-10s | %-15s | %-15s |\n", "Username", "Name", "Access Level");
-                printf("-------------------------------------------------\n");
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+                system(command);
+                delayed_print("\nUSERS:\n");
+                delayed_print("-------------------------------------------------\n");
+                sprintf(buffer, "| %-10s | %-15s | %-15s |\n", "Username", "Name", "Access Level");
+                delayed_print(buffer);
+                delayed_print("-------------------------------------------------\n");
                 while (fscanf(file, "%s\n%s\n%s\n%d\n%s\n", tempUser.username, tempUser.password, tempUser.name, 
                         &tempUser.access_level, tempUser.last_logon) != EOF) {
                     printf("| %-10s | %-15s | %-15d |\n", tempUser.username, tempUser.name, tempUser.access_level);
                 }
-                printf("-------------------------------------------------\n");
+                delayed_print("-------------------------------------------------\n");
                 fclose(file);
                 break;
 
@@ -2217,12 +2297,12 @@ void handle_user_input() {
 
         // Handle user input options
         if (strcmp(input, "help") == 0) {
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
             system(command);
             delayed_print("\nNO HELP AVAILABLE\n\n");
             delayed_print(prompt);
         } else if (strcmp(input, "help logon") == 0) {
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
             system(command);
             delayed_print("\nNO HELP AVAILABLE\n\n");
             delayed_print(prompt);
@@ -2272,7 +2352,7 @@ int main() {
         usleep(500);
     	}
         delayed_print("\n");
-        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);
         delayed_print("\nLOGON: ");
 
