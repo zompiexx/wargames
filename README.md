@@ -97,8 +97,26 @@ At the moment, the Wargames C code has the following features:
   * Simulation of System Overload for 0 player mode using CPU utilisation monitoring
 
 Still to do:
-* Directory Listing
-* Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
+Planned by Author
+1) add user function: create/edit/delete documents/text files. this should uitilise the data/wopr/usr/<user> and data/wopr/pub folder structure to store files and call nano as the editor.
+2) similar to above, but allow call to BASIC to create simple programs.
+3) Directory Listing4
+4) Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
+
+Requested by DCP
+1) allow users to run global thermonuclear war after login. 
+2) able to use dialer for connecting to outside/other telnet systems. 
+3) include the internet access for users of wopr 
+4) maybe add some of the other games, ie, poker, blackjack, zork, I know is available as text game. 
+4) bring up current defcon level. 
+5) maybe an area that shows war room current screen with stats or projections. 
+6) Subs- I remember a scene about Subs on game scene,  where David says blow them out of the water. Maybe those to start. Oh and you could add in the list
+7) turn on off the Joshua account command. [completed]
+8) capability to change area codes in the dialer-this could also be 1 of the sysadmin commands
+9) a command to List commands. ? Or List commands
+10) would like to see, q or x used for those-instead of having to type full command.
+11) change users levels access numbers to either start at 5 or 1 as to access level- like defcon  5 is highest access level or lowest access level, so later can build in other access levels. Sysadmin-all priv's, moderator-w/all except- -?, user w/internet-priv user w/ games-priv . user w/only view or something.
+12) add on the Logon Screen, Welcome to NORAD, Cheyenne Mountain Complex.
 
 If you want to try it out for yourself, here are the steps:
 
