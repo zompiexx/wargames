@@ -96,14 +96,13 @@ At the moment, the Wargames C code has the following features:
   * Grid and O and X are generated using character maps
   * Simulation of System Overload for 0 player mode using CPU utilisation monitoring
 
-Still to do:
-Planned by Author
+Still to do: Planned by Author
 1) add user function: create/edit/delete documents/text files. this should uitilise the data/wopr/usr/<user> and data/wopr/pub folder structure to store files and call nano as the editor.
 2) similar to above, but allow call to BASIC to create simple programs.
 3) Directory Listing4
 4) Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
 
-Requested by DCP
+Still to do: Requested
 1) allow users to run global thermonuclear war after login. 
 2) able to use dialer for connecting to outside/other telnet systems. 
 3) include the internet access for users of wopr 
