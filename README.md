@@ -99,7 +99,7 @@ At the moment, the Wargames C code has the following features:
 Still to do: Planned by Author
 1) add user function: create/edit/delete documents/text files. this should uitilise the data/wopr/usr/<user> and data/wopr/pub folder structure to store files and call nano as the editor.
 2) similar to above, but allow call to BASIC to create simple programs.
-3) Directory Listing4
+3) Directory Listing
 4) Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
 
 Still to do: Requested
