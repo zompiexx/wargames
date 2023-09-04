@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 
 /bin/lynx frogfind.com
 echo "--DISCONNECTED--"
