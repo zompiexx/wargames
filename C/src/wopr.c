@@ -2176,6 +2176,15 @@ void logged_on_user(User user) {
     char command[200];
     char buffer[500]; // Buffer to hold formatted output
     char input[100];
+
+    clear_screen();
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+    system(command);
+    delayed_print("Welcome to NORAD, Cheyenne Mountain Complex\n");
+    delayed_print("\033[4mW\033[0mar \033[4mO\033[0mperation \033[4mP\033[0mlan \033[4mR\033[0mesponse\n\n");
+    delayed_print("NOTE: Access to this system is restricted to authorised personnel only.\n");
+    delayed_print("      Unauthorised access to this system is a federal offence.\n\n");
+    usleep(5000000);
     
     clear_screen();
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
