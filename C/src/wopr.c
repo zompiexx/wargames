@@ -85,6 +85,51 @@ void author() {
     printf("\n\n");
 }
 
+void show_date() {
+    char command[200];
+    time_t current_time = time(NULL);
+    struct tm* time_info = localtime(&current_time);
+    char date_string[100];
+    strftime(date_string, sizeof(date_string), "\nDATE: %Y-%m-%d\n\n", time_info);
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+    system(command);
+    delayed_print(date_string);
+}
+
+void show_time() {
+    char command[200];
+    time_t current_time = time(NULL);
+    struct tm* time_info = localtime(&current_time);
+    char time_string[100];
+    strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n\n", time_info);
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+    system(command);
+    delayed_print(time_string);
+}     
+
+void show_list() {
+    char command[200];
+    delayed_print("\nUSE SYNTAX: LIST <TYPE>\n\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'USE SYNTAX: LIST TYPE'");
+    //system(command);
+}
+
+void connect_internet() {
+        char command[200];
+        snprintf(command, sizeof(command), "./internet.sh");
+        system(command);
+
+}
+
+void connect_arpanet() {
+        char command[200];
+        snprintf(command, sizeof(command), "./telehack.sh");
+        system(command);
+
+}
+
 const char *check_status_from_file(const char *filename) {
     FILE *file = fopen(filename, "r");
     
@@ -483,6 +528,26 @@ void emailFunction(User logged_on_user) {
     } while(choice != 5);
 }
 
+void help_joshua() {
+    char command[200];
+    delayed_print("\nCOMMANDS: HELP, LIST, DATE, TIME, DEFCON, AUTHOR, USERS");
+    delayed_print("\n          ARPANET, INTERNET, EXIT\n\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'VALID COMMANDS: HELP, LIST, DATE, TIME, EXIT'");
+    //system(command);
+}
+
+void help_user() {
+    char command[200];
+    delayed_print("\nCOMMANDS: HELP, LIST, DATE, TIME, DEFCON, AUTHOR, USERS, MAIL, WHOAMI");
+    delayed_print("\n          ARPANET, INTERNET, TIC-TAC-TOE, BACKDOOR, EXIT\n\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+    system(command);
+    //snprintf(command, sizeof(command), "espeak 'VALID COMMANDS: HELP, LIST, DATE, TIME, EXIT'");
+    //system(command);
+}
+
 void help_games() {
     char command[200];
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
@@ -570,6 +635,15 @@ void list_games() {
     system(command);
     //snprintf(command, sizeof(command), "espeak 'GLOBAL THERMONUCLEAR WAR'");
     //system(command);
+}
+
+void defcon_status() {
+    char command[200];
+    delayed_print("\nDEFCON: ");
+    printf("%d",defcon);
+    delayed_print("\n\n");
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+    system(command);
 }
 
 void manageUsers() {
@@ -773,138 +847,6 @@ void manageUsers() {
     printf("\n");
 }
 
-void logged_on_user(User user) {
-    char command[200];
-    char buffer[500]; // Buffer to hold formatted output
-    char input[100];
-    
-    clear_screen();
-    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-    system(command);
-    delayed_print("TRZ. 34/53/76               SYS PROC 3435.45.6456           XCOMP STATUS: PV-456\n");
-    delayed_print("ACTIVE PORTS: 34,53,75,94                                     CPU TM USED: 23:43\n");
-    delayed_print("#45/34/53.           ALT MODE FUNCT: PV-8-AY345              STANDBY MODE ACTIVE\n");
-    delayed_print("#543.654      #989.283       #028.392       #099.293      #934.905      #261.372\n");
-    delayed_print("\n");
-
-    sprintf(buffer, "USER         : %s\n", user.username);
-    delayed_print(buffer);
-
-    sprintf(buffer, "NAME         : %s\n", user.name);
-    delayed_print(buffer);
-    
-    sprintf(buffer, "ACCESS LEVEL : %d\n", user.access_level);
-    delayed_print(buffer);
-
-    delayed_print("\n");
-    
-    while(1) {
-        delayed_print("> ");
-        fgets(input, sizeof(input), stdin);
-        
-        // Remove trailing newline character
-        input[strcspn(input, "\n")] = '\0';
-
-        // If user just pressed Enter (carriage return)
-        if (input[0] == '\0') {
-            continue; // Go back to the start of the while loop
-        }
-
-        // Convert input to lowercase
-        for (int i = 0; input[i]; i++) {
-            input[i] = tolower(input[i]);
-        }
-        
-        // Check commands
-        if (strcmp(input, "help games") == 0) {
-            help_games();
-        }
-        else if (strcmp(input, "list games") == 0) {
-            list_games();
-        }
-        else if (strcmp(input, "author") == 0) {
-            author();
-        }
-        else if (strcmp(input, "whoami") == 0) {
-            delayed_print("\nUSER: ");
-            printf("%s",user.username);
-            delayed_print("\n\n");
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-            system(command);
-        }
-        else if (strcmp(input, "defcon") == 0) {
-            delayed_print("\nDEFCON: ");
-            printf("%d",defcon);
-            delayed_print("\n\n");
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-            system(command);
-        }
-        else if (strcmp(input, "cls") == 0) {
-            clear_screen();
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-            system(command);
-            delayed_print("TRZ. 34/53/76               SYS PROC 3435.45.6456           XCOMP STATUS: PV-456\n");
-            delayed_print("ACTIVE PORTS: 34,53,75,94                                     CPU TM USED: 23:43\n");
-            delayed_print("#45/34/53.           ALT MODE FUNCT: PV-8-AY345              STANDBY MODE ACTIVE\n");
-            delayed_print("#543.654      #989.283       #028.392       #099.293      #934.905      #261.372\n");
-            delayed_print("\n");
-        }
-        else if (strcmp(input, "users") == 0) {
-            if (user.access_level == 2) {
-                manageUsers();
-            } else {
-                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-                system(command);
-                delayed_print("\nPERMISSION DENIED. INSUFFICIENT ACCESS LEVEL.\n\n");
-            }
-           
-        }
-        else if (strcmp(input, "backdoor") == 0) {
-            if (user.access_level == 2) {
-                char buffer[10];
-                int user_input;
-                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-                system(command);
-                delayed_print("\nSET STATUS (0 = DISABLED, 1 = ENABLED): ");
-                fgets(buffer, sizeof(buffer), stdin);
-                
-                // Convert the string to an integer
-                user_input = atoi(buffer);
-
-                if (set_status_to_file("joshua.txt", user_input) != 0) {
-                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-                    system(command);
-                    delayed_print("ERROR SETTING STATUS.\n\n");
-                } else {
-                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-                    system(command);
-                    delayed_print("STATUS UPDATED.\n\n");
-                }
-            } else {
-                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-                system(command);
-                delayed_print("\nPERMISSION DENIED. INSUFFICIENT ACCESS LEVEL.\n\n");
-            }
-           
-        }
-        else if (strcmp(input, "mail") == 0) {
-            emailFunction(user);
-        }        
-        else if (strcmp(input, "exit") == 0) {
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-            system(command);
-            delayed_print("\nLOGGING OUT OF SESSION\n--CONNECTION TERMINATED--\n");
-            usleep(1000000);
-            exit(0);
-        }
-        else {
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-            system(command);
-            delayed_print("\nINVALID COMMAND\n\n");
-        }
-    }
-}
-
 void getPassword(char* password, size_t size) {
     struct termios old, new;
     int n = 0;
@@ -939,35 +881,6 @@ void getPassword(char* password, size_t size) {
 
     // Restore terminal
     (void) tcsetattr(fileno(stdin), TCSAFLUSH, &old);
-}
-
-void authenticateUser(char* username) {
-    char inputPassword[100];
-    FILE* file = fopen("users.txt", "r");
-    if (!file) {
-        printf("users.txt not found. Ensure a user exists.\n");
-        return;
-    }
-
-    User tempUser;
-
-    getPassword(inputPassword, sizeof(inputPassword));
-
-    int authenticated = 0;
-    while (fscanf(file, "%99s\n%99s\n%99s\n%d\n%99s\n", tempUser.username, tempUser.password, tempUser.name, 
-            &tempUser.access_level, tempUser.last_logon) != EOF) {
-        if (strcmp(tempUser.username, username) == 0 && strcmp(tempUser.password, inputPassword) == 0) {
-            authenticated = 1;
-            break;
-        }
-    }
-    fclose(file);
-
-    if (authenticated) {
-        printf("\nUSER AUTHENTICATION SUCCESSFUL\n");
-        usleep(1000000);
-        logged_on_user(tempUser); // Call this function if authenticated
-    }
 }
 
 void guesscode() {
@@ -1047,6 +960,7 @@ void guesscode() {
             input[i] = tolower(input[i]);
             }
             //optionally, do something with the input - but not necessary
+            usleep(500000);
             delayed_print("\nA STRANGE GAME. ");
             snprintf(command, sizeof(command), "aplay samples/a-strange-game.wav -q");
             system(command);
@@ -1054,7 +968,7 @@ void guesscode() {
             delayed_print("THE ONLY WINNING MOVE IS NOT TO PLAY!\n\n");
             snprintf(command, sizeof(command), "aplay samples/the-only-winning-move-is-not-to-play.wav -q");
             system(command);
-            usleep(5000000);
+            usleep(3000000);
             delayed_print("HOW ABOUT A NICE GAME OF CHESS?\n\n");
             snprintf(command, sizeof(command), "aplay samples/how-about-a-nice-game-of-chess.wav -q");
             system(command);
@@ -1195,29 +1109,29 @@ void end_game() {
     delayed_print("                    LORING AIRFORCE BASE      : ");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
-    usleep(1000000);
+    usleep(2000000);
     delayed_print("NO IMPACT\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
     system(command);
-    usleep(1000000);
+    usleep(2000000);
 
     delayed_print("                    ELMENDORF AIRFORCE BASE   : ");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
-    usleep(1000000);
+    usleep(2000000);
     delayed_print("NO IMPACT\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
     system(command);
-    usleep(1000000);
+    usleep(2000000);
 
     delayed_print("                    GRAND FORKS AIRFORCE BASE : ");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
-    usleep(1000000);
+    usleep(2000000);
     delayed_print("NO IMPACT\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
     system(command);
-    usleep(1000000);
+    usleep(2000000);
 
     usleep(10000000);
     guesscode();
@@ -1987,11 +1901,7 @@ void joshua() {
         }
 
         if (strcmp(input, "help") == 0) {
-            delayed_print("\nVALID COMMANDS: HELP, LIST, DATE, TIME, EXIT\n\n");
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-            system(command);
-            //snprintf(command, sizeof(command), "espeak 'VALID COMMANDS: HELP, LIST, DATE, TIME, EXIT'");
-            //system(command);
+            help_joshua();
             delayed_print(prompt);
         } else if (strcmp(input, "help games") == 0) {
             help_games();
@@ -2000,9 +1910,17 @@ void joshua() {
             //delayed_print("\n\n");
             delayed_print(prompt);
         } else if (strcmp(input, "list") == 0) {
-            delayed_print("\nUSE SYNTAX: LIST <TYPE>\n\n");
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
-            system(command);
+            show_list();
+            //snprintf(command, sizeof(command), "espeak 'USE SYNTAX: LIST TYPE'");
+            //system(command);
+            delayed_print(prompt);
+        } else if (strcmp(input, "internet") == 0) {
+            connect_internet();
+            //snprintf(command, sizeof(command), "espeak 'USE SYNTAX: LIST TYPE'");
+            //system(command);
+            delayed_print(prompt);
+        } else if (strcmp(input, "arpanet") == 0) {
+            connect_arpanet();
             //snprintf(command, sizeof(command), "espeak 'USE SYNTAX: LIST TYPE'");
             //system(command);
             delayed_print(prompt);
@@ -2018,22 +1936,10 @@ void joshua() {
             system(command);
             delayed_print(prompt);
         } else if (strcmp(input, "date") == 0) {
-            time_t current_time = time(NULL);
-            struct tm* time_info = localtime(&current_time);
-            char date_string[100];
-            strftime(date_string, sizeof(date_string), "\nDATE: %Y-%m-%d\n\n", time_info);
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-            system(command);
-            delayed_print(date_string);
+            show_date();
             delayed_print(prompt);
         } else if (strcmp(input, "time") == 0) {
-            time_t current_time = time(NULL);
-            struct tm* time_info = localtime(&current_time);
-            char time_string[100];
-            strftime(time_string, sizeof(time_string), "\nTIME: %H:%M:%S\n\n", time_info);
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-            system(command);
-            delayed_print(time_string);
+            show_time();
             delayed_print(prompt);
         } else if (strstr(input, "hello") != NULL && woprchat == 0 && game_running == 0) {
             delayed_print("\nHOW ARE YOU FEELING TODAY?\n\n");
@@ -2238,11 +2144,7 @@ void joshua() {
             end_game();
             delayed_print(prompt);
         } else if (strcmp(input, "defcon") == 0) {
-            delayed_print("\nDEFCON: ");
-            printf("%d",defcon);
-            delayed_print("\n\n");
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
-            system(command);
+            defcon_status();
             delayed_print(prompt);
         } else if (strcmp(input, "tic-tac-toe") == 0) {
             snprintf(command, sizeof(command), "./tic-tac-toe");
@@ -2268,6 +2170,186 @@ void joshua() {
     }
 
     return;
+}
+
+void logged_on_user(User user) {
+    char command[200];
+    char buffer[500]; // Buffer to hold formatted output
+    char input[100];
+    
+    clear_screen();
+    snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+    system(command);
+    delayed_print("TRZ. 34/53/76               SYS PROC 3435.45.6456           XCOMP STATUS: PV-456\n");
+    delayed_print("ACTIVE PORTS: 34,53,75,94                                     CPU TM USED: 23:43\n");
+    delayed_print("#45/34/53.           ALT MODE FUNCT: PV-8-AY345              STANDBY MODE ACTIVE\n");
+    delayed_print("#543.654      #989.283       #028.392       #099.293      #934.905      #261.372\n");
+    delayed_print("\n");
+    delayed_print("HINT: TYPE HELP FOR A LIST OF COMMANDS\n\n");
+
+    sprintf(buffer, "USER         : %s\n", user.username);
+    delayed_print(buffer);
+
+    sprintf(buffer, "NAME         : %s\n", user.name);
+    delayed_print(buffer);
+    
+    sprintf(buffer, "ACCESS LEVEL : %d\n", user.access_level);
+    delayed_print(buffer);
+
+    delayed_print("\n");
+    
+    while(1) {
+        delayed_print("> ");
+        fgets(input, sizeof(input), stdin);
+        
+        // Remove trailing newline character
+        input[strcspn(input, "\n")] = '\0';
+
+        // If user just pressed Enter (carriage return)
+        if (input[0] == '\0') {
+            continue; // Go back to the start of the while loop
+        }
+
+        // Convert input to lowercase
+        for (int i = 0; input[i]; i++) {
+            input[i] = tolower(input[i]);
+        }
+        
+        // Check commands
+        if (strcmp(input, "help games") == 0) {
+            help_games();
+        }
+        else if (strcmp(input, "help") == 0) {
+            help_user();
+        }
+        else if (strcmp(input, "defcon") == 0) {
+            defcon_status();
+        }
+        else if (strcmp(input, "list games") == 0) {
+            list_games();
+        }
+        else if (strcmp(input, "list") == 0) {
+            show_list();
+        }
+        else if (strcmp(input, "author") == 0) {
+            author();
+        }
+        else if (strcmp(input, "internet") == 0) {
+            connect_internet();
+        } else if (strcmp(input, "arpanet") == 0) {
+            connect_arpanet();
+        }
+        else if (strcmp(input, "whoami") == 0) {
+            delayed_print("\nUSER: ");
+            printf("%s",user.username);
+            delayed_print("\n\n");
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+        }
+        else if (strcmp(input, "cls") == 0) {
+            clear_screen();
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+            system(command);
+            delayed_print("TRZ. 34/53/76               SYS PROC 3435.45.6456           XCOMP STATUS: PV-456\n");
+            delayed_print("ACTIVE PORTS: 34,53,75,94                                     CPU TM USED: 23:43\n");
+            delayed_print("#45/34/53.           ALT MODE FUNCT: PV-8-AY345              STANDBY MODE ACTIVE\n");
+            delayed_print("#543.654      #989.283       #028.392       #099.293      #934.905      #261.372\n");
+            delayed_print("\n");
+            delayed_print("HINT: TYPE HELP FOR A LIST OF COMMANDS\n\n");
+        }
+        else if (strcmp(input, "users") == 0) {
+            if (user.access_level == 2) {
+                manageUsers();
+            } else {
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+                system(command);
+                delayed_print("\nPERMISSION DENIED. INSUFFICIENT ACCESS LEVEL.\n\n");
+            }
+           
+        }
+        else if (strcmp(input, "backdoor") == 0) {
+            if (user.access_level == 2) {
+                char buffer[10];
+                int user_input;
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                system(command);
+                delayed_print("\nSET STATUS (0 = DISABLED, 1 = ENABLED): ");
+                fgets(buffer, sizeof(buffer), stdin);
+                
+                // Convert the string to an integer
+                user_input = atoi(buffer);
+
+                if (set_status_to_file("joshua.txt", user_input) != 0) {
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
+                    delayed_print("ERROR SETTING STATUS.\n\n");
+                } else {
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
+                    delayed_print("STATUS UPDATED.\n\n");
+                }
+            } else {
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+                system(command);
+                delayed_print("\nPERMISSION DENIED. INSUFFICIENT ACCESS LEVEL.\n\n");
+            }
+           
+        }
+        else if (strcmp(input, "mail") == 0) {
+            emailFunction(user);
+        } 
+        else if (strcmp(input, "date") == 0) {
+            show_date(user);
+        } 
+        else if (strcmp(input, "time") == 0) {
+            show_time(user);
+        } 
+        else if (strcmp(input, "tic-tac-toe") == 0) {
+            snprintf(command, sizeof(command), "./tic-tac-toe");
+            system(command);
+        }         
+        else if (strcmp(input, "exit") == 0) {
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+            system(command);
+            delayed_print("\nLOGGING OUT OF SESSION\n--CONNECTION TERMINATED--\n");
+            usleep(1000000);
+            exit(0);
+        }
+        else {
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("\nINVALID COMMAND\n\n");
+        }
+    }
+}
+
+void authenticateUser(char* username) {
+    char inputPassword[100];
+    FILE* file = fopen("users.txt", "r");
+    if (!file) {
+        printf("users.txt not found. Ensure a user exists.\n");
+        return;
+    }
+
+    User tempUser;
+
+    getPassword(inputPassword, sizeof(inputPassword));
+
+    int authenticated = 0;
+    while (fscanf(file, "%99s\n%99s\n%99s\n%d\n%99s\n", tempUser.username, tempUser.password, tempUser.name, 
+            &tempUser.access_level, tempUser.last_logon) != EOF) {
+        if (strcmp(tempUser.username, username) == 0 && strcmp(tempUser.password, inputPassword) == 0) {
+            authenticated = 1;
+            break;
+        }
+    }
+    fclose(file);
+
+    if (authenticated) {
+        printf("\nUSER AUTHENTICATION SUCCESSFUL\n");
+        usleep(1000000);
+        logged_on_user(tempUser); // Call this function if authenticated
+    }
 }
 
 void handle_user_input() {
