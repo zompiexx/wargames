@@ -101,6 +101,7 @@ Still to do: Planned by Author
 2) similar to above, but allow call to BASIC to create simple programs.
 3) Directory Listing
 4) Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
+5) I am planning to write a customised version of the IMSAI 8080 program which includes a telnet client and system calls to play the samples. The server could then be a separate Linux machine in a remote location.
 
 Still to do: Requested
 1) allow users to run global thermonuclear war after login. 
@@ -116,6 +117,7 @@ Still to do: Requested
 10) would like to see, q or x used for those-instead of having to type full command.
 11) change users levels access numbers to either start at 5 or 1 as to access level- like defcon  5 is highest access level or lowest access level, so later can build in other access levels. Sysadmin-all priv's, moderator-w/all except- -?, user w/internet-priv user w/ games-priv . user w/only view or something.
 12) add on the Logon Screen, Welcome to NORAD, Cheyenne Mountain Complex.
+13) allow primary targets to be edited after input
 
 If you want to try it out for yourself, here are the steps:
 
