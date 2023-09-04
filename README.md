@@ -81,6 +81,9 @@ At the moment, the Wargames C code has the following features:
   * User Accounts (for users other than "Joshua")
   * Option to disable "Joshua" backdoor account when logged in using a level 2 (sysadmin) account using the command: backdoor
   * Email system for users of WOPR (send and recieve email between users)
+  * Allow connection to ARPANET, INTERNET from WOPR sessions
+  * HELP updated to include all valid commands for user and Joshua WOPR sessions
+  * Logon Screen for users added, Welcome to NORAD, Cheyenne Mountain Complex.
 
 * Bank
   * Very simple program, just accepts any username and password
@@ -104,20 +107,13 @@ Still to do: Planned by Author
 5) I am planning to write a customised version of the IMSAI 8080 program which includes a telnet client and system calls to play the samples. The server could then be a separate Linux machine in a remote location.
 
 Still to do: Requested
-1) allow users to run global thermonuclear war after login. 
-2) able to use dialer for connecting to outside/other telnet systems. 
-3) include the internet access for users of wopr 
-4) maybe add some of the other games, ie, poker, blackjack, zork, I know is available as text game. 
-4) bring up current defcon level. 
-5) maybe an area that shows war room current screen with stats or projections. 
-6) Subs- I remember a scene about Subs on game scene,  where David says blow them out of the water. Maybe those to start. Oh and you could add in the list
-7) turn on off the Joshua account command. [completed]
-8) capability to change area codes in the dialer-this could also be 1 of the sysadmin commands
-9) a command to List commands. ? Or List commands
-10) would like to see, q or x used for those-instead of having to type full command.
-11) change users levels access numbers to either start at 5 or 1 as to access level- like defcon  5 is highest access level or lowest access level, so later can build in other access levels. Sysadmin-all priv's, moderator-w/all except- -?, user w/internet-priv user w/ games-priv . user w/only view or something.
-12) add on the Logon Screen, Welcome to NORAD, Cheyenne Mountain Complex.
-13) allow primary targets to be edited after input
+allow users to run global thermonuclear war after login. [decided not to implement this as would require major re-sequencing in code]
+maybe add some of the other games, ie, poker, blackjack, zork, I know is available as text game. 
+maybe an area that shows war room current screen with stats or projections. [quite complicated to code this, and would probably work better with a dedicated display output on server]
+Subs- I remember a scene about Subs on game scene,  where David says blow them out of the water. Maybe those to start.
+capability to change area codes in the dialer-this could also be 1 of the sysadmin commands
+change users levels access numbers to either start at 5 or 1 as to access level- like defcon  5 is highest access level or lowest access level, so later can build in other access levels. Sysadmin-all priv's, moderator-w/all except- -?, user w/internet-priv user w/ games-priv . user w/only view or something. [something for the future, if I create different roles]
+allow primary targets to be edited after input
 
 If you want to try it out for yourself, here are the steps:
 
