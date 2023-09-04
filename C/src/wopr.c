@@ -530,20 +530,20 @@ void emailFunction(User logged_on_user) {
 
 void help_joshua() {
     char command[200];
-    delayed_print("\nCOMMANDS: HELP, LIST, DATE, TIME, DEFCON, AUTHOR, USERS");
-    delayed_print("\n          ARPANET, INTERNET, EXIT\n\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
+    delayed_print("\nCOMMANDS: HELP, LIST, DATE, TIME, DEFCON, AUTHOR, USERS");
+    delayed_print("\n          ARPANET, INTERNET, EXIT\n\n");
     //snprintf(command, sizeof(command), "espeak 'VALID COMMANDS: HELP, LIST, DATE, TIME, EXIT'");
     //system(command);
 }
 
 void help_user() {
     char command[200];
-    delayed_print("\nCOMMANDS: HELP, LIST, DATE, TIME, DEFCON, AUTHOR, USERS, MAIL, WHOAMI");
-    delayed_print("\n          ARPANET, INTERNET, TIC-TAC-TOE, BACKDOOR, EXIT\n\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
+    delayed_print("\nCOMMANDS: HELP, LIST, DATE, TIME, DEFCON, AUTHOR, USERS, MAIL, WHOAMI");
+    delayed_print("\n          ARPANET, INTERNET, TIC-TAC-TOE, BACKDOOR, EXIT\n\n");
     //snprintf(command, sizeof(command), "espeak 'VALID COMMANDS: HELP, LIST, DATE, TIME, EXIT'");
     //system(command);
 }
