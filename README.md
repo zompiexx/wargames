@@ -78,8 +78,8 @@ At the moment, the Wargames C code has the following features:
     * If you need to disable the speech synth so you can run in client/server mode using telnet, edit the WOPR.c file and modify the sgpt lines so that output is not piped to espeak. If you are running locally, this doesn't affect you.
   * Samples integration for WOPR/Joshua voice: uses aplay system command call to play wav file
   * Integration with Chat GPT for WOPR Chat (requires Shell GPT to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
-  * User Accounts (for users other than "Joshua")
-  * Option to disable "Joshua" backdoor account when logged in using a level 2 (sysadmin) account using the command: backdoor
+  * User Accounts (for users other than "Joshua") can be managed with Joshua account or Access Level 5 (sysadmin) account  using the command: users
+  * Option to disable "Joshua" backdoor account when logged in using a Access Level 5 (sysadmin) account using the command: backdoor
   * Email system for users of WOPR (send and recieve email between users)
   * Allow connection to ARPANET, INTERNET from WOPR sessions
   * HELP updated to include all valid commands for user and Joshua WOPR sessions
