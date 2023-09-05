@@ -85,7 +85,7 @@ At the moment, the Wargames C code has the following features:
   * HELP updated to include all valid commands for user and Joshua WOPR sessions
   * Logon Screen for users added, Welcome to NORAD, Cheyenne Mountain Complex.
   * Option to change area code in the dialer and save new default
-  * User access levels from 1 - 5 now valid. For INTERNET and ARPANET access, Level 3 required, Backdoor and User Management functions, level 5 required.
+  * User access levels from 1 - 5 now valid. For INTERNET and ARPANET, Access Level 3 required, Backdoor and User Management functions, Access Level 5 required. Basic permissions, Access Level 1 Required. 2,4 for future development.
 
 * Bank
   * Very simple program, just accepts any username and password
