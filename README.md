@@ -102,18 +102,21 @@ At the moment, the Wargames C code has the following features:
   * Simulation of System Overload for 0 player mode using CPU utilisation monitoring
 
 Still to do: Planned by Author
-1) add user function: create/edit/delete documents/text files. this should uitilise the data/wopr/usr/<user> and data/wopr/pub folder structure to store files and call nano as the editor.
-2) similar to above, but allow call to BASIC to create simple programs.
+1) Add user function: create/edit/delete documents/text files. This should uitilise the data/wopr/usr/<user> and data/wopr/pub folder structure to store files and call nano as the editor.
+2) Similar to above, but allow call to BASIC to create simple programs.
 3) Directory Listing
 4) Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
-5) I am planning to write a customised version of the IMSAI 8080 program which includes a telnet client and system calls to play the samples. The server could then be a separate Linux machine in a remote location.
+5) Customised version of the IMSAI 8080 program which includes a telnet client and uses system calls to play the samples. The server could then be a separate Linux machine in a remote location.
+6) Support multiple concurrent users of WOPR - possibly with multiple instances of IMSAI 8080 program using different TCP listener ports
+7) Allow Primary Targets to be edited after input
 
 Still to do: Requested
+Subs- I remember a scene about Subs on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
+maybe add some of the other games, ie, poker, blackjack, zork, I know is available as text game. [if they can be compiled for Linux, then they can be called - I need the source code]
+
+Requested: Deferred
 allow users to run global thermonuclear war after login. [decided not to implement this as would require major re-sequencing in code]
-maybe add some of the other games, ie, poker, blackjack, zork, I know is available as text game. 
 maybe an area that shows war room current screen with stats or projections. [quite complicated to code this, and would probably work better with a dedicated display output on server]
-Subs- I remember a scene about Subs on game scene,  where David says blow them out of the water. Maybe those to start.
-allow primary targets to be edited after input
 
 If you want to try it out for yourself, here are the steps:
 
