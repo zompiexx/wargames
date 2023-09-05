@@ -84,6 +84,8 @@ At the moment, the Wargames C code has the following features:
   * Allow connection to ARPANET, INTERNET from WOPR sessions
   * HELP updated to include all valid commands for user and Joshua WOPR sessions
   * Logon Screen for users added, Welcome to NORAD, Cheyenne Mountain Complex.
+  * Option to change area code in the dialer and save new default
+  * User access levels from 1 - 5 now valid. For INTERNET and ARPANET access, Level 3 required, Backdoor and User Management functions, level 5 required.
 
 * Bank
   * Very simple program, just accepts any username and password
@@ -111,8 +113,6 @@ allow users to run global thermonuclear war after login. [decided not to impleme
 maybe add some of the other games, ie, poker, blackjack, zork, I know is available as text game. 
 maybe an area that shows war room current screen with stats or projections. [quite complicated to code this, and would probably work better with a dedicated display output on server]
 Subs- I remember a scene about Subs on game scene,  where David says blow them out of the water. Maybe those to start.
-capability to change area codes in the dialer-this could also be 1 of the sysadmin commands
-change users levels access numbers to either start at 5 or 1 as to access level- like defcon  5 is highest access level or lowest access level, so later can build in other access levels. Sysadmin-all priv's, moderator-w/all except- -?, user w/internet-priv user w/ games-priv . user w/only view or something. [something for the future, if I create different roles]
 allow primary targets to be edited after input
 
 If you want to try it out for yourself, here are the steps:
