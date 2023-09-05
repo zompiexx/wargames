@@ -2244,9 +2244,21 @@ void logged_on_user(User user) {
             author();
         }
         else if (strcmp(input, "internet") == 0) {
-            connect_internet();
-        } else if (strcmp(input, "arpanet") == 0) {
-            connect_arpanet();
+            if (user.access_level >= 3) {
+                connect_internet();
+            } else {
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+                system(command);
+                delayed_print("\nPERMISSION DENIED. ACCESS LEVEL REQUIRED: 3\n\n");
+            }
+        } else if (strcmp(input, "arpanet") == 0) {        
+            if (user.access_level >= 3) {
+                connect_arpanet();
+            } else {
+                snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+                system(command);
+                delayed_print("\nPERMISSION DENIED. ACCESS LEVEL REQUIRED: 3\n\n");
+            }
         }
         else if (strcmp(input, "whoami") == 0) {
             delayed_print("\nUSER: ");
@@ -2267,17 +2279,17 @@ void logged_on_user(User user) {
             delayed_print("HINT: TYPE HELP FOR A LIST OF COMMANDS\n\n");
         }
         else if (strcmp(input, "users") == 0) {
-            if (user.access_level == 2) {
+            if (user.access_level == 5) {
                 manageUsers();
             } else {
                 snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
                 system(command);
-                delayed_print("\nPERMISSION DENIED. INSUFFICIENT ACCESS LEVEL.\n\n");
+                delayed_print("\nPERMISSION DENIED. ACCESS LEVEL REQUIRED: 5\n\n");
             }
            
         }
         else if (strcmp(input, "backdoor") == 0) {
-            if (user.access_level == 2) {
+            if (user.access_level == 5) {
                 char buffer[10];
                 int user_input;
                 snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
@@ -2300,7 +2312,7 @@ void logged_on_user(User user) {
             } else {
                 snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
                 system(command);
-                delayed_print("\nPERMISSION DENIED. INSUFFICIENT ACCESS LEVEL.\n\n");
+                delayed_print("\nPERMISSION DENIED. ACCESS LEVEL REQUIRED: 5\n\n");
             }
            
         }
