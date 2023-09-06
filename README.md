@@ -60,6 +60,7 @@ At the moment, the Wargames C code has the following features:
   *   Samples integration for IMSAI 8080/Kermit and Dialer/Modem Sounds and more: uses aplay system command call to play wav files
   *   Data files can be customised to connect to other systems
   *   Internet (using lynx browser) added to systems_list.txt and install.sh
+  *   Viewdata Client added and dialer entries for Telstar, NightOwl BBS
 
 * School Computer
   *  Includes a fully functional database
