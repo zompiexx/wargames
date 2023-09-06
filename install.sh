@@ -17,6 +17,12 @@ cd vidtex-1.3.0
 sudo make install
 cd ..
 
+#Install Viewdata Fonts
+wget https://bjh21.me.uk/bedstead/bedstead.otf
+wget https://galax.xyz/TELETEXT/MODE7GX3.TTF
+sudo cp bedstead.otf /usr/share/fonts/truetype/
+sudo cp MODE7GX3.TTF /usr/share/fonts/truetype/
+
 #Install shell-gpt & WOPR role (needs to be enabled in wopr.c)
 #echo you are running Python Version
 #python --version
