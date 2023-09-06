@@ -16,13 +16,13 @@ BANK
 311
 437
 2977
-system
-command
+TELSTAR
+./telstar.sh
 311
 767
 3395
-system
-command
+NIGHTOWL-BBS
+./nightowlbbs.sh
 311
 399
 3572
