@@ -52,6 +52,7 @@ At the moment, the Wargames C code has the following features:
 * IMSAI 8080 Program
   * Simulates CP/M 2.2 running on an IMSAI 8080
   * Provides Kermit and Dialer programs
+  * Customisable drive B: commands using cpm_commands.txt data file
 
 * Dialer Program
   *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
