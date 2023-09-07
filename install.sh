@@ -23,6 +23,9 @@ wget https://galax.xyz/TELETEXT/MODE7GX3.TTF
 sudo cp bedstead.otf /usr/share/fonts/truetype/
 sudo cp MODE7GX3.TTF /usr/share/fonts/truetype/
 
+#Install cool-retro-term
+sudo apt install cool-retro-term
+
 #Install shell-gpt & WOPR role (needs to be enabled in wopr.c)
 #echo you are running Python Version
 #python --version
@@ -42,6 +45,9 @@ gcc C/src/tic-tac-toe.c -o ./tic-tac-toe
 
 #Install data files
 cp C/src/*.txt ./
+
+#Copy config files
+cp C/src/imsai8080.json ./
 
 #Make scripts executable
 chmod +x ~/wargames/*.sh
