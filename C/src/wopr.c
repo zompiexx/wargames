@@ -19,6 +19,7 @@
 #define MAX_STRING_LENGTH 20
 #define INBOX 1
 #define SENT_ITEMS 2
+#define SHELL_GPT 0 // 0 = disabled, 1 = enabled
 
 // Struct for user data
 typedef struct {
@@ -2155,17 +2156,18 @@ void joshua() {
             delayed_print(prompt);
         } else if (strcmp(input, "users") == 0) {
             manageUsers();
-        //} else {
-            // Construct the shell command
-            //char sgpt[200] = "sgpt --role WOPR \"";
-            //strcat(sgpt, input);
-            //strcat(sgpt, "\" | tee /dev/tty | espeak");
-            //strcat(sgpt, "\" ");
-            //printf("\n");
-
-            // Call the shell command
-            //system(sgpt);
-            //printf("\n");
+        } else {
+            //Only do this if SHELL_GPT = 1 (enabled)
+            if(SHELL_GPT == 1) {
+                char sgpt[200] = "sgpt --role WOPR \"";
+                strcat(sgpt, input);
+                strcat(sgpt, "\" | tee /dev/tty | espeak");
+                //strcat(sgpt, "\" ");
+                printf("\n");
+                // Call the shell command
+                system(sgpt);
+                printf("\n");
+            }
         }
     }
 
