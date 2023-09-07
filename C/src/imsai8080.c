@@ -262,7 +262,7 @@ int main(){
 		goto imsai8080;
 	} else {
 		toUpperCase(command);
-    	printf("%s", command);
+		printf("%s", command);
 		printf("? \n");
 		printf("\n");
 		goto imsai8080;
