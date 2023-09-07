@@ -4,6 +4,9 @@ It simulates the IMSAI 8080, WOPR and other Computer Systems from the Wargames M
 
 NOTE: The C source code and scripts have been written to compile on Debian Linux. If you want to run compile this code to run on any other platform, you will need to modify the code to suit your purposes. The C programs are all work in progress, so expect some bugs! The client/server mode uses telnet instead of ssh because the IMSAI 8080esp WiFi modem only supports telnet. If this is not an issue for you, then by all means use ssh (although, this will require authentication - so it's not ideal for this simulation). If you are running it in local mode, then this doesn't affect you.
 
+TIP: In the C version of the code, some features will not work in unauthenticated telnet client/server mode (i.e. espeak, shell-gpt, vidtex). If you want all features to work in client/server mode, then you can connect on the standard telnet port 23 (or ssh if you are not limited to telnet), and authenticate/login using the same account that you used to install the wargames software when prompted, then run ~/wargames/imsai8080.
+The idea is that when connecting from a retro computer using a WiFi modem or serial connection, the wargames software is hosted on a small computer running Linux, ideally an SBC such as a Raspberry PI (but can be whatever you want) that is located behind the retro hardware, ideally running headless, but with audio out connected. That way, the user/operator can experience using the retor hardware as a terminal, but with all the wargames systems hosted on another server - as it would have been in the movie (other than slightly cheating with the sound).
+
 WARNING: In addition to the simulated computer systems featured in the Wargames movie, the dialer, associated data files, and scripts may contain connection details for other systems that are period (1970s, 1980s) relevant, such as Telehack.com - which simulates the old ARPANET. You should check that the method of connection used in the scripts is acceptable for your purposes, and if not - then either modify the scripts accordingly, or not use that feature. When connecting to external systems, especially over the Internet, it is always best practice to use encrypted protocols such as ssh. For example, in order to connect to Telehack.com using ssh as opposed to telnet, you would need to modify the telehack.sh script to replace the telnet command with ssh, in the appropriate format, e.g. ssh -p 2222 username@telehack.com. It's not possible to provide the scripts for ssh access since your username to an external system will be unique, which is why the scripts provided use telnet - and are only intended to be used for guest access.
 
 The code was originally developed on a Sinclair QL using SuperBasic, but then I re-wrote it in BASIC-80 on CP/M so it would run on my IMSAI 8080esp (emulated IMSAI 8080 replica), and I then subsequently re-wrote/converted it to C on Linux (more details on progress of the C code below) to allow additional features to be included. The code could be easily ported to other platforms. To save space in memory, the BASIC-80 code uses text files for the help pages, and these are included in the project.
@@ -113,12 +116,11 @@ Still to do: Planned by Author
 7) Allow Primary Targets to be edited after input
 
 Still to do: Requested
-Subs- I remember a scene about Subs on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
-maybe add some of the other games, ie, poker, blackjack, zork, I know is available as text game. [if they can be compiled for Linux, then they can be called - I need the source code]
+1) Subs on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
 
 Requested: Deferred
-allow users to run global thermonuclear war after login. [decided not to implement this as would require major re-sequencing in code]
-maybe an area that shows war room current screen with stats or projections. [quite complicated to code this, and would probably work better with a dedicated display output on server]
+1) allow users to run global thermonuclear war after login. [decided not to implement this as would require major re-sequencing in code]
+2) maybe an area that shows war room current screen with stats or projections. [quite complicated to code this, and would probably work better with a dedicated display output on server]
 
 If you want to try it out for yourself, here are the steps:
 
