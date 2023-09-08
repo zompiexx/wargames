@@ -15,6 +15,12 @@
 #define CHARACTER_DELAY 5000  // 1000 = 1ms
 #define MAX_BUFFER_LENGTH 1024
 
+void fix_backspace_key() {
+	char system_command[100];
+	snprintf(system_command, sizeof(system_command), "stty erase ^H");
+    system(system_command);
+}
+
 void clear_screen() {
     printf("\033[2J\033[H");
 }
@@ -75,6 +81,7 @@ void bank_computer() {
 }
 
 int main() {
+    fix_backspace_key();
     bank_computer();
 	return 0;
 }

@@ -30,6 +30,12 @@ typedef struct {
 Student students[MAX_STUDENTS];
 int student_count = 0;
 
+void fix_backspace_key() {
+	char system_command[100];
+	snprintf(system_command, sizeof(system_command), "stty erase ^H");
+    system(system_command);
+}
+
 void delayed_print(const char* str) {
     for (int i = 0; str[i]; i++) {
         putchar(str[i]);
@@ -405,7 +411,7 @@ void school_computer() {
 }
 
 int main() {
-
+        fix_backspace_key();
         // Clear screen
         clear_screen();
 

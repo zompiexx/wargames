@@ -25,6 +25,12 @@ typedef struct {
 
 Command commands[MAX_COMMANDS];
 
+void fix_backspace_key() {
+	char system_command[100];
+	snprintf(system_command, sizeof(system_command), "stty erase ^H");
+    system(system_command);
+}
+
 void toLowerCase(char* str) {
     for (int i = 0; str[i]; i++) {
         str[i] = tolower(str[i]);
@@ -134,6 +140,7 @@ void promptAndExecute(const char *inputCommand) {
 }
 
 int main(){
+	fix_backspace_key();
 	clear_screen();
 	char command[100];
 	char system_command[200];

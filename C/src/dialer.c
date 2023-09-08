@@ -17,6 +17,12 @@ static int area_code;
 
 int number_of_systems = 0;  // global variable for the number of systems found in systems_list.txt file
 
+void fix_backspace_key() {
+	char system_command[100];
+	snprintf(system_command, sizeof(system_command), "stty erase ^H");
+    system(system_command);
+}
+
 void clear_input_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
@@ -651,6 +657,7 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
 }
 
 int main() {
+    fix_backspace_key();
     int system_area_code[MAX_RECORDS],system_pfx[MAX_RECORDS], system_num[MAX_RECORDS];
     char system_name[MAX_RECORDS][MAX_SYSTEM_NAME_LENGTH];
     char system_action[MAX_RECORDS][MAX_SYSTEM_ACTION_LENGTH];

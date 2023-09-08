@@ -36,6 +36,12 @@ struct Reservation {
 
 struct Reservation reservations[MAX_PASSENGERS];
 
+void fix_backspace_key() {
+	char system_command[100];
+	snprintf(system_command, sizeof(system_command), "stty erase ^H");
+    system(system_command);
+}
+
 void clear_screen() {
     printf("\033[2J\033[H");
 }
@@ -180,6 +186,7 @@ void search_reservation() {
 
 
 int main(){
+    fix_backspace_key();
     clear_screen();
     char command[100];
     char system_command[200];

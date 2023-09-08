@@ -43,6 +43,12 @@ typedef struct {
 int game_running = 0;
 int defcon = 5;
 
+void fix_backspace_key() {
+	char system_command[100];
+	snprintf(system_command, sizeof(system_command), "stty erase ^H");
+    system(system_command);
+}
+
 void delayed_print(const char* str) {
     //char command[200];
     for (int i = 0; str[i]; i++) {
@@ -2446,6 +2452,7 @@ void handle_user_input() {
 }
 
 int main() {
+        fix_backspace_key();
         char command[200];
         // Clear screen
         clear_screen();

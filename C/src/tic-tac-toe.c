@@ -11,7 +11,7 @@
 
 #define SIZE 3
 
-static int cpu_threshold = 60; //this is the cpu_threshold - set a lower value for a fast system
+static int cpu_threshold = 65; //this is the cpu_threshold - set a lower value for a fast system
 static int cpu_threshold_trigger = 2; //this is the number of times the cpu_threshold needs to be met
 static int cpu_threshold_trigger_count = 0; //this counts the number of times the cpu_threshold has been triggered
 static int previous_utilization = 0;
@@ -19,6 +19,12 @@ static int peak_utilization = 0;
 static char cpu_overload = 'N';
 
 char board[SIZE][SIZE]; // Game board
+
+void fix_backspace_key() {
+	char system_command[100];
+	snprintf(system_command, sizeof(system_command), "stty erase ^H");
+    system(system_command);
+}
 
 void clear_screen() {
     printf("\033[H\033[J");
@@ -368,6 +374,7 @@ void monitor_cpu_utilization() {
 }
 
 int main() {
+    fix_backspace_key();
     int users;
     char player1, player2;
     char command[200];
