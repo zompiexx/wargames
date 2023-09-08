@@ -31,8 +31,8 @@ PAN-AM
 311
 936
 3923
-system
-command
+SIMULANT
+./simulant.sh
 311
 767
 7305
