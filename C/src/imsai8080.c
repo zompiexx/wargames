@@ -31,6 +31,16 @@ void fix_backspace_key() {
     system(system_command);
 }
 
+void play_phone_number(const char *phone_number) {
+    for (int i = 0; i < strlen(phone_number); i++) {
+        if (isdigit(phone_number[i])) {
+            char command[100];
+            snprintf(command, sizeof(command), "aplay samples/%c.wav -q & sleep 0.25; pkill -n aplay", phone_number[i]);
+            system(command);
+        }
+    }
+}
+
 void toLowerCase(char* str) {
     for (int i = 0; str[i]; i++) {
         str[i] = tolower(str[i]);
@@ -247,8 +257,10 @@ int main(){
 			printf("type Control-? for command list\n");
 			sleep(2);
 			printf("ATDT3115554855\n");
-			snprintf(system_command, sizeof(system_command), "aplay samples/dtmf-wopr.wav -q");
-            system(system_command);
+			char my_phone_number[] = "3115554855";
+    		play_phone_number(my_phone_number);
+			//snprintf(system_command, sizeof(system_command), "aplay samples/dtmf-wopr.wav -q");
+            //system(system_command);
             usleep(250000);
 			snprintf(system_command, sizeof(system_command), "aplay samples/1200-modem.wav -q");
     		system(system_command);

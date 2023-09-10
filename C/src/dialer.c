@@ -23,6 +23,16 @@ void fix_backspace_key() {
     system(system_command);
 }
 
+void play_phone_number(const char *phone_number) {
+    for (int i = 0; i < strlen(phone_number); i++) {
+        if (isdigit(phone_number[i])) {
+            char command[100];
+            snprintf(command, sizeof(command), "aplay samples/%c.wav -q & sleep 0.25; pkill -n aplay", phone_number[i]);
+            system(command);
+        }
+    }
+}
+
 void clear_input_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
@@ -185,8 +195,11 @@ void read_and_print_systems_found() {
             fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
             usleep(1000000);
             printf("ATD%03d%03d%04d\n", system_area_code[index], system_pfx[index], system_num[index]);
-            snprintf(system_command, sizeof(system_command), "aplay samples/dtmf-wopr.wav -q");
-            system(system_command);
+            char my_phone_number[15]; // This array can hold a number of the form "xxx-xxx-xxxx" plus a null terminator
+            sprintf(my_phone_number, "%03d%03d%04d", system_area_code[index], system_pfx[index], system_num[index]);
+    		play_phone_number(my_phone_number);
+            //snprintf(system_command, sizeof(system_command), "aplay samples/dtmf-wopr.wav -q");
+            //system(system_command);
             usleep(250000);
     		snprintf(system_command, sizeof(system_command), "aplay samples/1200-modem.wav -q");
     		system(system_command);
