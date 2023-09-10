@@ -56,6 +56,7 @@ At the moment, the Wargames C code has the following features:
   * Simulates CP/M 2.2 running on an IMSAI 8080
   * Provides Kermit and Dialer programs
   * Customisable drive B: commands using cpm_commands.txt data file
+  * DTMF dialer added
 
 * Dialer Program
   *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
@@ -91,6 +92,7 @@ At the moment, the Wargames C code has the following features:
   * Logon Screen for users added, Welcome to NORAD, Cheyenne Mountain Complex.
   * Option to change area code in the dialer and save new default
   * User access levels from 1 - 5 now valid. For INTERNET and ARPANET, Access Level 3 required, Backdoor and User Management functions, Access Level 5 required. Basic permissions, Access Level 1 Required. 2,4 for future development.
+  * DTMF dialer added
 
 * Bank
   * Very simple program, just accepts any username and password
