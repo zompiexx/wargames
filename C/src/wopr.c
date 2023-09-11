@@ -1200,6 +1200,7 @@ void global_thermonuclear_war() {
     delayed_print("YOU HAVE SELECTED: ");
     delayed_print(side);
     usleep(2500000);
+    input_targets:;
     clear_screen ();
     usleep(2500000);
     delayed_print("\033[4mAWAITING FIRST STRIKE COMMAND\033[24m\n\n");
@@ -1252,13 +1253,22 @@ void global_thermonuclear_war() {
         usleep(1000000);
         snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
         system(command);
-        delayed_print("\nCOMMAND (L = LAUNCH): ");
+        delayed_print("\nCOMMAND (L = LAUNCH, E = EDIT TARGETS, X = EXIT): ");
         scanf(" %c", &input);
         clear_input_buffer();
         if (input == 'l' || input == 'L') {
             usleep(2000000);
             defcon=3;
             break;
+        } else if (input == 'e' || input == 'E') {
+            usleep(2000000);
+            defcon=5;
+            goto input_targets;
+        } else if (input == 'x' || input == 'X') {
+            usleep(2000000);
+            defcon=5;
+            clear_screen();
+            goto end_missile_launch;
         }
     }
        
@@ -1812,6 +1822,7 @@ void global_thermonuclear_war() {
     usleep(2000000);
 
     //control returned to joshua function
+    end_missile_launch:;
 }
 
 void joshua() {
