@@ -2007,6 +2007,7 @@ void joshua() {
             usleep(1000000);
             global_thermonuclear_war();
             delayed_print(prompt);
+            woprchat = 5;
         } else if (strcmp(input, "exit") == 0) {
             snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
             system(command);
