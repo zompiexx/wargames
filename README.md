@@ -119,6 +119,7 @@ Still to do: Planned by Author
 
 Still to do: Requested
 1) Subs on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
+2) A rolling demo/screensaver that can change its path/outcome. [will investigate]
 
 Requested: Deferred
 1) allow users to run global thermonuclear war after login. [decided not to implement this as would require major re-sequencing in code]
