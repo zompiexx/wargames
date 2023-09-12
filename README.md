@@ -147,7 +147,7 @@ Installation:
 Running the Software (Local Mode):
 * To start IMSAI 8080, Run: ./imsai8080.sh
 * OR
-* To start IMSAI 8080 using cool-retro-term, Run: ./cool-retro-term.sh
+* To start IMSAI 8080 using cool-retro-term, Run: ./imsai8080-crt.sh
 
 Running the Software (Client/Server Mode):
 * To start IMSAI 8080 (TCP 9999), Run: ./imsai8080_start.sh
