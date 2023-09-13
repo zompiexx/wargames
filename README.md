@@ -57,6 +57,8 @@ At the moment, the Wargames C code has the following features:
   * Provides Kermit and Dialer programs
   * Customisable drive B: commands using cpm_commands.txt data file
   * DTMF dialer added
+  * cool-retro-term included in install.sh script
+  * Viewdata Font added to install.sh script and Backspace Key in cool-retro-term fixed in all programs
 
 * Dialer Program
   *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
@@ -66,6 +68,9 @@ At the moment, the Wargames C code has the following features:
   *   Data files can be customised to connect to other systems
   *   Internet (using lynx browser) added to systems_list.txt and install.sh
   *   Viewdata Client added and dialer entries for Telstar, NightOwl BBS. NOTE: Viewdata Client will only work in local mode
+  *   DTMF dialer added (works in scan and view mode)
+  *   Engaged tone in dialer for unavailable systems (any with system name = system)
+  *   Option to change area code in the dialer and save new default
 
 * School Computer
   *  Includes a fully functional database
@@ -92,7 +97,7 @@ At the moment, the Wargames C code has the following features:
   * Logon Screen for users added, Welcome to NORAD, Cheyenne Mountain Complex.
   * Option to change area code in the dialer and save new default
   * User access levels from 1 - 5 now valid. For INTERNET and ARPANET, Access Level 3 required, Backdoor and User Management functions, Access Level 5 required. Basic permissions, Access Level 1 Required. 2,4 for future development.
-  * DTMF dialer added
+  * Edit and Exit options added to Global Thermonuclear War Game
 
 * Bank
   * Very simple program, just accepts any username and password
