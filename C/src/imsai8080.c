@@ -35,7 +35,7 @@ void play_phone_number(const char *phone_number) {
     for (int i = 0; i < strlen(phone_number); i++) {
         if (isdigit(phone_number[i])) {
             char command[100];
-            snprintf(command, sizeof(command), "aplay samples/%c.wav -q & sleep 0.25; pkill -n aplay", phone_number[i]);
+            snprintf(command, sizeof(command), "aplay samples/%c.wav -q & sleep 0.2; pkill -n aplay", phone_number[i]);
             system(command);
         }
     }

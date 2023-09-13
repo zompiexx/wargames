@@ -27,7 +27,7 @@ void play_phone_number(const char *phone_number) {
     for (int i = 0; i < strlen(phone_number); i++) {
         if (isdigit(phone_number[i])) {
             char command[100];
-            snprintf(command, sizeof(command), "aplay samples/%c.wav -q & sleep 0.25; pkill -n aplay", phone_number[i]);
+            snprintf(command, sizeof(command), "aplay samples/%c.wav -q & sleep 0.2; pkill -n aplay", phone_number[i]);
             system(command);
         }
     }
@@ -201,12 +201,20 @@ void read_and_print_systems_found() {
             //snprintf(system_command, sizeof(system_command), "aplay samples/dtmf-wopr.wav -q");
             //system(system_command);
             usleep(250000);
-    		snprintf(system_command, sizeof(system_command), "aplay samples/1200-modem.wav -q");
-    		system(system_command);
-			clear_screen();
-            fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
-            usleep(2000000);
-			printf("CONNECTING\n\n");
+            if(strcmp(system_name[index],"system")==0) {
+                snprintf(system_command, sizeof(system_command), "aplay samples/phone-busy-1.wav -q");
+    		    system(system_command);
+                clear_screen();
+                fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
+                usleep(2000000);
+            } else {
+                snprintf(system_command, sizeof(system_command), "aplay samples/1200-modem.wav -q");
+    		    system(system_command);
+                clear_screen();
+                fflush(stdout); // Flush the output buffer to ensure the prompt is displayed
+                usleep(2000000);
+                printf("CONNECTING\n\n");
+            }
             usleep(2000000);
             system(system_action[index]); // Execute the selected system action
         }
