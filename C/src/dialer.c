@@ -367,6 +367,7 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
     int s5=0;
     int random_number;
     int n;
+    char my_phone_number[15]; // This array can hold a number of the form "xxx-xxx-xxxx" plus a null terminator
 
     for (int i = nd_start; i <= nd_end; i++) {
         if (ln == 0 || i == (nd_start+10) || i == (nd_start+100) || i == (nd_start+1000)) {
@@ -467,17 +468,23 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
             }
         }
         if (hit == 'Y') {
+            sprintf(my_phone_number, "%03d%03d%04d", area_code, pf1, i);
+    		play_phone_number(my_phone_number);
+
+            snprintf(command, sizeof(command), "aplay samples/1200-modem.wav -q");
+            system(command);
+
             printf("\033[7m(%03d) ",area_code);
             printf("%03d %04d", pf1, i);
             printf("\033[0m     ");
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-            system(command);
+            fflush(stdout); // flush the output buffer
+
             // Save the hit to the file
             saveNumber(area_code, pf1, i, system_name[n], system_action[n]);
         } else {
-            printf("(%03d) ",area_code);
-            printf("%03d %04d", pf1, i);
-            printf("     ");
+            sprintf(my_phone_number, "%03d%03d%04d", area_code, pf1, i);
+    		play_phone_number(my_phone_number);
+
             random_number = rand() % 10;
 
             if (random_number == 1 && s1 == 0) {
@@ -502,6 +509,10 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
                 snprintf(command, sizeof(command), "aplay samples/phone-beep.wav -q");
                 system(command);
             }
+            printf("(%03d) ",area_code);
+            printf("%03d %04d", pf1, i);
+            printf("     ");
+            fflush(stdout); // flush the output buffer
         }
         
         fflush(stdout); // flush the output buffer
@@ -519,17 +530,23 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
             }
         }
         if (hit == 'Y') {
+            sprintf(my_phone_number, "%03d%03d%04d", area_code, pf2, i);
+    		play_phone_number(my_phone_number);
+
+            snprintf(command, sizeof(command), "aplay samples/1200-modem.wav -q");
+            system(command);
+
             printf("\033[7m(%03d) ",area_code);
             printf("%03d %04d", pf2, i);
             printf("\033[0m     ");
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-            system(command);
+            fflush(stdout); // flush the output buffer
+
             // Save the hit to the file
             saveNumber(area_code, pf2, i, system_name[n], system_action[n]);
         } else {
-            printf("(%03d) ",area_code);
-            printf("%03d %04d", pf2, i);
-            printf("     ");
+            sprintf(my_phone_number, "%03d%03d%04d", area_code, pf2, i);
+    		play_phone_number(my_phone_number);
+
             random_number = rand() % 10;
 
             if (random_number == 1 && s1 == 0) {
@@ -554,6 +571,10 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
                 snprintf(command, sizeof(command), "aplay samples/phone-beep.wav -q");
                 system(command);
             }
+            printf("(%03d) ",area_code);
+            printf("%03d %04d", pf2, i);
+            printf("     ");
+            fflush(stdout); // flush the output buffer
          }
 
         fflush(stdout); // flush the output buffer
@@ -571,17 +592,23 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
             }
         }
         if (hit == 'Y') {
+            sprintf(my_phone_number, "%03d%03d%04d", area_code, pf3, i);
+    		play_phone_number(my_phone_number);
+
+            snprintf(command, sizeof(command), "aplay samples/1200-modem.wav -q");
+            system(command);
+
             printf("\033[7m(%03d) ",area_code);
             printf("%03d %04d", pf3, i);
             printf("\033[0m     ");
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-            system(command);
+            fflush(stdout); // flush the output buffer
+
             // Save the hit to the file
             saveNumber(area_code, pf3, i, system_name[n], system_action[n]);
         } else {
-            printf("(%03d) ",area_code);
-            printf("%03d %04d", pf3, i);
-            printf("     ");
+            sprintf(my_phone_number, "%03d%03d%04d", area_code, pf3, i);
+    		play_phone_number(my_phone_number);
+
             random_number = rand() % 10;
 
             if (random_number == 1 && s1 == 0) {
@@ -606,6 +633,10 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
                 snprintf(command, sizeof(command), "aplay samples/phone-beep.wav -q");
                 system(command);
             }
+            printf("(%03d) ",area_code);
+            printf("%03d %04d", pf3, i);
+            printf("     ");
+            fflush(stdout); // flush the output buffer
         }
 
         fflush(stdout); // flush the output buffer
@@ -623,17 +654,23 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
             }
         }
         if (hit == 'Y') {
+            sprintf(my_phone_number, "%03d%03d%04d", area_code, pf4, i);
+    		play_phone_number(my_phone_number);
+
+            snprintf(command, sizeof(command), "aplay samples/1200-modem.wav -q");
+            system(command);
+
             printf("\033[7m(%03d) ",area_code);
             printf("%03d %04d", pf4, i);
             printf("\033[0m\n");
-            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
-            system(command);
+            fflush(stdout); // flush the output buffer
+
             // Save the hit to the file
             saveNumber(area_code, pf4, i, system_name[n], system_action[n]);
         } else {
-            printf("(%03d) ",area_code);
-            printf("%03d %04d", pf4, i);
-            printf("\n");
+            sprintf(my_phone_number, "%03d%03d%04d", area_code, pf4, i);
+    		play_phone_number(my_phone_number);
+
             random_number = rand() % 10;
 
             if (random_number == 1 && s1 == 0) {
@@ -654,10 +691,20 @@ void dialer(int system_area_code[], int system_pfx[], int system_num[], char sys
                 s5 = 1;
                 snprintf(command, sizeof(command), "aplay samples/funny-answer-phone.wav -q");
                 system(command);
+            } else if (random_number == 6) {
+                snprintf(command, sizeof(command), "aplay samples/telephone-ringing.wav -q");
+                system(command);
+            } else if (random_number == 7) {
+                snprintf(command, sizeof(command), "aplay samples/telephone-ringing.wav -q");
+                system(command);
             } else {
                 snprintf(command, sizeof(command), "aplay samples/phone-beep.wav -q");
                 system(command);
             }
+            printf("(%03d) ",area_code);
+            printf("%03d %04d", pf4, i);
+            printf("\n");
+            fflush(stdout); // flush the output buffer
         }
 
         fflush(stdout); // flush the output buffer
