@@ -119,9 +119,9 @@ Still to do: Planned by Author
 3) Directory Listing
 4) Enhance functionality of Pan-AM system to include options to modify, delete records etc., and to cross reference flight schedules
 5) Customised version of the IMSAI 8080 program which includes a telnet client and uses system calls to play the samples. The server could then be a separate Linux machine in a remote location.
-6) Support multiple concurrent users of WOPR - possibly with multiple instances of IMSAI 8080 program using different TCP listener ports
-7) Allow Primary Targets to be edited after input
-8) Add another system for the "real" provision
+6) Support multiple concurrent users / terminals connected to WOPR - possibly with multiple instances of IMSAI 8080 program using different TCP listener ports
+7) Add another system for the "real" Protovision
+8) Randomise / alternate connection speed and modem samples between 300 and 1200 baud for WOPR and indicate negitioated connection speed
 
 Still to do: Requested
 1) Subs on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
