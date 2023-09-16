@@ -124,6 +124,8 @@ Still to do: Planned by Author
 6) Support multiple concurrent users / terminals connected to WOPR - possibly with multiple instances of IMSAI 8080 program using different TCP listener ports
 7) Add another system for the "real" Protovision
 8) Randomise / alternate connection speed and modem samples between 300 and 1200 baud for WOPR and indicate negitioated connection speed
+9) Client only install (cool-retro-term, profile, script)
+10) Stream audio for remote clients
 
 Still to do: Requested
 1) Subs and bombers on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
