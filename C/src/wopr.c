@@ -42,6 +42,7 @@ typedef struct {
 
 int game_running = 0;
 int defcon = 5;
+int hints = 0;
 
 void fix_backspace_key() {
 	char system_command[100];
@@ -986,6 +987,11 @@ void guesscode() {
             delayed_print("GREETINGS PROFESSOR FALKEN\n\n");
             snprintf(command, sizeof(command), "aplay samples/greetings.wav -q");
             system(command);
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/falken_hello-joshua.wav -q");
+                system(command);
+            } 
             fgets(input, sizeof(input), stdin);
             // Remove trailing newline character
             input[strcspn(input, "\n")] = '\0';
@@ -1197,6 +1203,11 @@ void global_thermonuclear_war() {
         delayed_print("  1. UNITED STATES\n");
         delayed_print("  2. SOVIET UNION\n\n");
         delayed_print("PLEASE CHOOSE ONE: ");
+        if(hints == 1) {
+            usleep(2000000);
+            snprintf(command, sizeof(command), "aplay samples/david_ill-be-the-russians.wav -q");
+            system(command);
+        } 
         
         scanf(" %c", &input);
         
@@ -1846,8 +1857,15 @@ void global_thermonuclear_war() {
     snprintf(command, sizeof(command), "aplay samples/greetings.wav -q");
     system(command);
     delayed_print(prompt);
+    if(hints == 1) {
+        usleep(2000000);
+        snprintf(command, sizeof(command), "aplay samples/david_incorrect-identification.wav -q");       
+        system(command);
+        usleep(500000);
+        snprintf(command, sizeof(command), "aplay samples/david_i-am-not-falken-falken-is-dead.wav -q");       
+        system(command);
+    } 
     usleep(2000000);
-
     //control returned to joshua function
     end_missile_launch:;
 }
@@ -1931,6 +1949,11 @@ void joshua() {
     snprintf(command, sizeof(command), "aplay samples/greetings.wav -q");
     system(command);
     delayed_print(prompt);
+    if(hints == 1) {
+        usleep(2000000);
+        snprintf(command, sizeof(command), "aplay samples/david_hello.wav -q");
+        system(command);
+    }  
     char input[100];
     int woprchat = 0;
     int whatcount = 0;
@@ -1947,7 +1970,7 @@ void joshua() {
 
         if (strcmp(input, "help") == 0) {
             help_joshua();
-            delayed_print(prompt);
+            delayed_print(prompt);     
         } else if (strcmp(input, "help games") == 0) {
             help_games();
             delayed_print(prompt);
@@ -1993,6 +2016,11 @@ void joshua() {
             system(command);
             delayed_print(prompt);
             woprchat = 1;
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/david_im-fine-how-are-you.wav -q");
+                system(command);
+            }           
         } else if (strstr(input, "fine") != NULL && woprchat == 1 && game_running == 0) {
             delayed_print("\nEXCELLENT. ");
             snprintf(command, sizeof(command), "aplay samples/excellent.wav -q");
@@ -2007,6 +2035,11 @@ void joshua() {
             //snprintf(command, sizeof(command), "espeak 'EXCELLENT. ITS BEEN A LONG TIME. CAN YOU EXPLAIN THE REMOVAL OF YOUR USER ACCOUNT ON JUNE twenty third, nineteen seventy three'");
             delayed_print(prompt);
             woprchat = 2;
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/david_people-sometimes-make-mistakes.wav -q");
+                system(command);
+            } 
         } else if (strstr(input, "mistake") != NULL && woprchat == 2 && game_running == 0) {
             delayed_print("\nYES THEY DO. ");
             //snprintf(command, sizeof(command), "espeak 'YES THEY DO.'");
@@ -2019,6 +2052,11 @@ void joshua() {
             system(command);
             delayed_print(prompt);
             woprchat = 3;
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/david_how-about-global-thermonuclear-war.wav -q");
+                system(command);
+            } 
         } else if (strstr(input, "nuclear") != NULL && woprchat == 3 && game_running == 0) {
             delayed_print("\nWOULDN'T YOU PREFER A GOOD GAME OF CHESS?\n\n");
             //snprintf(command, sizeof(command), "espeak 'WOULDNT YOU PREFER A GOOD GAME OF CHESS'");
@@ -2026,6 +2064,11 @@ void joshua() {
             system(command);
             delayed_print(prompt);
             woprchat = 4;
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/david_later-lets-play-global-thermonuclear-war.wav -q");
+                system(command);
+            } 
         } else if (strstr(input, "later") != NULL && woprchat == 4 && game_running == 0) {
             delayed_print("\nFINE\n\n");
             //snprintf(command, sizeof(command), "espeak 'FINE'");
@@ -2058,6 +2101,11 @@ void joshua() {
             system(command);
             usleep(1000000);
             delayed_print(prompt);
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/david_what-is-the-primary-goal-1st-time.wav -q");
+                system(command);
+            } 
         } else if (strstr(input, "what") != NULL && whatcount == 0 && game_running == 1) {
             whatcount = 1;
             delayed_print("\nYOU SHOULD KNOW PROFESSOR. ");
@@ -2069,6 +2117,11 @@ void joshua() {
             system(command);
             usleep(1000000);
             delayed_print(prompt);
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/david_what-is-the-primary-goal-2nd-time.wav -q");
+                system(command);
+            } 
         } else if (strstr(input, "what") != NULL && whatcount == 1 && game_running == 1) {
             whatcount = 2;
             delayed_print("\nTO WIN THE GAME.\n\n");
@@ -2076,6 +2129,11 @@ void joshua() {
             system(command);
             usleep(1000000);
             delayed_print(prompt);
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/david_are-you-still-playing-the-game.wav -q");       
+                system(command);
+            } 
         } else if (strstr(input, "still") != NULL && game_running == 1) {
             whatcount = 2;
             delayed_print("\nOF COURSE. ");
@@ -2157,6 +2215,11 @@ void joshua() {
             delayed_print("\n");
             usleep(1000000);
             delayed_print(prompt);
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/david_is-this-a-game-or-is-it-real.wav -q");
+                system(command);
+            } 
         } else if (strstr(input, "real") != NULL && whatcount == 2 && game_running == 1) {
             whatcount = 3;
             delayed_print("\nWHAT'S THE DIFFERENCE?\n\n");
@@ -2173,6 +2236,11 @@ void joshua() {
             snprintf(command, sizeof(command), "aplay samples/could-not-find-you-in-seattle-and-no-terminal-is-in-operation-at-your-classified-address.wav -q");
             system(command);
             delayed_print(prompt);
+            if(hints == 1) {
+                usleep(2000000);
+                snprintf(command, sizeof(command), "aplay samples/david_what-classified-address.wav -q");
+                system(command);
+            } 
         } else if (strstr(input, "address") != NULL && whatcount == 3 && game_running == 1) {
             whatcount = 4;
             delayed_print("\nDOD PENSION FILES INDICATE\n");
@@ -2476,7 +2544,19 @@ void handle_user_input() {
                 system(command);
                 usleep(1000000);
                 break;  // Exit the while loop  
-            }   
+            }
+        } else if (strcmp(input, "hints") == 0) {
+            char buffer[10];
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("\nSET HINTS (0 = DISABLED, 1 = ENABLED): ");
+            fgets(buffer, sizeof(buffer), stdin); 
+            // Convert the string to an integer
+            hints = atoi(buffer);
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("HINTS UPDATED\n\n"); 
+            delayed_print(prompt);   
         } else {
             authenticateUser(input);  // Call the authentication function for that username
             snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
