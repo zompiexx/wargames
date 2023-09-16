@@ -99,7 +99,7 @@ At the moment, the Wargames C code has the following features:
   * Edit and Exit options added to Global Thermonuclear War Game
   * root account added to users.txt and users management removed from joshua account options. The default password for root account = password.
   * User Accounts (for users other than "Joshua") can be managed with root account or Access Level 5 (sysadmin) account  using the command: users
-  * Hints added. To use, type hints at LOGON: prompt. This will allow you to enable the other side (David Lightman) of the chat with Joshua / WOPR
+  * Hints added. To use, type "hints" at logon prompt. This will allow you to enable the other side (David Lightman) of the chat with Joshua / WOPR. e.g. LOGON: hints
 
 * Bank
   * Very simple program, just accepts any username and password
@@ -126,7 +126,7 @@ Still to do: Planned by Author
 8) Randomise / alternate connection speed and modem samples between 300 and 1200 baud for WOPR and indicate negitioated connection speed
 
 Still to do: Requested
-1) Subs on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
+1) Subs and bombers on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
 2) A rolling demo/screensaver that can change its path/outcome. [will investigate]
 
 Requested: Deferred
