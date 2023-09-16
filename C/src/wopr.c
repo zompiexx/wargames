@@ -539,7 +539,7 @@ void help_joshua() {
     char command[200];
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
     system(command);
-    delayed_print("\nCOMMANDS: HELP, LIST, DATE, TIME, DEFCON, AUTHOR, USERS");
+    delayed_print("\nCOMMANDS: HELP, LIST, DATE, TIME, DEFCON, AUTHOR");
     delayed_print("\n          ARPANET, INTERNET, EXIT\n\n");
     //snprintf(command, sizeof(command), "espeak 'VALID COMMANDS: HELP, LIST, DATE, TIME, EXIT'");
     //system(command);
@@ -651,6 +651,25 @@ void defcon_status() {
     delayed_print("\n\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
     system(command);
+}
+
+void create_root_user() {
+    char* username = "root";
+    char* password = "password";
+    char* name = "root";
+    int access_level = 9;
+    char* last_logon = "Never";
+
+    FILE* file = fopen("users.txt", "a");
+    if (file) {
+        // Check if user "root" exists. If true, exit the function.
+        if (userExists(username)) return;
+        fprintf(file, "%s\n%s\n%s\n%d\n%s\n", username, password, name, access_level, last_logon);
+        fclose(file);
+    } else {
+        // Handle the error, e.g., print an error message
+        //printf("Error opening or creating users.txt!\n");
+    }
 }
 
 void manageUsers() {
@@ -792,6 +811,14 @@ void manageUsers() {
                 system(command);
                 fgets(inputUsername, sizeof(inputUsername), stdin);
                 strtok(inputUsername, "\n");
+
+                //check whether user to delete is root
+                if (strcmp(inputUsername, "root") == 0) {
+                    delayed_print("ACCESS DENIED\n");
+                    snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+                    system(command);
+                    break;
+                }
 
                 FILE* delFile = fopen("delete.txt", "w");
                 if (!delFile) {
@@ -2172,8 +2199,8 @@ void joshua() {
         } else if (strcmp(input, "cls") == 0) {
             clear_screen();
             delayed_print(prompt);
-        } else if (strcmp(input, "users") == 0) {
-            manageUsers();
+        //} else if (strcmp(input, "users") == 0) {
+        //    manageUsers();
         } else {
             //Only do this if SHELL_GPT = 1 (enabled)
             if(SHELL_GPT == 1) {
@@ -2299,7 +2326,7 @@ void logged_on_user(User user) {
             delayed_print("HINT: TYPE HELP FOR A LIST OF COMMANDS\n\n");
         }
         else if (strcmp(input, "users") == 0) {
-            if (user.access_level == 5) {
+            if (user.access_level >= 5) {
                 manageUsers();
             } else {
                 snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
@@ -2309,7 +2336,7 @@ void logged_on_user(User user) {
            
         }
         else if (strcmp(input, "backdoor") == 0) {
-            if (user.access_level == 5) {
+            if (user.access_level >= 5) {
                 char buffer[10];
                 int user_input;
                 snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
@@ -2481,6 +2508,7 @@ int main() {
         delayed_print("\nLOGON: ");
 
         // Handle user input
+        create_root_user();
         handle_user_input();
         
         exit(0);
