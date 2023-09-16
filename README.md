@@ -89,7 +89,7 @@ At the moment, the Wargames C code has the following features:
     * If you need to disable the speech synth so you can run in client/server mode using telnet, edit the WOPR.c file and modify the sgpt lines so that output is not piped to espeak. If you are running locally, this doesn't affect you.
   * Samples integration for WOPR/Joshua voice: uses aplay system command call to play wav file
   * Integration with Chat GPT for WOPR Chat (requires Shell GPT to be installed: code and install info here - https://github.com/TheR1D/shell_gpt)
-  * User Accounts (for users other than "Joshua") can be managed with Joshua account or Access Level 5 (sysadmin) account  using the command: users
+  * User Accounts (for users other than "Joshua") can be managed with root account or Access Level 5 (sysadmin) account  using the command: users
   * Option to disable "Joshua" backdoor account when logged in using a Access Level 5 (sysadmin) account using the command: backdoor
   * Email system for users of WOPR (send and recieve email between users)
   * Allow connection to ARPANET, INTERNET from WOPR sessions
@@ -98,6 +98,7 @@ At the moment, the Wargames C code has the following features:
   * Option to change area code in the dialer and save new default
   * User access levels from 1 - 5 now valid. For INTERNET and ARPANET, Access Level 3 required, Backdoor and User Management functions, Access Level 5 required. Basic permissions, Access Level 1 Required. 2,4 for future development.
   * Edit and Exit options added to Global Thermonuclear War Game
+  * root account added to users.txt and users management removed from joshua account options. default password for root account = password. this can be changed by users with access-level 5 or above.
 
 * Bank
   * Very simple program, just accepts any username and password
@@ -122,7 +123,6 @@ Still to do: Planned by Author
 6) Support multiple concurrent users / terminals connected to WOPR - possibly with multiple instances of IMSAI 8080 program using different TCP listener ports
 7) Add another system for the "real" Protovision
 8) Randomise / alternate connection speed and modem samples between 300 and 1200 baud for WOPR and indicate negitioated connection speed
-9) Add root account to users.txt and remove users management from joshua account options. Add a check in code to prevent deletion of root account. Include users.txt as part of install. It will still be possible to change the password of the root account.
 
 Still to do: Requested
 1) Subs on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
