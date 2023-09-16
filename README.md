@@ -99,7 +99,7 @@ At the moment, the Wargames C code has the following features:
   * Edit and Exit options added to Global Thermonuclear War Game
   * root account added to users.txt and users management removed from joshua account options. The default password for root account = password.
   * User Accounts (for users other than "Joshua") can be managed with root account or Access Level 5 (sysadmin) account  using the command: users
-  * Hints added. To use, type hints at LOGON: prompt (this will allow you to enable the other side (David Lightman) of the chat with Joshua / WOPR
+  * Hints added. To use, type hints at LOGON: prompt. This will allow you to enable the other side (David Lightman) of the chat with Joshua / WOPR
 
 * Bank
   * Very simple program, just accepts any username and password
