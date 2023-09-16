@@ -122,6 +122,7 @@ Still to do: Planned by Author
 6) Support multiple concurrent users / terminals connected to WOPR - possibly with multiple instances of IMSAI 8080 program using different TCP listener ports
 7) Add another system for the "real" Protovision
 8) Randomise / alternate connection speed and modem samples between 300 and 1200 baud for WOPR and indicate negitioated connection speed
+9) Add root account to users.txt and remove users management from joshua account options. Add a check in code to prevent deletion of root account. Include users.txt as part of install. It will still be possible to change the password of the root account.
 
 Still to do: Requested
 1) Subs on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
