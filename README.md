@@ -97,7 +97,7 @@ At the moment, the Wargames C code has the following features:
   * Option to change area code in the dialer and save new default
   * User access levels from 1 - 5 now valid. For INTERNET and ARPANET, Access Level 3 required, Backdoor and User Management functions, Access Level 5 required. Basic permissions, Access Level 1 Required. 2,4 for future development.
   * Edit and Exit options added to Global Thermonuclear War Game
-  * root account added to users.txt and users management removed from joshua account options. default password for root account = password.
+  * root account added to users.txt and users management removed from joshua account options. The default password for root account = password.
   * User Accounts (for users other than "Joshua") can be managed with root account or Access Level 5 (sysadmin) account  using the command: users
 
 * Bank
