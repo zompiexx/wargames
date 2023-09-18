@@ -572,77 +572,92 @@ void list_games() {
     system(command);
     //snprintf(command, sizeof(command), "espeak 'FALKENS MAZE'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("BLACK JACK\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'BLACK JACK'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("GIN RUMMY\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'GIN RUMMY'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("HEARTS\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'HEARTS'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("BRIDGE\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'BRIDGE'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("CHECKERS\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'CHECKERS'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("CHESS\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'CHESS'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("POKER\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'POKER'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("FIGHTER COMBAT\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'FIGHTER COMBAT'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("GUERRILLA ENGAGEMENT\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'GUERRILLA ENGAGEMENT'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("DESERT WARFARE\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'DESERT WARFARE'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("AIR-TO-GROUND ACTIONS\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //nprintf(command, sizeof(command), "espeak 'AIR-TO-GROUND ACTIONS'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("THEATERWIDE TACTICAL WARFARE\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'THEATERWIDE TACTICAL WARFARE'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     delayed_print("THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'THEATERWIDE BIOTOXIC AND CHEMICAL WARFARE'");
     //system(command);
+    fflush(stdout); // flush the output buffer
     usleep(500000);
     delayed_print("\nGLOBAL THERMONUCLEAR WAR\n\n");
     snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q");
     system(command);
     //snprintf(command, sizeof(command), "espeak 'GLOBAL THERMONUCLEAR WAR'");
     //system(command);
+    fflush(stdout); // flush the output buffer
 }
 
 void defcon_status() {
