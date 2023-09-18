@@ -67,7 +67,7 @@ At the moment, the Wargames C code has the following features:
   *   Samples integration for IMSAI 8080/Kermit and Dialer/Modem Sounds and more: uses aplay system command call to play wav files
   *   Data files can be customised to connect to other systems
   *   Internet (using lynx browser) added to systems_list.txt and install.sh
-  *   Viewdata Client added and dialer entries for Telstar, NightOwl BBS.
+  *   Viewdata Client added and dialer entries for Telstar, NightOwl BBS. NOTE: the telstar.sh and nightowlbbs.sh scripts must be modified to run using sudo for client/server mode, see notes in .sh files
   *   DTMF dialer added (works in scan and view mode)
   *   Engaged tone in dialer for unavailable systems (any with system name = system)
   *   Option to change area code in the dialer and save new default
