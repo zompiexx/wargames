@@ -2302,7 +2302,7 @@ void joshua() {
             if(shell_gpt == 1) {
                 char sgpt[200] = "sgpt --role WOPR \"";
                 strcat(sgpt, input);
-                strcat(sgpt, "\" | tee /dev/tty | espeak");
+                strcat(sgpt, "\" | tee /dev/tty | espeak -v en-us -s 140 -p 30");
                 //strcat(sgpt, "\" ");
                 printf("\n");
                 // Call the shell command
