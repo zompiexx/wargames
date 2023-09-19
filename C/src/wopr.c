@@ -19,7 +19,6 @@
 #define MAX_STRING_LENGTH 20
 #define INBOX 1
 #define SENT_ITEMS 2
-#define SHELL_GPT 0 // 0 = disabled, 1 = enabled
 
 // Struct for user data
 typedef struct {
@@ -42,7 +41,8 @@ typedef struct {
 
 int game_running = 0;
 int defcon = 5;
-int hints = 0;
+int hints = 0; // 0 = disabled, 1 = enabled
+int shell_gpt = 0;  // 0 = disabled, 1 = enabled
 
 void fix_backspace_key() {
 	char system_command[100];
@@ -2299,7 +2299,7 @@ void joshua() {
         //    manageUsers();
         } else {
             //Only do this if SHELL_GPT = 1 (enabled)
-            if(SHELL_GPT == 1) {
+            if(shell_gpt == 1) {
                 char sgpt[200] = "sgpt --role WOPR \"";
                 strcat(sgpt, input);
                 strcat(sgpt, "\" | tee /dev/tty | espeak");
@@ -2584,6 +2584,17 @@ void handle_user_input() {
             snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
             system(command);
             delayed_print("HINTS UPDATED\n\n"); 
+        } else if (strcmp(input, "gpt") == 0) {
+            char buffer[10];
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("\nSET GPT (0 = DISABLED, 1 = ENABLED): ");
+            fgets(buffer, sizeof(buffer), stdin); 
+            // Convert the string to an integer
+            shell_gpt = atoi(buffer);
+            snprintf(command, sizeof(command), "aplay samples/computer-beeps-short.wav -q &");
+            system(command);
+            delayed_print("GPT UPDATED\n\n"); 
         } else {
             authenticateUser(input);  // Call the authentication function for that username
             snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
