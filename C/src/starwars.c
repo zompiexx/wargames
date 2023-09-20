@@ -13,34 +13,17 @@ void clearScreenAndSetCursor() {
 void displayFrame(const char frame[], int size) {
     clearScreenAndSetCursor();
 
-    int lineCount = 0;
-    int currentLineWidth = 0;
-
-    // Calculate lineCount
-    for (int i = 0; i < size; i++) {
-        if (frame[i] == '\n') {
-            lineCount++;
-            currentLineWidth = 0;
-        } else {
-            currentLineWidth++;
-        }
-    }
-
-    int topMargin = (24 - lineCount) / 2;
+    int topMargin = 5;  // Calculated for 67x14 animation on 80x24 terminal
     for (int i = 0; i < topMargin; i++) {
         putchar('\n');
     }
 
-    currentLineWidth = 0;
+    int leftMargin = (80 - 67) / 2;  // Centering the frame on the terminal given the animation width
     for (int i = 0; i < size; i++) {
-        if (frame[i] == '\n') {
-            int leftMargin = 40 - (currentLineWidth / 2);  // Centering the frame line and then adding 5 for the shift
+        if (i == 0 || frame[i - 1] == '\n') {
             for (int j = 0; j < leftMargin; j++) {
                 putchar(' ');
             }
-            currentLineWidth = 0;
-        } else {
-            currentLineWidth++;
         }
         putchar(frame[i]);
     }
@@ -92,11 +75,19 @@ int main(int argc, char *argv[]) {
             
             frameDelay = atoi(buffer);  // Convert to integer delay
 
+            // If the frameDelay is greater than 60, skip this frame
+            if (frameDelay > 60) {
+                while (ch != '\n' && ch != EOF) {  // Skip the current line
+                    ch = fgetc(fp);
+                }
+                frameSize = 0;  // Reset frame size
+                continue;  // Jump to the next iteration of the loop
+            }
+
             // If there's frame content to display
             if (frameSize > 0) {
                 displayFrame(frame, frameSize);
                 usleep(frameDelay * 150000);  // Variable delay between frames
-                //usleep(500000);  // Fixed delay between frames
                 frameSize = 0;  // Reset for the next frame
             }
 
