@@ -95,7 +95,8 @@ int main(int argc, char *argv[]) {
             // If there's frame content to display
             if (frameSize > 0) {
                 displayFrame(frame, frameSize);
-                usleep(frameDelay * 100000);  // Adjusted delay
+                usleep(frameDelay * 150000);  // Variable delay between frames
+                //usleep(500000);  // Fixed delay between frames
                 frameSize = 0;  // Reset for the next frame
             }
 
