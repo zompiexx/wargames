@@ -63,7 +63,7 @@ At the moment, the Wargames C code has the following features:
 * Dialer Program
   *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
   *   Stores systems (WOPR, PAN-AM, BANK) in data files so it tracks progress and allows for customisation such as external systems you define
-  *   WOPR - calls other external system commands for Speech synth, shell GPT (for Chat GPT integration) etc.
+  *   WOPR - calls other external system commands for Speech synth, Shell GPT (for Chat GPT integration) etc.
   *   Samples integration for IMSAI 8080/Kermit and Dialer/Modem Sounds and more: uses aplay system command call to play wav files
   *   Data files can be customised to connect to other systems
   *   Internet (using lynx browser) added to systems_list.txt and install.sh
@@ -99,7 +99,8 @@ At the moment, the Wargames C code has the following features:
   * Edit and Exit options added to Global Thermonuclear War Game
   * root account added to users.txt and users management removed from joshua account options. The default password for root account = password.
   * User Accounts (for users other than "Joshua") can be managed with root account or Access Level 5 (sysadmin) account  using the command: users
-  * Hints added. To use, type "hints" at logon prompt. This will allow you to enable the other side (David Lightman) of the chat with Joshua / WOPR. e.g. LOGON: hints
+  * Hints control added. To use, type "hints" at logon prompt. This will allow you to enable the other side (David Lightman) of the chat with Joshua / WOPR. e.g. LOGON: hints
+  * Chat GPT control added. To use, type "gpt" at logon prompt. This will allow you to enable Chat GPT integration (if you have installed and configured Shell GPT). e.g. LOGON: gpt
 
 * Bank
   * Very simple program, just accepts any username and password
