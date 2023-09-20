@@ -1,3 +1,7 @@
+//Wargames Movie Simulator
+//Written by Andy Glenn
+//(c) 2023
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -87,7 +91,7 @@ int main(int argc, char *argv[]) {
             // If there's frame content to display
             if (frameSize > 0) {
                 displayFrame(frame, frameSize);
-                usleep(frameDelay * 150000);  // Variable delay between frames
+                usleep(frameDelay * 1000000/15);  // Variable delay between frames (15fps)
                 frameSize = 0;  // Reset for the next frame
             }
 
