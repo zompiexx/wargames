@@ -1,5 +1,8 @@
 HELOWRLD
 COM
 echo "Hello World!"
+STARWARS
+COM
+./starwars.sh
 
 
