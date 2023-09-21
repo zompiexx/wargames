@@ -42,6 +42,7 @@ gcc C/src/pan-am.c -o ./pan-am
 gcc C/src/bank.c -o ./bank
 gcc C/src/wopr.c -o ./wopr
 gcc C/src/tic-tac-toe.c -o ./tic-tac-toe
+gcc C/src/starwars.c -o ./starwars
 
 #Install data files
 cp C/src/*.txt ./
