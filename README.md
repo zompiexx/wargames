@@ -30,7 +30,7 @@ NOTE: The code will run using a BASIC-80 interpreter (on a SYSGEN 64 image/boot 
 
 If you want to see a demo of the BASIC code in action, running on an IMSAI 8080esp (albeit, a slightly earlier version of the code), please watch these Youtube videos: https://youtu.be/GsTtD4rpM6E and https://youtu.be/U8yCnbcdOrg
 
-The C code is almost the same, but with a few extra features, such as Speech Synth, Samples for WOPR voice, AI tic-tac-toe, customisable systems list for dialer with connectivity to external systems, and AI integration using Chat GPT. If you want to see a demo of the C code in action, please watch these Youtube videos: https://youtu.be/v-t_O3rKOhM and https://youtu.be/FdS34ddK4-4
+The C code is almost the same, but with a few extra features, such as Speech Synth, Samples for WOPR voice, AI tic-tac-toe, customisable systems list for dialer with connectivity to external systems, and AI integration using Chat GPT. If you want to see a demo of the C code in action, please watch these Youtube videos: https://youtu.be/SULOI-x5fKs and https://youtu.be/ULw2MiVK-GE
 
 Useful Links: 
 
