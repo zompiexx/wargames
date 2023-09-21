@@ -59,6 +59,7 @@ At the moment, the Wargames C code has the following features:
   * DTMF dialer added
   * cool-retro-term included in install.sh script
   * Viewdata Font added to install.sh script and Backspace Key in cool-retro-term fixed in all programs
+  * Star Wars ASCIIMATION added as a program/command to drive B: (thanks to Simon Jansen for giving permission for it's inclusion: https://www.asciimation.co.nz/)
 
 * Dialer Program
   *   Dialer - calls WOPR program and connects to WOPR (and other systems when written and linked)
