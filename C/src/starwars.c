@@ -2,6 +2,8 @@
 //Written by Andy Glenn
 //(c) 2023
 
+//Star Wars ASCIIMATION Player
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]) {
     char ch;
     char frame[MAX_FRAME_SIZE];
     int frameSize = 0;
-    int frameDelay = 0;
+    int frameRepeat = 0; // Renamed from frameDelay to frameRepeat
 
     fp = fopen(argv[1], "r");
     if (fp == NULL) {
@@ -55,7 +57,7 @@ int main(int argc, char *argv[]) {
 
     while (1) {
         ch = fgetc(fp);
-        
+
         if (ch == EOF) {
             // Display any remaining frame content and exit loop
             if (frameSize > 0) {
@@ -76,11 +78,11 @@ int main(int argc, char *argv[]) {
                 ch = fgetc(fp);
             }
             buffer[bufferIndex] = '\0';
-            
-            frameDelay = atoi(buffer);  // Convert to integer delay
 
-            // If the frameDelay is greater than 60, skip this frame
-            if (frameDelay > 60) {
+            frameRepeat = atoi(buffer);  // Convert to integer repeat
+
+            // If the frameRepeat is greater than 60, skip this frame
+            if (frameRepeat > 60) {
                 while (ch != '\n' && ch != EOF) {  // Skip the current line
                     ch = fgetc(fp);
                 }
@@ -90,8 +92,10 @@ int main(int argc, char *argv[]) {
 
             // If there's frame content to display
             if (frameSize > 0) {
-                displayFrame(frame, frameSize);
-                usleep(frameDelay * 1000000/15);  // Variable delay between frames (15fps)
+                for(int i = 0; i < frameRepeat; i++) {
+                    displayFrame(frame, frameSize);
+                    usleep(1000000/15);  // Constant delay between repeated frames
+                }
                 frameSize = 0;  // Reset for the next frame
             }
 
