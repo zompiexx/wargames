@@ -133,6 +133,7 @@ Still to do: Requested
 1) Subs and bombers on game scene,  where David says blow them out of the water. Maybe those to start. [will investigate]
 2) A rolling demo/screensaver that can change its path/outcome. [will investigate]
 3) C: and D: drives for IMSAI 8080. [will investigate]
+4) Add STATUS command to WOPR for sysadmins to show: Date, Time, Number of User Accounts, Defcon Status, Mail and Backdoor Status. [will investigate]
 
 Requested: Deferred
 1) allow users to run global thermonuclear war after login. [decided not to implement this as would require major re-sequencing in code]
