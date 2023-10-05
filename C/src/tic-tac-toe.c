@@ -8,11 +8,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include <ctype.h>
 
 #define SIZE 3
 
 static int cpu_threshold = 65; //this is the cpu_threshold - set a lower value for a fast system
-static int cpu_threshold_trigger = 2; //this is the number of times the cpu_threshold needs to be met
+static int cpu_threshold_trigger = 3; //this is the number of times the cpu_threshold needs to be met
 static int cpu_threshold_trigger_count = 0; //this counts the number of times the cpu_threshold has been triggered
 static int previous_utilization = 0;
 static int peak_utilization = 0;
@@ -35,7 +36,7 @@ void gotoxy(int x, int y) {
 }
 
 void draw_nought(int row_offset, int col_offset) {
-    char nought[7][7] = {
+    char nought[7][14] = {
         //{' ', ' ', ' ', ' ', ' ', ' ', ' '},
         {' ', ' ', '#', '#', ' '},
         {' ', '#', ' ', ' ', '#'},
@@ -56,7 +57,7 @@ void draw_nought(int row_offset, int col_offset) {
 }
 
 void draw_cross(int row_offset, int col_offset) {
-    char cross[7][7] = {
+    char cross[7][14] = {
         //{' ', ' ', ' ', ' ', ' ', ' ', ' '},
         {' ', '#', ' ', ' ', '#'},
         {' ', ' ', '#', '#', ' '},
@@ -82,18 +83,18 @@ int rows = 24, cols = 80;
     int grid_size = 3; // 3x3 grid
 
     int start_row = (rows - (cell_size * grid_size)) / 2;
-    int start_col = cols - (cell_size * grid_size + 1); // Right-justify the grid
+    int start_col = cols - ((cell_size * 2) * grid_size + 1); // Right-justify the grid
 
     for (int i = 0; i <= grid_size; i++) {
         gotoxy(start_col, start_row + i * cell_size);
-        for (int j = 0; j < cell_size * grid_size; j++) {
+        for (int j = 0; j < (cell_size *2) * grid_size; j++) {
             printf("*");
         }
     }
 
     for (int i = 0; i <= grid_size; i++) {
-        for (int j = 0; j < cell_size * grid_size; j++) {
-            gotoxy(start_col + i * cell_size, start_row + j);
+        for (int j = 0; j < (cell_size * grid_size) + 1; j++) {
+            gotoxy(start_col + i * (cell_size * 2), start_row + j);
             printf("*");
         }
     }
@@ -101,7 +102,7 @@ int rows = 24, cols = 80;
     char row_labels[] = {'a', 'b', 'c'};
     for (int row = 0; row < grid_size; row++) {
         for (int col = 1; col <= grid_size; col++) {
-            int x = start_col + (col - 1) * cell_size + (cell_size / 2);
+            int x = start_col + (col - 1) * (cell_size *2) + ((cell_size *2) / 2);
             int y = start_row + row * cell_size + cell_size - 1;
             gotoxy(x, y);
             printf("%c%d", row_labels[row], col);
@@ -124,13 +125,29 @@ void reset_board() {
 char get_side_choice() {
     char side;
     gotoxy(0, 1);
-    printf("Choose your side (x/o): ");
+    printf("SELECT SIDE (O OR X):\n");
+    gotoxy(0, 2);
     scanf(" %c", &side);
+    side=toupper(side);
+    gotoxy(0, 1);
+    printf("                     \n");
+    printf("                     \n");
 
-    while (side != 'x' && side != 'o') {
+
+    while (side != 'X' && side != 'O') {
         gotoxy(0, 1);
-        printf("Invalid choice! Choose your side (x/o): ");
+        printf("INVALID OPTION       \n");
+        printf("                     \n");
+        usleep(2000000);
+        
+        gotoxy(0, 1);
+        printf("SELECT SIDE (O OR X):\n");
+        gotoxy(0, 2);
         scanf(" %c", &side);
+        side=toupper(side);
+        gotoxy(0, 1);
+        printf("                     \n");
+        printf("                     \n");
     }
     
     return side;
@@ -138,21 +155,30 @@ char get_side_choice() {
 
 void get_grid_choice(int *row, int *col, char player) {
     char row_choice;
-    gotoxy(0, 3 + player);
-    printf("Player %d, choose grid square (e.g., a1): ", player + 1);
+    gotoxy(0, 1);
+    printf("PLAYER %d, SELECT SQUARE:\n", player + 1);
+    gotoxy(0, 2);
     scanf(" %c%d", &row_choice, col);
-    gotoxy(0, 3);
-    printf("                                               ");
+    gotoxy(0, 1);
+    printf("                         \n");
+    printf("                         \n");
 
     *row = row_choice - 'a';
     *col -= 1;
 
     while (*row < 0 || *row >= SIZE || *col < 0 || *col >= SIZE || board[*row][*col] != '\0') {
-        gotoxy(0, 3 + player);
-        printf("Invalid square! Player %d, choose grid square (e.g., a1): ", player + 1);
-        gotoxy(0, 3);
-        printf("                                                               ");
+        gotoxy(0, 1);
+        printf("INVALID SQUARE           \n");
+        printf("                         \n");
+        usleep(2000000);
+
+        gotoxy(0, 1);
+        printf("PLAYER %d, SELECT SQUARE:\n", player + 1);
+        gotoxy(0, 2);
         scanf(" %c%d", &row_choice, col);
+        gotoxy(0, 1);
+        printf("                         \n");
+        printf("                         \n");
         *row = row_choice - 'a';
         *col -= 1;
     }
@@ -199,33 +225,48 @@ void draw_symbol(int row, int col, char symbol) {
     int rows = 24, cols = 80;
     int start_row = (rows - (cell_size * grid_size)) / 2;
     int start_col = cols - (cell_size * grid_size + 1);
-    int x = start_col + col * cell_size + (cell_size / 2) - 2;
+    int x = (start_col + col * (cell_size * 2) - (cell_size * 2)) - 2;
     int y = start_row + row * cell_size + (cell_size / 2) - 2;
+    char command[200];
 
-    if (symbol == 'o') {
+    if (symbol == 'O') {
         draw_nought(y, x);
     } else {
         draw_cross(y, x);
     }
+    snprintf(command, sizeof(command), "aplay samples/learn.wav -q &");
+    system(command);
 }
 
 void get_player_choice(int *row, int *col, char side) {
     char row_choice;
-    gotoxy(0, 5);
-    printf("Choose grid square (e.g., a1): ");
+    gotoxy(0, 1);
+    printf("SELECT SQUARE (%c):\n",side);
+    gotoxy(0, 2);
     scanf(" %c%d", &row_choice, col);
-    gotoxy(0, 5);
-    printf("                                    ");
+    gotoxy(0, 1);
+    printf("                   \n");
+    printf("                   \n");
 
     *row = row_choice - 'a';
     *col -= 1;
 
     while (*row < 0 || *row >= SIZE || *col < 0 || *col >= SIZE || board[*row][*col] != '\0') {
-        gotoxy(0, 5);
-        printf("Invalid square! Choose grid square (e.g., a1): ");
+        gotoxy(0, 1);
+        printf("INVALID SQUARE     \n");
+        printf("                   \n");
+        usleep(2000000);
+        gotoxy(0, 1);
+        printf("                   \n");
+        printf("                   \n");
+        gotoxy(0, 1);
+        printf("SELECT SQUARE (%c):\n",side);
+        gotoxy(0, 2);
         scanf(" %c%d", &row_choice, col);
-        gotoxy(0,5);
-        printf("                                                    ");
+        gotoxy(0, 1);
+        printf("                   \n");
+        printf("                   \n");
+
         *row = row_choice - 'a';
         *col -= 1;
     }
@@ -270,7 +311,7 @@ void get_computer_choice(int *row, int *col, char side) {
     int bestVal = -1000;
     int moveRow = -1;
     int moveCol = -1;
-    char playerSide = (side == 'x') ? 'o' : 'x';
+    char playerSide = (side == 'X') ? 'O' : 'X';
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -294,13 +335,25 @@ void get_computer_choice(int *row, int *col, char side) {
 int get_number_of_users() {
     int users;
     gotoxy(0, 1);
-    printf("Enter number of users (0, 1, or 2): ");
+    printf("PLAYERS (0, 1, or 2):\n");
+    gotoxy(0, 2);
     scanf("%d", &users);
+    gotoxy(0, 1);
+    printf("                     \n");
+    printf("                     ");
 
     while (users < 0 || users > 2) {
         gotoxy(0, 1);
-        printf("Invalid number! Enter number of users (0, 1, or 2): ");
+        printf("INVALID OPTION   \n");
+        printf("                 ");
+        usleep(2000000);
+        gotoxy(0, 1);  
+        printf("PLAYERS (0, 1, or 2):\n");
+        gotoxy(0, 2);
         scanf("%d", &users);
+        gotoxy(0, 1);
+        printf("                     \n");
+        printf("                     ");
     }
     return users;
 }
@@ -343,16 +396,16 @@ void monitor_cpu_utilization() {
 
     gotoxy(0, 19);
     //printf("CPU Utilization: %03d%%\n", current_utilization);
-    printf("CPU Peak Utilization: %03d%%\n", peak_utilization);
-    printf("CPU Threshold Trigger Count: %d\n", cpu_threshold_trigger_count);
-    printf("CPU Overload: %c\n", cpu_overload);
+    printf("CPU PEAK UTILIZATION: %03d%%\n", peak_utilization);
+    printf("CPU THRESHOLD COUNT : %d\n", cpu_threshold_trigger_count);
+    printf("CPU OVERLOAD        : %c\n", cpu_overload);
 
     if (current_utilization >= previous_utilization + cpu_threshold || peak_utilization >= previous_utilization + cpu_threshold) {
         cpu_threshold_trigger_count=cpu_threshold_trigger_count+1;
         if(cpu_threshold_trigger_count > cpu_threshold_trigger) {      
             cpu_overload = 'Y';
             gotoxy(0, 21);
-            printf("CPU Overload: %c\n", cpu_overload);
+            printf("CPU OVERLOAD        : %c\n", cpu_overload);
             gotoxy(0, 15);
             printf("\033[31m");
             printf("SYSTEM OVERLOAD\n");
@@ -387,14 +440,12 @@ int main() {
     draw_grid();
 
     users = get_number_of_users();
-    gotoxy(1, 1);
-    printf("                                        "); // Print spaces over the previous prompt
 
     if (users == 2) {
         player1 = get_side_choice();
         gotoxy(1, 2);
-        printf("                                        "); // Print spaces over the previous prompt
-        player2 = (player1 == 'x') ? 'o' : 'x';
+        printf("                                  "); // Print spaces over the previous prompt
+        player2 = (player1 == 'X') ? 'O' : 'X';
 
         int turn = 0;
         while (true) {
@@ -403,19 +454,19 @@ int main() {
 
             get_player_choice(&row, &col, side);
             gotoxy(1, 3);
-            printf("                                        "); // Print spaces over the previous prompt
+            printf("                                  "); // Print spaces over the previous prompt
             board[row][col] = side;
             draw_symbol(row, col, side);
 
             if (check_winner(side)) {
                 gotoxy(0, 6);
-                printf("Player %d wins!\n\n", turn + 1);
+                printf("PLAY %d WINS!\n\n", turn + 1);
                 break;
             }
 
             if (check_draw()) {
                 gotoxy(0, 6);
-                printf("It's a draw!\n\n");
+                printf("IT'S A DRAW!\n\n");
                 break;
             }
 
@@ -423,7 +474,7 @@ int main() {
         }
         char playagain;
         gotoxy(0,23);
-        printf("Play again (Y/N): ");
+        printf("PLAY AGAIN (Y/N): ");
         scanf("%s", &playagain);
         if (playagain == 'Y' || playagain == 'y') {
             goto start_game;
@@ -431,25 +482,25 @@ int main() {
     } else if (users == 1) {
         char playerSide = get_side_choice();
         gotoxy(1, 2);
-        printf("                                        "); // Print spaces over the previous prompt
-        char computerSide = (playerSide == 'x') ? 'o' : 'x';
+        printf("                                  "); // Print spaces over the previous prompt
+        char computerSide = (playerSide == 'X') ? 'O' : 'X';
 
         while (true) {
             int row, col;
 
             get_player_choice(&row, &col, playerSide);
             gotoxy(1, 3);
-            printf("                                        "); // Print spaces over the previous prompt
+            printf("                                  "); // Print spaces over the previous prompt
             board[row][col] = playerSide;
             draw_symbol(row, col, playerSide);
             if (check_winner(playerSide)) {
                 gotoxy(0, 6);
-                printf("Player wins!\n\n");
+                printf("PLAYER WINS!\n\n");
                 break;
             }
             if (check_draw()) {
                 gotoxy(0, 6);
-                printf("It's a draw!\n\n");
+                printf("IT'S A DRAW!\n\n");
                 break;
             }
 
@@ -458,24 +509,24 @@ int main() {
             draw_symbol(row, col, computerSide);
             if (check_winner(computerSide)) {
                 gotoxy(0, 6);
-                printf("Computer wins playing %c!\n\n", computerSide);
+                printf("COMPUTER WINS PLAYING %c!\n\n", computerSide);
                 break;
             }
             if (check_draw()) {
                 gotoxy(0, 6);
-                printf("It's a draw!\n\n");
+                printf("IT'S A DRAW!\n\n");
                 break;
             }
         }
         char playagain;
         gotoxy(0,23);
-        printf("Play again (Y/N): ");
+        printf("PLAY AGAIN (Y/N): ");
         scanf("%s", &playagain);
         if (playagain == 'Y' || playagain == 'y') {
             goto start_game;
         }
     } else if (users == 0) {
-        char sides[2] = {'x', 'o'};
+        char sides[2] = {'X', 'O'};
         int turn = 0;
         int game_count = 1;
         int games = 0;
@@ -484,15 +535,23 @@ int main() {
         gotoxy(0, 1);
         printf("                              ");
         gotoxy(0, 1);
-        printf("How Many Games: ");
+        printf("HOW MANY GAMES: \n");
+        gotoxy(0, 2);
         scanf("%d",&games);
+        gotoxy(0, 1);
+        printf("                              \n");
+        printf("                              ");
       
         while(games<=0) {
             gotoxy(0, 1);
             printf("                              ");
             gotoxy(0, 1);
-            printf("How Many Games (>0): ");
+            printf("HOW MANY GAMES (>0): ");
+            gotoxy(0, 2);
             scanf("%d",&games);
+            gotoxy(0, 1);
+            printf("                              \n");
+            printf("                              ");
         }
 
         game_loop:
@@ -512,23 +571,21 @@ int main() {
             get_computer_choice(&row, &col, side);
             board[row][col] = side;
             draw_symbol(row, col, side);
-            snprintf(command, sizeof(command), "aplay samples/learn.wav -q &");
-            system(command);
             fflush(stdout); // flush the output buffer
             monitor_cpu_utilization();
             usleep(move_delay/game_count);
             
             if (check_winner(side)) {
                 gotoxy(0, 5);
-                printf("Game Number: %d\n",game_count);
-                printf("Computer playing %c wins!\n\n", side);
+                printf("GAME NUMBER: %d\n",game_count);
+                printf("COMPUTER PLAYING %c WINS!\n\n", side);
                 break;
             }
 
             if (check_draw()) {
                 gotoxy(0, 5);
-                printf("Game Number: %d\n",game_count);
-                printf("It's a draw!\n\n");
+                printf("GAME NUMBER: %d\n",game_count);
+                printf("IT'S A DRAW!\n\n");
                 break;
             }
 
@@ -541,7 +598,7 @@ int main() {
         } else {
             char playagain;
             gotoxy(0,23);
-            printf("Play again (Y/N): ");
+            printf("PLAY AGAIN (Y/N): ");
             scanf("%s", &playagain);
             if (playagain == 'Y' || playagain == 'y') {
                 goto start_game;
