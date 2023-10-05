@@ -12,7 +12,7 @@
 
 #define SIZE 3
 
-static int cpu_threshold = 30; //this is the cpu_threshold - set a lower value for a fast system
+static int cpu_threshold = 65; //this is the cpu_threshold - set a lower value for a fast system
 static int cpu_threshold_trigger = 3; //this is the number of times the cpu_threshold needs to be met
 static int cpu_threshold_trigger_count = 0; //this counts the number of times the cpu_threshold has been triggered
 static int previous_utilization = 0;
