@@ -562,6 +562,7 @@ int main() {
         int randomCol = rand() % 3;  // random number between 0 and 2
         board[randomRow][randomCol] = sides[turn];
         draw_symbol(randomRow, randomCol, sides[turn]);
+        gotoxy(0, 22);
         fflush(stdout); // flush the output buffer
         usleep(move_delay/game_count);
         turn = 1 - turn;  // Alternate the turn immediately after the first move
