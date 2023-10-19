@@ -14,7 +14,7 @@
 #include <termios.h>
 #include <stdbool.h>
 
-#define CHARACTER_DELAY 5000  // 1000 = 1ms
+#define CHARACTER_DELAY 7500  // 1000 = 1ms
 #define MAX_TARGETS 4
 #define MAX_STRING_LENGTH 20
 #define INBOX 1
@@ -2615,6 +2615,8 @@ int main() {
         clear_screen();
 
         // Send "LOGON: " to the client
+        snprintf(command, sizeof(command), "aplay samples/computer-beeps.wav -q &");
+        system(command);
         int i;
     	for (i = 0; i < 360; i++) {
         delayed_print(" ");
