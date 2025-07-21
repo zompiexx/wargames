@@ -187,4 +187,8 @@ Connecting using IMSAI8080esp:
 WARNING:
 * If running in client/server mode using telnet & telnetd, please be aware that telnet is an unencrypted protocol
 
+WARGAMES FONTS:
+* WarGames Fonts have bee kindly provided by Michael Walden (thanks Michael) and are available here: https://mw.rat.bz/wgterm/
+* Note: These may not work perfectly if you are using the BBS and Telstar systems from the dialer, but really look the part for the WOPR access!
+
 
